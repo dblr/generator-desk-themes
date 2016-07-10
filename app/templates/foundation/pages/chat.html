@@ -1,58 +1,64 @@
+<!-- build:chat_new -->
 {% extends "../_layout.html" %}
 {% assign page = 'chat_new' %}
 {% block main %}
-<div id="desk-external-variables-chat_new" class="desk-external-variables hide">
-  <div id="system-snippets-name_required">{{system.snippets.name_required}}</div>
-  <div id="system-snippets-email_required">{{system.snippets.email_required}}</div>
-  <div id="system-snippets-invalid_email">{{system.snippets.invalid_email}}</div>
-  <div id="system-snippets-question_required">{{system.snippets.question_required}}</div>
-  <div id="system-snippets-exceeding_max_chars">{{system.snippets.exceeding_max_chars}}</div>
-</div>
-<div id="content">
-  <div class="container chat">
-    <div class="body row">
-      <div class="columns medium-8 {% if desk.page.theme.layout != 'left' %} columns medium-push-4 {% endif %}">
-        <div class="header row">
-          <div class="columns medium-12">
-            <h2>{{system.snippets.live_chat}}</h2>
-          </div>
-        </div>
-        <div class="row body">
-          <div class="columns medium-12">
-            <div class="panel form">
-            {{form_begin}}
-              {% if current_user == nil or current_user.is_guest %}
-                <div class="row">
-                  <div class="form-group columns medium-6">
-                    <label class="control-label" for="interaction_name">{{system.snippets.your_name}} ({{system.snippets.required}}):</label>
-                    <input value="{{ interaction.name }}" id="interaction_name" class="form-control" maxlength="100" name="interaction[name]" type="text" />
-                  </div>
-                  <div class="form-group columns medium-6">
-                    <label class="control-label" for="interaction_email">{{system.snippets.your_email}} ({{system.snippets.required}}):</label>
-                    <input value="{{ interaction.email }}" id="interaction_email" class="form-control" maxlength="100" name="interaction[email]" type="text" />
-                  </div>
-                </div>
-              {% endif %}
-              <div class="form-group">
-                <label for="chat_subject" class="control-label">{{system.snippets.question}} ({{system.snippets.required}}):</label>
-                <textarea id='chat_subject' name='chat[subject]' type='text' value='{% if search_term and search_term != '' %}{{search_term}}{% else %}{{chat.subject}}{%endif%}' rows="6" cols="40" class="form-control">{{chat.body}}</textarea>
-              </div>
-              {% if MBArticleSuggest == true %}
-                <div class="autosuggest multi-brand show-for-small-only"></div>
-              {% else %}
-                <div class="autosuggest show-for-small-only"></div>
-              {% endif %}
+<!-- endbuild -->
 
-              <div class="input-button clearfix">
-                 <input id='email_submit' class="button button-submit right" name='commit' type='submit' value='{{system.snippets.go_chat}}' />
-              </div>
-            {{form_end}}
-            </div> <!-- .panel-default.form -->
+  <div id="desk-external-variables-chat_new" class="desk-external-variables hide">
+    <div id="system-snippets-name_required">{{system.snippets.name_required}}</div>
+    <div id="system-snippets-email_required">{{system.snippets.email_required}}</div>
+    <div id="system-snippets-invalid_email">{{system.snippets.invalid_email}}</div>
+    <div id="system-snippets-question_required">{{system.snippets.question_required}}</div>
+    <div id="system-snippets-exceeding_max_chars">{{system.snippets.exceeding_max_chars}}</div>
+  </div>
+  <div id="content">
+    <div class="container chat">
+      <div class="body row">
+        <div class="columns medium-8 {% if desk.page.theme.layout != 'left' %} columns medium-push-4 {% endif %}">
+          <div class="header row">
+            <div class="columns medium-12">
+              <h2>{{system.snippets.live_chat}}</h2>
+            </div>
           </div>
-        </div><!-- Row -->
-      </div> <!-- .columns medium-8 -->
-     {{ sidebar_suggest }}
-    </div><!-- Row -->
-  </div><!-- Container Chat-->
-</div><!-- #Content -->
+          <div class="row body">
+            <div class="columns medium-12">
+              <div class="panel form">
+              {{form_begin}}
+                {% if current_user == nil or current_user.is_guest %}
+                  <div class="row">
+                    <div class="form-group columns medium-6">
+                      <label class="control-label" for="interaction_name">{{system.snippets.your_name}} ({{system.snippets.required}}):</label>
+                      <input value="{{ interaction.name }}" id="interaction_name" class="form-control" maxlength="100" name="interaction[name]" type="text" />
+                    </div>
+                    <div class="form-group columns medium-6">
+                      <label class="control-label" for="interaction_email">{{system.snippets.your_email}} ({{system.snippets.required}}):</label>
+                      <input value="{{ interaction.email }}" id="interaction_email" class="form-control" maxlength="100" name="interaction[email]" type="text" />
+                    </div>
+                  </div>
+                {% endif %}
+                <div class="form-group">
+                  <label for="chat_subject" class="control-label">{{system.snippets.question}} ({{system.snippets.required}}):</label>
+                  <textarea id='chat_subject' name='chat[subject]' type='text' value='{% if search_term and search_term != '' %}{{search_term}}{% else %}{{chat.subject}}{%endif%}' rows="6" cols="40" class="form-control">{{chat.body}}</textarea>
+                </div>
+                {% if MBArticleSuggest == true %}
+                  <div class="autosuggest multi-brand show-for-small-only"></div>
+                {% else %}
+                  <div class="autosuggest show-for-small-only"></div>
+                {% endif %}
+
+                <div class="input-button clearfix">
+                   <input id='email_submit' class="button button-submit right" name='commit' type='submit' value='{{system.snippets.go_chat}}' />
+                </div>
+              {{form_end}}
+              </div> <!-- .panel-default.form -->
+            </div>
+          </div><!-- Row -->
+        </div> <!-- .columns medium-8 -->
+       {{ sidebar_suggest }}
+      </div><!-- Row -->
+    </div><!-- Container Chat-->
+  </div><!-- #Content -->
+  
+<!-- build:endblock -->
 {% endblock %}
+<!-- endbuild -->

@@ -1,28 +1,34 @@
+<!-- build:login -->
 {% extends "../_layout.html" %}
 {% assign page = 'login' %}
 {% block main %}
-<div id="content">
-  <div class="container login">
-    <div class="body row"> 
-      <div class="columns medium-6  medium-offset-3">
-        <div id="desk-external-variables-myportal_show" class="desk-external-variables hide">
-          <div id="system-snippets-email_required" class=""><p class="error">{{system.snippets.email_required}}</p></div>
-          <div id="system-snippets-invalid_email" class="alert hide">{{system.snippets.invalid_email}}</div>
-          <div id="system-snippets-password_required" class="alert hide">{{system.snippets.password_required}}</div>
-        </div>
+<!-- endbuild -->
 
-        <div class="panel panel-default form login clearfix">
-        <h2 class="text-center">{{desk.system.snippets.login_title}}</h2>
-          <div class="panel-body">
-            <div id='form' class='login-form'>
-              {{desk.page.content.form}}
-            </div>
+  <div id="content">
+    <div class="container login">
+      <div class="body row"> 
+        <div class="columns medium-6  medium-offset-3">
+          <div id="desk-external-variables-myportal_show" class="desk-external-variables hide">
+            <div id="system-snippets-email_required" class=""><p class="error">{{system.snippets.email_required}}</p></div>
+            <div id="system-snippets-invalid_email" class="alert hide">{{system.snippets.invalid_email}}</div>
+            <div id="system-snippets-password_required" class="alert hide">{{system.snippets.password_required}}</div>
           </div>
-          <ul class="button-group login even-2"></ul>
-          <ul class="button-group account even-2"></ul>
+
+          <div class="panel panel-default form login clearfix">
+          <h2 class="text-center">{{desk.system.snippets.login_title}}</h2>
+            <div class="panel-body">
+              <div id='form' class='login-form'>
+                {{desk.page.content.form}}
+              </div>
+            </div>
+            <ul class="button-group login even-2"></ul>
+            <ul class="button-group account even-2"></ul>
+          </div>
         </div>
-      </div>
-    </div><!-- body.row -->
-  </div><!-- .container.login -->
-</div><!-- #content -->
-{% endblock %} 
+      </div><!-- body.row -->
+    </div><!-- .container.login -->
+  </div><!-- #content -->
+
+<!-- build:endblock -->
+{% endblock %}
+<!-- endbuild -->

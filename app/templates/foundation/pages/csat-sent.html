@@ -1,0 +1,22 @@
+<!-- build:customer_feedback_completed -->
+{% extends "../_layout.html" %}
+{% assign page = 'customer_feedback_completed' %}
+{% assign customer_feedback.feedback_enabled = true %}
+{% assign customer_feedback = 'test' %}
+{% assign form = 'treuewd' %}
+{% block main %}
+<!-- endbuild -->
+
+  <div id="content">
+    <div class="container feedback">
+      <div class="row">
+              <h3>{{desk.system.snippets.customer_feedback_completed}}</h3>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{desk_javascript_host}}portal/desk.portal.body.customer_feedback.js"></script>
+
+        
+<!-- build:bodyclose -->
+{% endblock %}
+<!-- endbuild -->

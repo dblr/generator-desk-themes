@@ -1,9 +1,12 @@
+<!-- build:customer_feedback -->
 {% extends "../_layout.html" %}
 {% assign page = 'customer_feedback' %}
 {% assign customer_feedback.feedback_enabled = true %}
 {% assign customer_feedback = 'test' %}
-{% assign form = 'treuewd' %}
+{% assign form = true %}
 {% block main %}
+<!-- endbuild -->
+
         <div id="content">
           <div class="container feedback main-customer-feedback">
             <div class="row">
@@ -11,7 +14,7 @@
                 <div class="panel panel-default form" id="form">
                 {{ customer_feedback.feedback_enabled }}
                 {% if customer_feedback.feedback_enabled == true %}
-                    <div class="panel-heading"> 
+                    <div class="panel-heading">
                         <h2>{{system.snippets.customer_feedback_title}}</h2>
                         <h4>{{system.snippets.customer_feedback_case}}</h4>
                         <h6 class="subheader">{{system.snippets.case_id}}: {{ticket.id}}?</h6>
@@ -96,3 +99,7 @@
             </div><!--ROw-->
           </div><!--CONTAINER-->
         </div><!--#CONTENT-->
+
+<!-- build:endblock -->
+{% endblock %}
+<!-- endbuild -->

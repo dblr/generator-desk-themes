@@ -1,6 +1,9 @@
+<!-- build:page_article -->
 {% extends "../_layout.html" %}
 {% assign page = 'page_article' %}
 {% block main %}
+<!-- endbuild -->
+
 {% if article == null %}
 <div id="content">
   <div class="container article">
@@ -84,4 +87,6 @@
   </div><!--Container Article-->
 </div><!--#Content-->
 {% endif %}
+<!-- build:endblock -->
 {% endblock %}
+<!-- endbuild -->

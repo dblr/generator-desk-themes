@@ -1,81 +1,88 @@
+<!-- build:myportal_index -->
 {% extends "../_layout.html" %}
 {% assign page = 'myportal_index' %}
 {% assign desk.page.content.form = "<form accept-charset='UTF-8' action='/customer/registrations' method='post' novalidate='novalidate'><div style='margin:0;padding:0;display:inline'><input name='utf8' type='hidden' value='✓'><input name='authenticity_token' type='hidden' value='INY+d0Nc5eu0DcqQ7aLr3wmShSotRr4twIgCKCBWrbk='></div> <div class='field'> <label for='email'>Email</label> <input id='email' maxlength='50' name='email' type='text' class='invalid'><label for='email' generated='true' class='invalid'>Email address is required.</label> </div> <div class='input-button actions'><input id='registration_submit' name='commit' type='submit' value='Send Instructions'></div> </form>" %}
 {% block main %}
-<div id="registration-in-progress" class="hide">
-    <img alt='Ajax-loader-small' src='{{ "/images/ajax-loader-small.gif" | portal_image_url: image_asset_host }}' /> {{ system.snippets.registration_in_progress}} 
-</div>
-<div id="content"> 
-    <div class="container myportal index">
-        <div class="row">
-            <div class="columns medium-12">
-                <div class="header row">
-                    <div class="columns medium-4 small-12"> 
-                        <select id="CaseFilter" class="form-control">
-                            <option value="my">{{ system.snippets.show_my_cases}}</option>  
-                            {% if desk.customer.can_access_company_tickets? %}
-                            <option value="company" selected="selected">{{ system.snippets.show_all_cases}}</option>
-                            {% endif %}
-                            <option value="7">{{ system.snippets.show_last_num_days | format_snippet: '"num":"7"' }}</option>
-                            <option value="30">{{ system.snippets.show_last_num_days | format_snippet: '"num":"30"' }}</option>
-                        </select> 
-                    </div>
-                    <div class="columns medium-4 small-6">
-                        <div class="switch left">
-                            <input class="checkbox" id="ActiveOnly" type="checkbox" name="checkbox"></input>
-                            <label for="ActiveOnly"></label>
-                        </div>
-                        <h6 class="left">&nbsp; &nbsp;{{ system.snippets.active_only}}</h6> 
-                    </div>
-                    <div class="columns medium-4 small-6">
-                        {% if site.email_enabled_config %}
-                        <a href="{{desk.system.links.email}}" class="button right ">{{ system.snippets.create_new_case}}</a> {% endif %}
-                    </div>
-                </div>
-                <div class="body row">
-                    <div class="columns medium-12">
-                        <table id="MyCases" class="{% if MyCasesSort == true %} sort {% endif %}" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>{{ system.snippets.case_id}}</th>
-                                    <th class="hide-for-small-only">{{ system.snippets.assigned_agent}}</th>
-                                    <th>{{ system.snippets.subject}}</th> 
-                                    {% if desk.customer.can_access_company_tickets? %}
-                                    <th class="hide-for-small-only">{{ system.snippets.from}}</th>
-                                    {% endif %} 
-                                    <th class="hide-for-small-only">{{ system.snippets.updated}}</th>
-                                    <th class="hide-for-small-only">{{ system.snippets.status}}</th> 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for case in desk.page.content.cases %}
-                                <tr>
-                                    <td class='a-caseid'>{{ case.id }}</td>
-                                    <td class="hide-for-small-only"><span>{{case.user.name_public | show_something:  system.snippets.unassigned}}</span></td>
-                                    <td class='a-casesubject'><img src='{{ case.channel_icon }}' /> <a href="{{ case.portal_url }}">{{ case.subject | clip:50 }}</a></td>
-                                    {% if desk.customer.can_access_company_tickets? %}
-                                    <td class='a-casefrom hide-for-small-only'>{{case.customer.first_name}}</td>
-                                    {% endif %}
-                                    <td class='a-casecreated hide-for-small-only'>{{ case.updated_at | in_time_zone: site.timezone | date: '%b %d %Y' }}</td>
-                                    <td class='a-casestatus hide-for-small-only'>{% case case.status.id %} {% when 10 %} {{ system.snippets.case_new}} {% when 30 %} {{ system.snippets.case_open}} {% when 50 %} {{ system.snippets.case_pending}} {% when 70 %} {{ system.snippets.case_resolved}} {% when 90 %} {{ system.snippets.case_closed}} {% endcase %}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                        <div id='pagination'>
-                            {{ desk.page.content.more_cases_block }}
-                        </div>
-                    </div>
-                </div>
-                <!-- .row -->
-            </div>
-        </div>
-        <!-- .row-->
-    </div>
-    <!-- .portal-->
-</div>
-<!-- #content -->
-{% if MyCasesSort == true %}
-<input id="MyCaseSort" class="hidden hide" value="true" /> {% endif %}
-{% endblock %} 
+<!-- endbuild -->
+
+  <div id="registration-in-progress" class="hide">
+      <img alt='Ajax-loader-small' src='{{ "/images/ajax-loader-small.gif" | portal_image_url: image_asset_host }}' /> {{ system.snippets.registration_in_progress}} 
+  </div>
+  <div id="content"> 
+      <div class="container myportal index">
+          <div class="row">
+              <div class="columns medium-12">
+                  <div class="header row">
+                      <div class="columns medium-4 small-12"> 
+                          <select id="CaseFilter" class="form-control">
+                              <option value="my">{{ system.snippets.show_my_cases}}</option>  
+                              {% if desk.customer.can_access_company_tickets? %}
+                              <option value="company" selected="selected">{{ system.snippets.show_all_cases}}</option>
+                              {% endif %}
+                              <option value="7">{{ system.snippets.show_last_num_days | format_snippet: '"num":"7"' }}</option>
+                              <option value="30">{{ system.snippets.show_last_num_days | format_snippet: '"num":"30"' }}</option>
+                          </select> 
+                      </div>
+                      <div class="columns medium-4 small-6">
+                          <div class="switch left">
+                              <input class="checkbox" id="ActiveOnly" type="checkbox" name="checkbox"></input>
+                              <label for="ActiveOnly"></label>
+                          </div>
+                          <h6 class="left">&nbsp; &nbsp;{{ system.snippets.active_only}}</h6> 
+                      </div>
+                      <div class="columns medium-4 small-6">
+                          {% if site.email_enabled_config %}
+                          <a href="{{desk.system.links.email}}" class="button right ">{{ system.snippets.create_new_case}}</a> {% endif %}
+                      </div>
+                  </div>
+                  <div class="body row">
+                      <div class="columns medium-12">
+                          <table id="MyCases" class="{% if MyCasesSort == true %} sort {% endif %}" width="100%">
+                              <thead>
+                                  <tr>
+                                      <th>{{ system.snippets.case_id}}</th>
+                                      <th class="hide-for-small-only">{{ system.snippets.assigned_agent}}</th>
+                                      <th>{{ system.snippets.subject}}</th> 
+                                      {% if desk.customer.can_access_company_tickets? %}
+                                      <th class="hide-for-small-only">{{ system.snippets.from}}</th>
+                                      {% endif %} 
+                                      <th class="hide-for-small-only">{{ system.snippets.updated}}</th>
+                                      <th class="hide-for-small-only">{{ system.snippets.status}}</th> 
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {% for case in desk.page.content.cases %}
+                                  <tr>
+                                      <td class='a-caseid'>{{ case.id }}</td>
+                                      <td class="hide-for-small-only"><span>{{case.user.name_public | show_something:  system.snippets.unassigned}}</span></td>
+                                      <td class='a-casesubject'><img src='{{ case.channel_icon }}' /> <a href="{{ case.portal_url }}">{{ case.subject | clip:50 }}</a></td>
+                                      {% if desk.customer.can_access_company_tickets? %}
+                                      <td class='a-casefrom hide-for-small-only'>{{case.customer.first_name}}</td>
+                                      {% endif %}
+                                      <td class='a-casecreated hide-for-small-only'>{{ case.updated_at | in_time_zone: site.timezone | date: '%b %d %Y' }}</td>
+                                      <td class='a-casestatus hide-for-small-only'>{% case case.status.id %} {% when 10 %} {{ system.snippets.case_new}} {% when 30 %} {{ system.snippets.case_open}} {% when 50 %} {{ system.snippets.case_pending}} {% when 70 %} {{ system.snippets.case_resolved}} {% when 90 %} {{ system.snippets.case_closed}} {% endcase %}
+                                      </td>
+                                  </tr>
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                          <div id='pagination'>
+                              {{ desk.page.content.more_cases_block }}
+                          </div>
+                      </div>
+                  </div>
+                  <!-- .row -->
+              </div>
+          </div>
+          <!-- .row-->
+      </div>
+      <!-- .portal-->
+  </div>
+  <!-- #content -->
+  {% if MyCasesSort == true %}
+  <input id="MyCaseSort" class="hidden hide" value="true" />
+  {% endif %}
+
+<!-- build:endblock -->
+{% endblock %}
+<!-- endbuild -->

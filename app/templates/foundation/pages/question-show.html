@@ -1,187 +1,183 @@
+<!-- build:question_show -->
 {% extends "../_layout.html" %}
 {% assign page = 'question_show' %}
 {% block main %}
-        <!--
-          .g8""8q. `7MMF'   `7MF'`7MM"""YMM   .M"""bgd MMP""MM""YMM `7MMF' .g8""8q. `7MN.   `7MF'
-        .dP'    `YM. MM       M    MM    `7  ,MI    "Y P'   MM   `7   MM .dP'    `YM. MMN.    M
-        dM'      `MM MM       M    MM   d    `MMb.          MM        MM dM'      `MM M YMb   M
-        MM        MM MM       M    MMmmMM      `YMMNq.      MM        MM MM        MM M  `MN. M
-        MM.      ,MP MM       M    MM   Y  , .     `MM      MM        MM MM.      ,MP M   `MM.M
-        `Mb.    ,dP' YM.     ,M    MM     ,M Mb     dM      MM        MM `Mb.    ,dP' M     YMM
-          `"bmmd"'    `bmmmmd"'  .JMMmmmmMMM P"Ybmmd"     .JMML.    .JMML. `"bmmd"' .JML.    YM
-              MMb
-               `bood'         BEGIN QUESTION SHOW                                           -->
-        <div id="desk-external-variables-question_show" class="desk-external-variables hide">
-          <div id="system-snippets-just_moderated">{{just_moderated}}</div>
-          <div id="system-snippets-name_required">{{system.snippets.name_required}}</div>
-          <div id="system-snippets-email_required">{{system.snippets.email_required}}</div>
-          <div id="system-snippets-invalid_email">{{system.snippets.invalid_email}}</div>
-          <div id="system-snippets-answer_required">{{system.snippets.answer_required}}</div>
-          <div id="system-snippets-exceeding_max_chars">{{system.snippets.exceeding_max_chars}}</div>
-        </div>
-        {% assign customer_answer_count = question.answers_customer_count %}
-        {% assign agent_answer_count = question.answers_agent_count %}
-        {% assign answers_count = question.answers_count %}
-        {% assign best_answer = question.best_answer %}
-        <div id="content">
-          <div class="container qna">
-            <div class="row">
-              <div class="columns medium-8 {% if desk.page.theme.layout != 'left' %} columns medium-push-4 {% endif %}">
-                <!-- THE QUESTION -->
-                <article class="question">
-                    <div class="row collapse">
-                      <div class="columns medium-1">
-                        <div class="th">{{ question.from_email | gravatar_image: gravatar_unknown_user, ssl }}</div>
-                      </div>
-                      <div class="columns medium-11">
-                        <div class="columns medium-12">
-                          <h4>{{ question.subject }}</h4>
-                          <time>{{ question.from_name }} &mdash; {{ question.created_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p %Z' }} </time>
-                          <hr>
-                          <p>{{ question.body }}</p>
-                        </div>
-                      </div>
-                    </div>
-                </article>
-                <!-- ANSWER COUNT -->
-                <div class="row">
-                  <div class="columns medium-12">
-                    <h4>{{ answers_count }} - {{ system.snippets.community_answer | pluralize: answer_count, system.snippets.community_answers }}</h4>
-                  </div>
-                </div>
-                <!-- BEST ANSWER -->
-                {% if best_answer != nil %}
-                  <div class="panel callout best-answer">
-                    <div class="row collapse">
-                      <div class="columns medium-1 hide-form-small-only">
-                        <div class="th">{{ best_answer.from_email | gravatar_image: gravatar_unknown_user,  ssl }}</div>
-                      </div>
-                      <div class="columns medium-11 small-12">
-                        <div class="columns medium-12">
-                          <div class="clearfix">
-                            <h4 class="left">{{ best_answer.from_name }}</h4>
-                              <span class="label success right">{{system.snippets.best_answer}}&nbsp;<i class="fa fa-check-circle"></i></span>
-                              {% if best_answer.agent? %}<span class="label right">{{ site.company_name }} {{ site.agent_name_config }} &nbsp; <i class="fa fa-lg fa-gear"></i></span>{% endif %}
-                          </div>
-                          <time>{{ best_answer.updated_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p %Z' }}</time>
-                          <hr>
-                          <p>{{ best_answer.body }}</p>
-                          {% if question.answers_count > 1 %}
-                            <a href="#bestanswer">{{system.snippets.view_conversation}}</a>
-                          {% endif %}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                {% endif %}
-                <!-- ALL ANSWERS -->
-                {% for answer in question.answers %}
-                  {% if answer.agent? %}
-                    <!-- AGENT -->
-                    <div class="panel agent">
-                      <div class="row collapse">
-                        <div class="columns medium-1 hide-for-small-only">
-                          <div class="th">}{{ answer.from_email | gravatar_image: gravatar_unknown_user,  ssl }}</div>
-                          {% if current_user != answer.user %}
-                            <div class='answer-rating rating-{{ answer | already_rated_by_user: current_user }}'>
-                                <div class="row">
-                                  {{ answer | already_rated_up: current_user }}
-                                  {{ answer | already_rated_down: current_user }}
-                                </div>
-                            </div>
-                          {% endif %}
-                        </div>
-                        <div class="columns medium-11 small-12">
-                          <div class="columns medium-12">
-                            <div class="clearfix">
-                              <h4 class="left">{{ answer.from_name }}</h4>
-                              {% if answer.id == best_answer.id %} <span class="label success right">{{system.snippets.best_answer}}&nbsp;<i class="fa fa-check-circle"></i></span>{% endif %}
-                              <span class="label right">{{ site.company_name }} {{ site.agent_name_config }} &nbsp; <i class="fa fa-lg fa-gear"></i></span>
-                            </div>
-                            <div class="clearfix">
-                                <time>{{ answer.updated_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p %Z' }}</time>
-                                <span class='score right label info {% if answer.rating_value > 0 %}pos{% elsif answer.rating_value < 0 %}neg{% endif %}' id='score-{{answer.id}}'>{{ answer.rating_value }}</span>
-                                <span class='dialog right label info'>{{system.snippets.rated}} : </span>
-                            </div>
-                            <hr>
-                            <p>{{ answer.body }}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  {% else %}
-                    <!-- USER -->
-                    <div class="panel user">
-                      <div class="row collapse">
-                        <div class="columns medium-1 hide-for-small-only">
-                          <div class="th">{{ answer.from_email | gravatar_image: gravatar_unknown_user,  ssl }}</div>
-                          {% if current_user != answer.user %}
-                            <div class='answer-rating rating-{{ answer | already_rated_by_user: current_user }}'>
-                                <div class="row">
-                                  {{ answer | already_rated_up: current_user }}
-                                  {{ answer | already_rated_down: current_user }}
-                                </div>
-                            </div>
-                          {% endif %}
-                        </div>
-                        <div class="columns medium-11 small-12">
-                          <div class="columns medium-12">
-                            <div class="clearfix">
-                              <h4 class="left">{{ answer.from_name }}</h4>
-                              {% if answer.id == best_answer.id %}<span class="label success right"> <span class="label success right">{{system.snippets.best_answer}}&nbsp;<i class="fa fa-check-circle"></i></span>{% endif %}
-                              <span class="label right warning">User &nbsp;<i class="fa fa-lg fa-user"></i></span>
-                            </div>
-                            <div class="clearfix">
-                                <time>{{ answer.updated_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p %Z' }}</time>
-                                <span class='score right label info {% if answer.rating_value > 0 %}pos{% elsif answer.rating_value < 0 %}neg{% endif %}' id='score-{{answer.id}}'>{{ answer.rating_value }}</span>
-                                <span class='dialog right label info'>{{system.snippets.rated}} : </span>
-                            </div>
-                            <hr>
-                            <p>{{ answer.body }}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  {% endif %}
-                {% endfor %}
-                <div class="reply">
-                  {% if question.allow_answers? != true or question.case.closed? %}
-                    <div class="alert">{{system.snippets.question_closed}}</div>
-                  {% else %}
-                    <h4>{{system.snippets.post_public_answer}}</h4>
-                    {{ form_begin }}
-                    <div class="form panel clearfix">
-                        {% if current_user == nil or current_user.is_guest %}
-                          <div class="row">
-                            <div class="columns medium-6">
-                              <div class="form-group">
-                                  <label for="interaction_name">{{system.snippets.your_name}} <span class="muted">({{system.snippets.required}})</span></label>
-                                  <input id="interaction_name" maxlength="100" class="form-control" name="interaction[name]" value="{{ interaction.name }}" type="text" />
-                               </div>
-                            </div>
-                            <div class="columns medium-6">
-                              <div class="form-group">
-                                <label for="interaction_email">{{system.snippets.your_email}} <span class="muted">({{system.snippets.required}})</span></label>
-                                <input id="interaction_email" class="form-control" maxlength="100" name="interaction[email]" value="{{ interaction.email }}" type="text" />
-                              </div>
-                            </div>
-                          </div>
-                        {% endif %}
-                        <div class="form-group">
-                          <label for="qna_body">{{system.snippets.answer}} <span class="muted">({{system.snippets.required}})</span></label>
-                          <textarea cols="40" id="qna_body" class="form-control" name="qna[body]" rows="6">{{ qna.body }}</textarea>
-                        </div>
-                        <div class="input-button">
-                          <input id="answer_submit" class="button button-submit right" name="commit" type="submit" value="{{system.snippets.post_answer}}" />
-                        </div>
-                    </div>
-                    {{ form_end }}
-                  {% endif %}
-                </div>
-              </div><!-- 8 col-->
-            {{ sidebar_main }}
-            </div><!--ROW-->
-          </div><!--Container-->
-        </div><!--Content-->
+{% assign customer_answer_count = question.answers_customer_count %}
+{% assign agent_answer_count = question.answers_agent_count %}
+{% assign answers_count = question.answers_count %}
+{% assign best_answer = question.best_answer %}
+<!-- endbuild -->
 
+  <div id="desk-external-variables-question_show" class="desk-external-variables hide">
+    <div id="system-snippets-just_moderated">{{just_moderated}}</div>
+    <div id="system-snippets-name_required">{{system.snippets.name_required}}</div>
+    <div id="system-snippets-email_required">{{system.snippets.email_required}}</div>
+    <div id="system-snippets-invalid_email">{{system.snippets.invalid_email}}</div>
+    <div id="system-snippets-answer_required">{{system.snippets.answer_required}}</div>
+    <div id="system-snippets-exceeding_max_chars">{{system.snippets.exceeding_max_chars}}</div>
+  </div>
+
+  <div id="content">
+    <div class="container qna">
+      <div class="row">
+        <div class="columns medium-8 {% if desk.page.theme.layout != 'left' %} columns medium-push-4 {% endif %}">
+          <!-- THE QUESTION -->
+          <article class="question">
+              <div class="row collapse">
+                <div class="columns medium-1">
+                  <div class="th">{{ question.from_email | gravatar_image: gravatar_unknown_user, ssl }}</div>
+                </div>
+                <div class="columns medium-11">
+                  <div class="columns medium-12">
+                    <h4>{{ question.subject }}</h4>
+                    <time>{{ question.from_name }} &mdash; {{ question.created_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p %Z' }} </time>
+                    <hr>
+                    <p>{{ question.body }}</p>
+                  </div>
+                </div>
+              </div>
+          </article>
+          <!-- ANSWER COUNT -->
+          <div class="row">
+            <div class="columns medium-12">
+              <h4>{{ answers_count }} - {{ system.snippets.community_answer | pluralize: answer_count, system.snippets.community_answers }}</h4>
+            </div>
+          </div>
+          <!-- BEST ANSWER -->
+          {% if best_answer != nil %}
+            <div class="panel callout best-answer">
+              <div class="row collapse">
+                <div class="columns medium-1 hide-form-small-only">
+                  <div class="th">{{ best_answer.from_email | gravatar_image: gravatar_unknown_user,  ssl }}</div>
+                </div>
+                <div class="columns medium-11 small-12">
+                  <div class="columns medium-12">
+                    <div class="clearfix">
+                      <h4 class="left">{{ best_answer.from_name }}</h4>
+                        <span class="label success right">{{system.snippets.best_answer}}&nbsp;<i class="fa fa-check-circle"></i></span>
+                        {% if best_answer.agent? %}<span class="label right">{{ site.company_name }} {{ site.agent_name_config }} &nbsp; <i class="fa fa-lg fa-gear"></i></span>{% endif %}
+                    </div>
+                    <time>{{ best_answer.updated_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p %Z' }}</time>
+                    <hr>
+                    <p>{{ best_answer.body }}</p>
+                    {% if question.answers_count > 1 %}
+                      <a href="#bestanswer">{{system.snippets.view_conversation}}</a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          <!-- ALL ANSWERS -->
+          {% for answer in question.answers %}
+            {% if answer.agent? %}
+              <!-- AGENT -->
+              <div class="panel agent">
+                <div class="row collapse">
+                  <div class="columns medium-1 hide-for-small-only">
+                    <div class="th">}{{ answer.from_email | gravatar_image: gravatar_unknown_user,  ssl }}</div>
+                    {% if current_user != answer.user %}
+                      <div class='answer-rating rating-{{ answer | already_rated_by_user: current_user }}'>
+                          <div class="row">
+                            {{ answer | already_rated_up: current_user }}
+                            {{ answer | already_rated_down: current_user }}
+                          </div>
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="columns medium-11 small-12">
+                    <div class="columns medium-12">
+                      <div class="clearfix">
+                        <h4 class="left">{{ answer.from_name }}</h4>
+                        {% if answer.id == best_answer.id %} <span class="label success right">{{system.snippets.best_answer}}&nbsp;<i class="fa fa-check-circle"></i></span>{% endif %}
+                        <span class="label right">{{ site.company_name }} {{ site.agent_name_config }} &nbsp; <i class="fa fa-lg fa-gear"></i></span>
+                      </div>
+                      <div class="clearfix">
+                          <time>{{ answer.updated_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p %Z' }}</time>
+                          <span class='score right label info {% if answer.rating_value > 0 %}pos{% elsif answer.rating_value < 0 %}neg{% endif %}' id='score-{{answer.id}}'>{{ answer.rating_value }}</span>
+                          <span class='dialog right label info'>{{system.snippets.rated}} : </span>
+                      </div>
+                      <hr>
+                      <p>{{ answer.body }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% else %}
+              <!-- USER -->
+              <div class="panel user">
+                <div class="row collapse">
+                  <div class="columns medium-1 hide-for-small-only">
+                    <div class="th">{{ answer.from_email | gravatar_image: gravatar_unknown_user,  ssl }}</div>
+                    {% if current_user != answer.user %}
+                      <div class='answer-rating rating-{{ answer | already_rated_by_user: current_user }}'>
+                          <div class="row">
+                            {{ answer | already_rated_up: current_user }}
+                            {{ answer | already_rated_down: current_user }}
+                          </div>
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="columns medium-11 small-12">
+                    <div class="columns medium-12">
+                      <div class="clearfix">
+                        <h4 class="left">{{ answer.from_name }}</h4>
+                        {% if answer.id == best_answer.id %}<span class="label success right"> <span class="label success right">{{system.snippets.best_answer}}&nbsp;<i class="fa fa-check-circle"></i></span>{% endif %}
+                        <span class="label right warning">User &nbsp;<i class="fa fa-lg fa-user"></i></span>
+                      </div>
+                      <div class="clearfix">
+                          <time>{{ answer.updated_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p %Z' }}</time>
+                          <span class='score right label info {% if answer.rating_value > 0 %}pos{% elsif answer.rating_value < 0 %}neg{% endif %}' id='score-{{answer.id}}'>{{ answer.rating_value }}</span>
+                          <span class='dialog right label info'>{{system.snippets.rated}} : </span>
+                      </div>
+                      <hr>
+                      <p>{{ answer.body }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+          <div class="reply">
+            {% if question.allow_answers? != true or question.case.closed? %}
+              <div class="alert">{{system.snippets.question_closed}}</div>
+            {% else %}
+              <h4>{{system.snippets.post_public_answer}}</h4>
+              {{ form_begin }}
+              <div class="form panel clearfix">
+                  {% if current_user == nil or current_user.is_guest %}
+                    <div class="row">
+                      <div class="columns medium-6">
+                        <div class="form-group">
+                            <label for="interaction_name">{{system.snippets.your_name}} <span class="muted">({{system.snippets.required}})</span></label>
+                            <input id="interaction_name" maxlength="100" class="form-control" name="interaction[name]" value="{{ interaction.name }}" type="text" />
+                         </div>
+                      </div>
+                      <div class="columns medium-6">
+                        <div class="form-group">
+                          <label for="interaction_email">{{system.snippets.your_email}} <span class="muted">({{system.snippets.required}})</span></label>
+                          <input id="interaction_email" class="form-control" maxlength="100" name="interaction[email]" value="{{ interaction.email }}" type="text" />
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                  <div class="form-group">
+                    <label for="qna_body">{{system.snippets.answer}} <span class="muted">({{system.snippets.required}})</span></label>
+                    <textarea cols="40" id="qna_body" class="form-control" name="qna[body]" rows="6">{{ qna.body }}</textarea>
+                  </div>
+                  <div class="input-button">
+                    <input id="answer_submit" class="button button-submit right" name="commit" type="submit" value="{{system.snippets.post_answer}}" />
+                  </div>
+              </div>
+              {{ form_end }}
+            {% endif %}
+          </div>
+        </div><!-- 8 col-->
+      {{ sidebar_main }}
+      </div><!--ROW-->
+    </div><!--Container-->
+  </div><!--Content-->
+        
+<!-- build:endblock -->
 {% endblock %}
+<!-- endbuild -->

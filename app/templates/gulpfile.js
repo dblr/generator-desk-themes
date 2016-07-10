@@ -252,6 +252,9 @@ gulp.task('default', ['clean'], () => {
 });
 
 
+
+
+// Desk Related Functionality
 gulp.task('templates', function() {
     gulp.src(['app/pages/*.html'])
         .pipe(liquify(locals, {
@@ -259,4 +262,221 @@ gulp.task('templates', function() {
         }))
         .pipe(gulp.dest('.tmp'))
         .pipe(reload({ stream: true }));
+});
+gulp.task('header', function() {
+    gulp.src(['app/header.html'])
+        .pipe(liquify(locals, {
+            filters: customFilters
+        }))
+        .pipe(gulp.dest('dist'))
+        .pipe(reload({ stream: true }));
+});
+gulp.task('cleanup', function () {
+  gulp.src('app/_layout.html')
+      .pipe(deleteLines({
+          'filters': [
+              /<script/i,
+              /<link/i,
+              /<meta/i,
+              /<html/i,
+              /<.html/i,
+              /<.head/i,
+              /<head/i,
+              /<body/i,
+              /<.body/i,
+              /<!-- bower/g,
+              /<!-- build/g,
+              /<!-- place/g,
+              /<!-- end/g,
+              /<!-- header/g,
+              /<!doctype/g,
+              /<title/g,
+              /<!-- Place/g,
+              /<.head>/g
+          ]
+      }))
+    .pipe(replace({
+      patterns: [
+        {
+          match: /{% block main %}\n{% endblock %}/g,
+          replacement: fs.readFileSync('.tmp/body.liquid', 'utf8')
+        }
+      ]
+    }))
+    .pipe(htmlreplace({
+      'page_index': '{% if page  == "page_index" %}',
+      'endblock': '',
+      'css': '',
+      'js': ''
+    }))
+    .pipe(removeEmptyLines())
+    .pipe(gp_rename('body.liquid'))
+    .pipe(gulp.dest('dist'));
+});
+gulp.task('layout', function () {
+  gulp.src('app/_layout.html')
+      .pipe(deleteLines({
+          'filters': [
+              /<script/i,
+              /<link/i,
+              /<meta/i,
+              /<html/i,
+              /<.html/i,
+              /<.head/i,
+              /<head/i,
+              /<body/i,
+              /<.body/i,
+              /<!-- bower/g,
+              /<!-- build/g,
+              /<!-- place/g,
+              /<!-- end/g,
+              /<!-- header/g,
+              /<!doctype/g,
+              /<title/g,
+              /<!-- Place/g,
+              /<.head>/g
+          ]
+      }))
+    .pipe(replace({
+      patterns: [
+        {
+          match: /{% block main %}\n{% endblock %}/g,
+          replacement: '{{desk:body}}'
+        }
+      ]
+    }))
+    .pipe(htmlreplace({
+      'page_index': '{% if page  == "page_index" %}',
+      'endblock': '',
+      'css': '',
+      'js': ''
+    }))
+    .pipe(removeEmptyLines())
+    .pipe(gp_rename('layout.liquid'))
+    .pipe(gulp.dest('dist'));
+});
+gulp.task('body', function() {
+    return gulp.src([
+            'app/pages/index.html',
+            'app/pages/article.html',
+            'app/pages/topic-article.html',
+            'app/pages/search.html',
+            'app/pages/question-show.html',
+            'app/pages/question.html',
+            'app/pages/question-precreate.html',
+            'app/pages/email.html',
+            'app/pages/email-precreate.html',
+            'app/pages/email-sent.html',
+            'app/pages/chat.html',
+            'app/pages/chat-precreate.html',
+            'app/pages/myportal.html',
+            'app/pages/myportal-show.html',
+            'app/pages/login.html',
+            'app/pages/register.html',
+            'app/pages/forgot.html',
+            'app/pages/myaccount.html',
+            'app/pages/verification.html',
+            'app/pages/csat.html',
+            'app/pages/csat-sent.html'
+        ])
+        .pipe(htmlreplace({
+            'page_index': '{% if page  == "page_index" %}',
+            'page_article': '{% elsif page == "page_article" %}',
+            'page_topic': '{% elsif page == "page_topic" %}',
+            'page_search_result': '{% elsif page == "page_search_result" %}',
+            'question_show': '{% elsif page == "question_show" %}',
+            'question_new': '{% elsif page == "question_new" %}',
+            'question_pre_create': '{% elsif page == "question_pre_create" %}',
+            'email_new': '{% elsif page == "email_new" %}',
+            'email_pre_create': '{% elsif page == "email_pre_create" %}',
+            'email_submitted': '{% elsif page == "email_submitted" %}',
+            'chat_new': '{% elsif page == "chat_new" %}',
+            'chat_pre_create': '{% elsif page == "chat_pre_create" %}',
+            'myportal_index': '{% elsif page == "myportal_index" %}',
+            'myportal_show': '{% elsif page == "myportal_show" %}',
+            'login': '{% elsif page == "login" %}',
+            'registration': '{% elsif page == "registration" %}',
+            'forgot_password': '{% elsif page == "forgot_password" %}',
+            'myaccount': '{% elsif page == "myaccount" %}',
+            'authentication_verification': '{% elsif page == "authentication_verification" %}',
+            'customer_feedback': '{% elsif page == "customer_feedback" %}',
+            'customer_feedback_completed': '{% elsif page == "customer_feedback_completed" %}',
+            'endblock': '',
+            'deskbody': '{{desk:body}}',
+            'bodyclose': '{%endif%}'
+        }))
+        .pipe(removeEmptyLines())
+        .pipe(gp_concat('body.liquid'))
+        .pipe(gulp.dest('.tmp'))
+});
+gulp.task('pages', function() {
+    return gulp.src([
+            'app/pages/index.html',
+            'app/pages/article.html',
+            'app/pages/topic-article.html',
+            'app/pages/search.html',
+            'app/pages/question-show.html',
+            'app/pages/question.html',
+            'app/pages/question-precreate.html',
+            'app/pages/email.html',
+            'app/pages/email-precreate.html',
+            'app/pages/email-sent.html',
+            'app/pages/chat.html',
+            'app/pages/chat-precreate.html',
+            'app/pages/myportal.html',
+            'app/pages/myportal-show.html',
+            'app/pages/login.html',
+            'app/pages/register.html',
+            'app/pages/forgot.html',
+            'app/pages/myaccount.html',
+            'app/pages/verification.html',
+            'app/pages/csat.html',
+            'app/pages/csat-sent.html'
+        ])
+        .pipe(htmlreplace({
+            'page_index': 'derp',
+            'page_article': '',
+            'page_topic': '',
+            'page_search_result': '',
+            'question_show': '',
+            'question_new': '',
+            'question_pre_create': '',
+            'email_new': '',
+            'email_pre_create': '',
+            'email_submitted': '',
+            'chat_new': '',
+            'chat_pre_create': '',
+            'myportal_index': '',
+            'myportal_show': '',
+            'login': '',
+            'registration': '',
+            'forgot_password': '',
+            'myaccount': '',
+            'authentication_verification': '',
+            'customer_feedback': '',
+            'customer_feedback_completed': '',
+            'endblock': '',
+            'deskbody': '{{desk:body}}',
+            'bodyclose': ''
+        }))
+        .pipe(removeEmptyLines())
+        .pipe(gulp.dest('dist/theme'))
+    return gulp.src('app/styles/*.scss')
+    .pipe($.plumber())
+    .pipe($.sourcemaps.init())
+    .pipe($.sass.sync({
+      outputStyle: 'expanded',
+      precision: 10,
+      includePaths: extraPaths
+    }).on('error', $.sass.logError))
+    .pipe($.autoprefixer({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}))
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest('dist/styles'))
+});
+
+gulp.task('desk', function(done) {
+    runSequence('html', 'pages', 'body', 'layout', 'cleanup', function() {
+        done();
+        console.log('Body, Scripts and Styles are now ready for your Desk.com site');
+    });
 });

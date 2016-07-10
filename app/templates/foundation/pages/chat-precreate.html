@@ -1,0 +1,113 @@
+<!-- build:chat_pre_create -->
+{% extends "../_layout.html" %}
+{% assign page = 'chat_pre_create' %}
+{% block main %}
+<!-- endbuild -->
+
+  <div id="desk-external-variables-chat_pre_create" class="desk-external-variables hide">
+    <div id="search_term">{{search_term}}</div>
+    <div id="number_search_results">{{number_search_results}}</div>
+    <div id="system-snippets-name_required">{{system.snippets.name_required}}</div>
+    <div id="system-snippets-email_required">{{system.snippets.email_required}}</div>
+    <div id="system-snippets-invalid_email">{{system.snippets.invalid_email}}</div>
+    <div id="system-snippets-question_required">{{system.snippets.question_required}}</div>
+    <div id="system-snippets-exceeding_max_chars">{{system.snippets.exceeding_max_chars}}</div>
+  </div>
+
+  <div id="PreCreate" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+            <a class="onclick-go-back close-reveal-modal" aria-label="Close">&#215;</a>
+            <h2 id="modalTitle">
+            {% if number_search_results > 0 %}
+                <i class="fa fa-exclamation-triangle warning"></i> {{system.snippets.chat_room_ready}}
+              {% else %}
+                <i class="fa fa-spinner fa-pulse"></i> {{system.snippets.please_wait}}
+              {% endif %}
+            </h2>
+            <p class="subheader">{{system.snippets.article_help}}</p>
+        </div>
+        {% if number_search_results > 0 %}
+          <div class="modal-body">
+              <dl>
+                {% for result in search_results limit:3 %}
+                    <dt>
+                      <a href='{{ result.public_url }}' target='_blank'>
+                        {% if result.class_name == "Question" %}
+                            <i class=" fa fa-question"></i>  {{ result.subject_plain | clip:70 }}
+                        {% elsif result.class_name == "Article" %}
+                            <i class=" fa fa-file-text-o"></i>  {{ result.subject_plain | clip:70 }}
+                        {% endif %}
+                      </a>
+                    </dt>
+                    <dd>{{ result.body_plain | clip:80 }}</dd>
+                {% endfor %}
+              </dl>
+              <span class="text-center">({{system.snippets.click_open_window}})</span>
+          </div>
+          <div class="modal-footer clearfix">
+              <div id='form'>
+                {{form_begin}}
+                <div class="input-button">
+                  {{system.snippets.did_not_help}}
+                   <input id="chat_submit" name="commit" type="submit" value="{{system.snippets.start_chat}}" class="button button-submit" />
+                </div>
+                {{form_end}}
+              </div>
+          </div>
+        {% else %}
+          <div class="modal-body">
+              <h1>{{system.snippets.chat_room_ready}}</h1>
+          </div>
+          <div class="modal-footer">
+              <p class="subheader">{{system.snippets.click_button_chat}}</p>
+              <div id='form'>
+                {{form_begin}}
+                  <div class='input-button'>
+                    <input id='chat_submit' name='commit' type='submit' class="button button-submit right" value='{{system.snippets.start_chat}}' />
+                  </div>
+                {{form_end}}
+              </div>
+          </div>
+        {% endif %}
+      </div><!-- MODAL CONTENT -->
+    </div><!-- MODAL DIALOG /  MODAL LG -->
+  </div><!-- #PreCreate -->
+
+  <div id="content">
+    <div class="container chat">
+        <div class="row body">
+          <div class="columns medium-12">
+            <div class="panel form">
+            {{form_begin}}
+              {% if current_user == nil or current_user.is_guest %}
+                <div class="row">
+                  <div class="form-group columns medium-6">
+                    <label class="control-label" for="interaction_name">{{system.snippets.your_name}} ({{system.snippets.required}}):</label>
+                    <input value="{{ interaction.name }}" id="interaction_name" class="form-control" maxlength="100" name="interaction[name]" type="text" />
+                  </div>
+                  <div class="form-group columns medium-6">
+                    <label class="control-label" for="interaction_email">{{system.snippets.your_email}} ({{system.snippets.required}}):</label>
+                    <input value="{{ interaction.email }}" id="interaction_email" class="form-control" maxlength="100" name="interaction[email]" type="text" />
+                  </div>
+                </div>
+              {% endif %}
+              <div class="form-group">
+                <label for="chat_subject" class="control-label">{{system.snippets.question}} ({{system.snippets.required}}):</label>
+                <textarea id='chat_subject' name='chat[subject]' type='text' value='{% if search_term and search_term != '' %}{{search_term}}{% else %}{{chat.subject}}{%endif%}' rows="6" cols="40" class="form-control">{{chat.body}}</textarea>
+              </div>
+              <div class="autosuggest show-for-small-only"></div>
+              <div class="input-button clearfix">
+                 <input id='email_submit' class="button button-submit right" name='commit' type='submit' value='{{system.snippets.go_chat}}' />
+              </div>
+            {{form_end}}
+            </div> <!-- .panel-default.form -->
+          </div>
+        </div><!-- Row -->
+    </div><!-- Container Chat-->
+  </div><!-- #Content -->
+
+<!-- build:endblock -->
+{% endblock %}
+<!-- endbuild -->

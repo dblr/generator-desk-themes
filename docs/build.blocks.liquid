@@ -1,0 +1,156 @@
+<!-- build:page_article -->
+{% extends "../_layout.html" %}
+{% assign page = 'page_article' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:chat_pre_create -->
+{% extends "../_layout.html" %}
+{% assign page = 'chat_new' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:chat_new -->
+{% extends "../_layout.html" %}
+{% assign page = 'chat_new' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:customer_feedback_completed -->
+{% extends "../_layout.html" %}
+{% assign page = 'customer_feedback_completed' %}
+{% assign customer_feedback.feedback_enabled = true %}
+{% assign customer_feedback = 'test' %}
+{% assign form = 'treuewd' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:customer_feedback -->
+{% extends "../_layout.html" %}
+{% assign page = 'customer_feedback' %}
+{% assign customer_feedback.feedback_enabled = true %}
+{% assign customer_feedback = 'test' %}
+{% assign form = 'treuewd' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:email_pre_create -->
+{% extends "../_layout.html" %}
+{% assign page = 'email_new' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:email_submitted -->
+{% extends "../_layout.html" %}
+{% assign page = 'email_submitted' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:email_new -->
+{% extends "../_layout.html" %}
+{% assign page = 'email_new' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:forgot_password -->
+{% extends "../_layout.html" %}
+{% assign page = 'forgot_password' %}
+{% assign desk.page.content.form = "<form accept-charset='UTF-8' action='/customer/password_resets' method='post' novalidate='novalidate'><div style='margin:0;padding:0;display:inline'><input name='utf8' type='hidden' value='✓'><input name='authenticity_token' type='hidden' value='INY+d0Nc5eu0DcqQ7aLr3wmShSotRr4twIgCKCBWrbk='></div> <div class='field'> <label for='email'>Email</label> <input id='email' maxlength='50' name='email' type='text'> </div> <div class='input-button actions'><input id='password_reset_submit' name='commit' type='submit' value='Send Instructions'></div> </form>" %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:page_index -->
+{% extends "../_layout.html" %}
+{% assign page = 'page_index' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:login -->
+{% extends "../_layout.html" %}
+{% assign page = 'login' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:myaccount -->
+{% extends "../_layout.html" %}
+{% assign page = 'myaccount' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:myportal_show -->
+{% extends "../_layout.html" %}
+{% assign page = 'myportal_show' %}
+{% assign email.attachments.size = 2 %}
+{% block main %}
+{% assign case = desk.page.content.case %}
+<!-- endbuild -->
+
+<!-- build:myportal_index -->
+{% extends "../_layout.html" %}
+{% assign page = 'myportal_index' %}
+{% assign desk.page.content.form = "<form accept-charset='UTF-8' action='/customer/registrations' method='post' novalidate='novalidate'><div style='margin:0;padding:0;display:inline'><input name='utf8' type='hidden' value='✓'><input name='authenticity_token' type='hidden' value='INY+d0Nc5eu0DcqQ7aLr3wmShSotRr4twIgCKCBWrbk='></div> <div class='field'> <label for='email'>Email</label> <input id='email' maxlength='50' name='email' type='text' class='invalid'><label for='email' generated='true' class='invalid'>Email address is required.</label> </div> <div class='input-button actions'><input id='registration_submit' name='commit' type='submit' value='Send Instructions'></div> </form>" %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:question_pre_create -->
+{% extends "../_layout.html" %}
+{% assign page = 'question_pre_create' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:question_show -->
+{% extends "../_layout.html" %}
+{% assign page = 'question_show' %}
+{% block main %}
+{% assign customer_answer_count = question.answers_customer_count %}
+{% assign agent_answer_count = question.answers_agent_count %}
+{% assign answers_count = question.answers_count %}
+{% assign best_answer = question.best_answer %}
+<!-- endbuild -->
+
+<!-- build:question_new -->
+{% extends "../_layout.html" %}
+{% assign page = 'question_new' %}
+{% block main %}
+{% assign customer_answer_count = question.answers_customer_count %}
+{% assign agent_answer_count = question.answers_agent_count %}
+{% assign answers_count = question.answers_count %}
+{% assign best_answer = question.best_answer %}
+<!-- endbuild -->
+
+<!-- build:registration -->
+{% extends "../_layout.html" %}
+{% assign page = 'registration' %}
+{% assign desk.page.content.form = "<form accept-charset='UTF-8' action='/customer/login/identity/register' method='post' novalidate='novalidate'> <div style='margin:0;padding:0;display:inline'> <input name='utf8' type='hidden' value='✓'> <input name='authenticity_token' type='hidden' value='RcGgJaMyoh9na0AA/CrNwUu3kzuDeMxtp1yqjp0oMX0='> </div> <input id='b_id' name='b_id' type='hidden' value='3891'> <div class='field'> <label for='email'>Email</label> <input disabled='disabled' id='email' name='email' type='text' value='customers-email@email.com'> </div> <div class='field'> <label for='first_name'>First name</label> <input id='first_name' name='first_name' type='text'> </div> <div class='field'> <label for='last_name'>Last name</label> <input id='last_name' name='last_name' type='text'> </div> <div class='field'> <label for='password'>Password</label> <input id='password' name='password' type='password'> </div> <div class='field'> <label for='password_confirmation'>Password confirmation</label> <input id='password_confirmation' name='password_confirmation' type='password'> </div> <input id='token' name='token' type='hidden' value='Fgm4SAGRMZYu4NIleqBD_Q'> <input id='lang_force' name='lang_force' type='hidden'> <div class='input-button actions'> <input name='commit' type='submit' value='Complete Registration'> </div> </form>" %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:page_search_result -->
+{% extends "../_layout.html" %}
+{% assign page = 'page_search_result' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:email_submitted -->
+{% extends "../_layout.html" %}
+{% assign page = 'email_submitted' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:page_topic -->
+{% extends "../_layout.html" %}
+{% assign type = 'articles' %}
+{% assign page = 'page_topic' %}
+{% block main %}
+<!-- endbuild -->
+
+<!-- build:authentication_verification -->
+{% extends "../_layout.html" %}
+{% assign page = 'authentication_verification' %}
+{% block main %}
+<!-- endbuild -->
+
+
+<!-- build:endblock -->
+{% endblock %}
+<!-- endbuild -->

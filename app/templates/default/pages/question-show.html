@@ -1,6 +1,13 @@
+<!-- build:question_show -->
 {% extends "../_layout.html" %}
 {% assign page = 'question_show' %}
 {% block main %}
+{% assign customer_answer_count = question.answers_customer_count %}
+{% assign agent_answer_count = question.answers_agent_count %}
+{% assign answers_count = question.answers_count %}
+{% assign best_answer = question.best_answer %}
+<!-- endbuild -->
+
         <div id="desk-external-variables-question_show" class="desk-external-variables hide">
           <div id="system-snippets-just_moderated">{{just_moderated}}</div>
           <div id="system-snippets-name_required">{{system.snippets.name_required}}</div>
@@ -164,4 +171,6 @@
           </div><!--Container-->
         </div><!--Content-->
 
+<!-- build:endblock -->
 {% endblock %}
+<!-- endbuild -->

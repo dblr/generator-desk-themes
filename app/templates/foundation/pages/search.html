@@ -1,115 +1,121 @@
+<!-- build:page_search_result -->
 {% extends "../_layout.html" %}
 {% assign page = 'page_search_result' %}
 {% block main %}
-        <div id="content">
-          <div class="container search">
-            <div class="row">
-              <div class="columns medium-8 {% if desk.page.theme.layout != 'left' %} columns medium-push-4 {% endif %}">
-                <div class="header row">
-                  <div class="columns medium-12">
-                    {% if MBSearchPage == true %}
-                      <h2><i class="fa fa-search"></i> <span id="total"></span> {{system.snippets.results_found_for}} "{{ search_term }}"</h2>
-                    {% else %}
-                      <h2><i class="fa fa-search"></i> {{ number_search_results }} {{system.snippets.results_found_for}} "{{ search_term }}"</h2>
-                    {% endif %}
-                  </div>
+<!-- endbuild -->
+
+  <div id="content">
+    <div class="container search">
+      <div class="row">
+        <div class="columns medium-8 {% if desk.page.theme.layout != 'left' %} columns medium-push-4 {% endif %}">
+          <div class="header row">
+            <div class="columns medium-12">
+              {% if MBSearchPage == true %}
+                <h2><i class="fa fa-search"></i> <span id="total"></span> {{system.snippets.results_found_for}} "{{ search_term }}"</h2>
+              {% else %}
+                <h2><i class="fa fa-search"></i> {{ number_search_results }} {{system.snippets.results_found_for}} "{{ search_term }}"</h2>
+              {% endif %}
+            </div>
+          </div>
+          {% if MBSearchPage == true %}
+          <!-- Start - Dont Edit between these lines -->
+          <div id="siteResults">
+            <div class="body row">
+              <div class="columns medium-12">
+                <ul class="tabs" data-tab role="tablist">
+                </ul>
+                <div class="tabs-content">
                 </div>
-                {% if MBSearchPage == true %}
-                <!-- Start - Dont Edit between these lines -->
-                <div id="siteResults">
-                  <div class="body row">
-                    <div class="columns medium-12">
-                      <ul class="tabs" data-tab role="tablist">
-                      </ul>
-                      <div class="tabs-content">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="body row">
-                    <div class="columns medium-12">
-                      <div role="tabpanel">
-                        <ul class="nav nav-tabs" data-tab role="tablist"></ul>
-                        <div class="tab-content"></div>
-                      </div>
-                    </div>
-                  </div>
+              </div>
+            </div>
+            <div class="body row">
+              <div class="columns medium-12">
+                <div role="tabpanel">
+                  <ul class="nav nav-tabs" data-tab role="tablist"></ul>
+                  <div class="tab-content"></div>
                 </div>
-                <!-- End - Don't Edit between these lines -->
-                {% endif %}
-                {% if MBSearchPage == true %}
-                <div id="brandResults" class="hide">
-                {% endif %}
-                    {% for result in search_results %}
-                      {% if result.class_name == "Article" %}
-                        <article class="row result article">
-                          <div class="columns medium-12">
-                            <h3>
-                              <a href='{{ result.public_url }}' title="{{ result.subject_plain }}"><span>{{ result.subject_plain }}</span></a>
-                            </h3>
-                            {% if MBSearchPage == true %}<label class="{{desk.current_brand.name}}">{{desk.current_brand.name}}</label>{% endif %}
-                            <p>{{ result.body_plain | clip }}</p>
-                            <a href="{{ result.public_url }}" class="button tiny">{{ system.snippets.read_article }}</a>
-                          </div>
-                        </article>
-                        <hr>
-                      {% elsif result.class_name == "Question" and MBSearchExcludeQuestions != true %}
-                        <article class="row result question">
-                          <div class="columns medium-12">
-                            <h3>
-                              <a href='{{ result.public_url }}' title="{{ result.subject_plain }}"><span>{{ result.subject_plain }}</span></a>
-                            </h3>
-                            {% if MBSearchPage == true %}<label class="{{desk.current_brand.name}}">{{desk.current_brand.name}}</label>{% endif %}
-                            <p>{{ result.body_plain | clip }}</p>
-                          </div>
-                          <div class="columns medium-12">
-                            {% if result.answers_agent_count > 0 %}
-                             <a href='{{ result.public_url }}' class="button tiny" title="{{ result.subject_plain }}">
-                                <span>{{ result.answers_agent_count }}</span>
-                                {{ site.agent_name_config }}
-                                {{ system.snippets.answer | pluralize: result.answers_agent_count, system.snippets.answers }}
-                              </a>
-                            {% elsif result.answers_customer_count > 0 %}
-                              <a href='{{ result.public_url }}' class="button tiny" title="{{ result.subject_plain }}">
-                                <span>{{ result.answers_customer_count }}</span>
-                                Community {{ system.snippets.answer | pluralize: result.answers_customer_count, system.snippets.answers }}
-                              </a>
-                            {% else %}
-                                <a href='{{ result.public_url }}' class="button tiny" title="{{ result.subject_plain }}">View Question</a>
-                            {% endif %}
-                          </div>
-                        </article> <!-- article row -->
-                        <hr>
+              </div>
+            </div>
+          </div>
+          <!-- End - Don't Edit between these lines -->
+          {% endif %}
+          {% if MBSearchPage == true %}
+          <div id="brandResults" class="hide">
+          {% endif %}
+              {% for result in search_results %}
+                {% if result.class_name == "Article" %}
+                  <article class="row result article">
+                    <div class="columns medium-12">
+                      <h3>
+                        <a href='{{ result.public_url }}' title="{{ result.subject_plain }}"><span>{{ result.subject_plain }}</span></a>
+                      </h3>
+                      {% if MBSearchPage == true %}<label class="{{desk.current_brand.name}}">{{desk.current_brand.name}}</label>{% endif %}
+                      <p>{{ result.body_plain | clip }}</p>
+                      <a href="{{ result.public_url }}" class="button tiny">{{ system.snippets.read_article }}</a>
+                    </div>
+                  </article>
+                  <hr>
+                {% elsif result.class_name == "Question" and MBSearchExcludeQuestions != true %}
+                  <article class="row result question">
+                    <div class="columns medium-12">
+                      <h3>
+                        <a href='{{ result.public_url }}' title="{{ result.subject_plain }}"><span>{{ result.subject_plain }}</span></a>
+                      </h3>
+                      {% if MBSearchPage == true %}<label class="{{desk.current_brand.name}}">{{desk.current_brand.name}}</label>{% endif %}
+                      <p>{{ result.body_plain | clip }}</p>
+                    </div>
+                    <div class="columns medium-12">
+                      {% if result.answers_agent_count > 0 %}
+                       <a href='{{ result.public_url }}' class="button tiny" title="{{ result.subject_plain }}">
+                          <span>{{ result.answers_agent_count }}</span>
+                          {{ site.agent_name_config }}
+                          {{ system.snippets.answer | pluralize: result.answers_agent_count, system.snippets.answers }}
+                        </a>
+                      {% elsif result.answers_customer_count > 0 %}
+                        <a href='{{ result.public_url }}' class="button tiny" title="{{ result.subject_plain }}">
+                          <span>{{ result.answers_customer_count }}</span>
+                          Community {{ system.snippets.answer | pluralize: result.answers_customer_count, system.snippets.answers }}
+                        </a>
+                      {% else %}
+                          <a href='{{ result.public_url }}' class="button tiny" title="{{ result.subject_plain }}">View Question</a>
                       {% endif %}
-                    {% endfor %}
-
-                  <div class="row footer">
-                      <div id='pagination'>
-                        <div class="columns medium-12">
-                            {{ more_search_block }}
-                        </div>
-                      </div>
-                  </div>
-                {% if MBSearchPage == true %}
-                </div>
-                {% endif %}
-
-                <!-- No Results -->
-                {% if number_search_results == 0 %}
-                  <div class="row noresults">
-                    <div class="columns medium-12">
-                      <h3>{{system.snippets.sorry_try_another_search}} <a href='{{desk.system.links.email}}'>{{system.snippets.send_us_an_email}}</a></h3>
                     </div>
-                  </div>
+                  </article> <!-- article row -->
+                  <hr>
                 {% endif %}
+              {% endfor %}
+
+            <div class="row footer">
+                <div id='pagination'>
+                  <div class="columns medium-12">
+                      {{ more_search_block }}
+                  </div>
+                </div>
+            </div>
+          {% if MBSearchPage == true %}
+          </div>
+          {% endif %}
+
+          <!-- No Results -->
+          {% if number_search_results == 0 %}
+            <div class="row noresults">
+              <div class="columns medium-12">
+                <h3>{{system.snippets.sorry_try_another_search}} <a href='{{desk.system.links.email}}'>{{system.snippets.send_us_an_email}}</a></h3>
+              </div>
+            </div>
+          {% endif %}
 
 
-              </div><!-- End 8 Column -->
+        </div><!-- End 8 Column -->
 
-              <!--Begin Sidebar-->
-              {{ sidebar_main }}
-              <!--END Sidebar-->
+        <!--Begin Sidebar-->
+        {{ sidebar_main }}
+        <!--END Sidebar-->
 
-            </div><!-- main row -->
-          </div><!-- .container results -->
-        </div><!-- #content-->
+      </div><!-- main row -->
+    </div><!-- .container results -->
+  </div><!-- #content-->
+
+<!-- build:endblock -->
 {% endblock %}
+<!-- endbuild -->

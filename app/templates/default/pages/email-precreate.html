@@ -1,0 +1,136 @@
+<!-- build:email_pre_create -->
+{% extends "../_layout.html" %}
+{% assign page = 'email_pre_create' %}
+{% block main %}
+<!-- endbuild -->
+
+<div id="desk-external-variables-email_pre_create" class="desk-external-variables hidden">
+  <div id="search_term">{{search_term}}</div>
+  <div id="number_search_results">{{number_search_results}}</div>
+  <div id="system-snippets-name_required">{{system.snippets.name_required}}</div>
+  <div id="system-snippets-email_required">{{system.snippets.email_required}}</div>
+  <div id="system-snippets-invalid_email">{{system.snippets.invalid_email}}</div>
+  <div id="system-snippets-subject_required">{{system.snippets.subject_required}}</div>
+  <div id="system-snippets-question_required">{{system.snippets.question_required}}</div>
+  <div id="system-snippets-exceeding_max_chars">{{system.snippets.exceeding_max_chars}}</div>
+</div>
+<div id="PreCreate" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="PreCreateModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close onclick-go-back"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h2>
+            {% if number_search_results > 0 %}
+              <i class="fa fa-exclamation-triangle warning"></i> {{system.snippets.not_posted_question_yet}}
+            {% else %}
+              <i class="fa fa-spinner fa-pulse"></i> {{system.snippets.please_wait}}
+            {% endif %}
+            </h2>
+            <p class="subheader">{{system.snippets.article_help}}</p>
+        </div>
+        {% if number_search_results > 0 %}
+          <div class="modal-body">
+              <ul id='search-results' class='results unstyled'>
+                {% for result in search_results limit:3 %}
+                  <li class='{% if result.class_name == "Question" and result.featured? == false %}question{% elsif result.class_name == "Question" and result.featured? %}question featured{% elsif result.class_name == "Article" %}article{% endif %}'>
+
+                    <h4>
+                    {% if result.class_name == "Question" %}
+                        <i class="fa fa-question"></i>
+                     {% elsif result.class_name == "Article" %}
+                        <i class="fa fa-file-text-o"></i>
+                     {% endif %}
+                      <a href='{{ result.public_url }}' target='_blank'>
+                        {{ result.subject_plain | clip:70 }}
+                      </a>
+                    </h4>
+                    <p>
+                      {{ result.body_plain | clip:80 }}
+                    </p>
+                  </li>
+                {% endfor %}
+                <li class="note">
+                  ({{system.snippets.click_open_window}})
+                </li>
+              </ul>
+          </div>
+          <div class="modal-footer">
+              <div id='form'>
+                {{form_begin}}
+                    <div class='input-button'>
+                      {{system.snippets.did_not_help}}
+                      <input id='email_submit' class="btn btn-submit" name='commit' type='submit' value='{{system.snippets.send_your_email}}' />
+                      <img alt='Ajax-loader-small' id='email_submit_spinner' src='{{ "/images/ajax-loader-small.gif" | portal_image_url: image_asset_host }}' style='display: none; margin: 7px 0 0 5px; position: absolute;' />
+                    </div>
+                {{form_end}}
+              </div>
+          </div>
+        {% else %}
+          <div class="modal-body">
+              <h1>{{system.snippets.please_wait}}</h1>
+          </div>
+        {% endif %}
+      </div><!-- MODAL CONTENT -->
+    </div><!-- MODAL DIALOG /  MODAL LG -->
+</div><!-- #PreCreate -->
+<div id="content">
+  <div class="container email">
+    <div class="row">
+      <div class="col-md-8 {% if desk.page.theme.layout != 'left' %} col-md-push-4 {% endif %}">
+        <div class="row nomarg header">
+            <h2>{{system.snippets.email_us}}</h2>
+        </div>
+        <div class="row nomarg body">
+          <div class="panel panel-default form">
+           {{form_begin}}
+            <div class="panel-body">
+              {% if current_user == nil or current_user.is_guest %}
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="interaction_name" class="control-label">{{system.snippets.your_name}} ({{system.snippets.required}}):</label>
+                      <input value="{{ interaction.name }}" id="interaction_name" class="form-control" maxlength="100" name="interaction[name]" type="text" required />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="interaction_email" class="control-label">{{system.snippets.your_email}} ({{system.snippets.required}}):</label>
+                      <input value="{{ interaction.email }}" id="interaction_email" class="form-control" maxlength="100" name="interaction[email]" type="email" required />
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+              <div class="form-group">
+                <label for="email_subject" class="control-label">{{system.snippets.subject}} ({{system.snippets.required}}):</label>
+                <input id='email_subject' class="form-control" maxlength='100' name='email[subject]' type='text' value='{% if search_term and search_term != '' %}{{search_term}}{% else %}{{email.subject}}{%endif%}' required/>
+              </div>
+              <div class="form-group">
+                <label for="email_body" class="control-label">{{system.snippets.message}} ({{system.snippets.required}}):</label>
+                <textarea id='email_body' class="form-control" rows="6" cols="6" name='email[body]' required>{{email.body}}</textarea>
+              </div>
+              <div class="form-group attachments">
+                <label for="case_attachment[attachment]" class="control-label"><i class="fa fa-paperclip"></i>{{system.snippets.file_attachment}}</label>
+                <div class="desk_file_upload">
+                    <input type="button" value="{{system.snippets.choose_file}}">
+                    <input name="case_attachment[attachment]" size="84" type="file">
+                    <div class="faux-file-field">
+                      <input disabled="disabled" type="text">
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-footer input-button">
+              <button id='email_submit' class="btn btn-submit" name='commit' type='submit' value='{{system.snippets.send_email}}'>{{system.snippets.send_email}}</button>
+            </div>
+            {{form_end}}
+          </div>
+        </div>
+      </div>
+      {{ sidebar_suggest }}
+    </div><!-- row -->
+  </div><!-- container -->
+</div><!-- CONTENT -->
+
+<!-- build:endblock -->
+{% endblock %}
+<!-- endbuild -->

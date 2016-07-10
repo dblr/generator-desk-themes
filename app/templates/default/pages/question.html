@@ -1,6 +1,13 @@
+<!-- build:question_new -->
 {% extends "../_layout.html" %}
 {% assign page = 'question_new' %}
 {% block main %}
+{% assign customer_answer_count = question.answers_customer_count %}
+{% assign agent_answer_count = question.answers_agent_count %}
+{% assign answers_count = question.answers_count %}
+{% assign best_answer = question.best_answer %}
+<!-- endbuild -->
+
   <div id="desk-external-variables-question_new" class="desk-external-variables hide">
     <div id="qna-kb_topic_id">{{qna.kb_topic_id}}</div>
     <div id="system-snippets-name_required">{{system.snippets.name_required}}</div>
@@ -67,4 +74,6 @@
     </div><!-- .qna -->
   </div> <!-- #content -->
   <!-- Old qna -->
+<!-- build:endblock -->
 {% endblock %}
+<!-- endbuild -->
