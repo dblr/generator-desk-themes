@@ -8,6 +8,58 @@ const wiredep = require('wiredep').stream;
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
+//Gather Required Goodies
+var gp_concat = require('gulp-concat-util'),
+gp_rename = require('gulp-rename'),
+htmlreplace = require('gulp-html-replace'),
+replace = require('gulp-replace-task'),
+deleteLines = require('gulp-delete-lines'),
+liquify = require('gulp-liquify'),
+swig = require('gulp-swig'),
+gravatar = require('gravatar'),
+runSequence = require('run-sequence'),
+removeEmptyLines = require('gulp-remove-empty-lines'),
+fs = require('fs');
+
+//Desk/Liquid Releated Variables
+var customFilters = {
+    gravatar_image: function(url) {
+        var unsecureUrl = gravatar.url(url, { s: '100', r: 'x', d: 'retro' }, false);
+        var url = gravatar.url(url);
+        return '<img src="' + url + '"/>';
+    },
+    in_time_zone: function(str) {
+        return str;
+    },
+    clip: function(str) {
+        var strnew = str.substring(0, 200)
+        return strnew;
+    },
+    format_snippet: function(str) {
+        return str;
+    },
+    portal_image_url: function(str) {
+        return str;
+    },
+    form: function(str) {
+        return str;
+    },
+    customer_feedback: function(str) {
+        return str;
+    },
+    show_something: function(str) {
+        return str;
+    },
+    escape_newlines: function(str){
+      return str;
+    },
+    pluralize: function(str) {
+      return str;
+    }
+}
+var locals = JSON.parse(fs.readFileSync('./app/data.json', 'utf8'));
+
+// Default Task
 gulp.task('styles', () => {<% if (includeSass) { %>
   return gulp.src('app/styles/*.scss')
     .pipe($.plumber())
@@ -103,9 +155,9 @@ gulp.task('extras', () => {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 <% if (includeBabel) { -%>
-gulp.task('serve', ['styles', 'scripts', 'fonts'], () => {
+gulp.task('serve', ['styles', 'templates' , 'scripts', 'fonts'], () => {
 <% } else { -%>
-gulp.task('serve', ['styles', 'fonts'], () => {
+gulp.task('serve', ['styles', 'templates' , 'fonts'], () => {
 <% } -%>
   browserSync({
     notify: false,
@@ -197,4 +249,14 @@ gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras'], () => {
 
 gulp.task('default', ['clean'], () => {
   gulp.start('build');
+});
+
+
+gulp.task('templates', function() {
+    gulp.src(['app/pages/*.html'])
+        .pipe(liquify(locals, {
+            filters: customFilters
+        }))
+        .pipe(gulp.dest('.tmp'))
+        .pipe(reload({ stream: true }));
 });

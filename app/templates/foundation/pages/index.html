@@ -1,0 +1,86 @@
+{% extends "../_layout.html" %}
+{% assign page = 'page_index' %}
+{% block main %}
+
+<div id="content">
+  <div class="container index">
+    <div class="row">
+      <div class="columns medium-12 large-8">
+        <div id="desk-external-variables-page_index" class="desk-external-variables">
+          <div id="system-snippets-just_moderated">{{just_moderated}}</div>
+        </div>
+        <div class="row header">
+          <div class="columns medium-12">
+            <h2>
+              {% if topics_count > 0 %}
+                  {{system.snippets.browse_by_topic}}
+              {% else %}
+                  {{system.snippets.no_topics_avail}}
+              {% endif %}
+            </h2>
+          </div>
+        </div>
+
+        <!--START GRID VIEW (DEFAULT) -->
+          <!-- ARTICLES GRID VIEW -->
+          <div class="row topic">
+            {%for topic in topics%}
+              {% if topic.article_count > 0 %}
+                  <div class="desk-topic desk-topic-{{ topic.id }} columns medium-6">
+                    <h3>
+                       <a href='{{ topic.public_articles_url }}'>{{ topic.name }}</a></h3>
+                    <ul>
+                      {% for article in topic.articles %}
+                      <li>
+                        <a href='{{ article.public_url }}'>{{ article.subject_plain }}</a>
+                      </li>
+                      {% endfor %}
+                    </ul>
+                    <a href='{{ topic.public_articles_url }}' class="button tiny"><span class="desk-view-text">{{system.snippets.view_all}} </span>
+                      {{ topic.article_count }}
+                    </a>
+                  </div>
+              {%endif%}
+            {%endfor%}
+          </div>
+          <!-- END ARTICLES GRID VIEW -->
+
+          <!-- QUESTION GRID VIEW -->
+          {% if site.questions_enabled_config %}
+            <!-- DO QUESTIONS EXIST?-->
+            <!-- END QUESTIONS EXIST -->
+            {% if questions == true %}
+            <div class="row header">
+                <div class="columns medium-12">
+                    <h2>{{system.snippets.recent_qna}}</h2>
+                </div>
+            </div>
+            {% endif %}
+            <div class="row topic">
+                {% for topic in topics %}
+                  {% if topic.question_count > 0 %}
+                    <div class="desk-qna desk-qna-{{ topic.id }} columns medium-6">
+                      <h3><a href='{{ topic.public_articles_url }}'>{{ topic.name }}</a></h3>
+                      <ul>
+                        {% for question in topic.questions %}
+                          <li class='desk-question {% if question.featured? %} featured{%endif%}'>
+                            <a href='{{ question.public_url }}'>{{ question.subject_plain }}</a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+
+                      <a href='{{ topic.public_questions_url  }}' class="button tiny"><span class="desk-view-text">{{system.snippets.view_all}} </span>
+                        {{ topic.question_count }}
+                      </a>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div><!-- .topicContainer.row -->
+          {% endif %}
+        <!-- END GRID VIEW -->
+      </div><!--Index Col 8 -->
+    </div><!-- Main Row-->
+  </div><!--Container-->
+</div><!--Content-->
+
+{% endblock %}

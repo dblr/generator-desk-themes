@@ -1,0 +1,54 @@
+{% extends "../widgets.html" %} {% assign page = 'page_index' %} {% block main %}
+<!-- BEGIN CHAT HEADER -->
+<title>{{ site.company_name }}</title>
+<id id="current-page">chat_widget_connected</id>
+<!-- BEGIN CHAT BODY -->
+<div id="customer_widget_main" class="customer_widget">
+    <div class="container chat chat-connected">
+        <div class="header row">
+            <div class="col-sm-8">
+                <div class="row">
+                    <h3>{{site.company_name}}</h3>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div style="float:right">
+                    {{ end_session_button }}
+                    <div id="chat_ended_session_div" style="display:none;">{{system.snippets.chat_ended}}</div>
+                    <div id="session_{{ chat_session.id }}" class="chat_timer_block">
+                        <!-- session time counter goes in here  - do not delete -->
+                        <div class="chat_timer_block" id="session_3690572">
+                          2:10
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row body">
+            <div class="">
+                <div class="customer_inner_widget">
+                    <div id="chat-session-{{ chat_session.id }}" style="height:100%;">
+                        <div class="chat_box">
+                            <div class="toolbar-border-extra-bottom-line"></div>
+                            <div id="chat_session_text_{{ chat_session.id }}" class="chat_message_area">
+                                <div class="chat_message_header_system">
+                                    <span class="chat_message_system chat_message_system_bold">{{system.snippets.question}}: {{ chat_session.subject }}</span>
+                                </div>
+                                <!--chat_message_header_system-->
+                                {{ messages_block }}
+                            </div>
+                            <!--chat_session_text_-->
+                        </div> 
+                        <!--chat_box--> 
+                    </div>
+                    <!--customer_inner_widget-->
+                    <!--chat-session-id--> 
+                    <div id="chat_waiting_area" class="chat_bottom_area" style="display:;"><span id="est_wait"></span></div>
+                    <!-- chat_waiting_area-->
+                    {{ chat_send_area }}
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

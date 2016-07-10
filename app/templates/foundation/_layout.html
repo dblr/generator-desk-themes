@@ -1,0 +1,625 @@
+<!doctype html>
+<html<% if (includeModernizr) { %> class="no-js"<% } %> lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= appname %></title>
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <% if (includeModernizr) { %>
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <script src="/bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+    <% } %>
+  </head>
+  <body>
+    <!--[if lt IE 10]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+<!-- THEME OPTIONS -->
+{% assign MyCasesSort = true %} <!-- All cases load on my case index page and our sortable -->
+{% assign IndexLayout = "Grid" %} <!-- Layout Functionality: Topics, Grid, List -->
+{% assign SkipPreCreate = false %} <!-- Enable skip precreate site wide (email,chat, question) -->
+{% assign responsiveImages = true %}
+<!-- MULTIBRAND OPTIONS -->
+{% assign MBSearchPage = true %} <!--Enables multibrand search page - all results/brands on one page -->
+{% assign MBSearchExcludeQuestions = false %} <!-- exclude questions, should only enable if MBSearchPage = true -->
+{% assign MBSearchSuggest = true %} <!-- Multibrand search autocomplete similar to desk's support site -->
+{% assign MBArticleSuggest = true %} <!-- Multibrand Article suggestion on email/chat/question forms -->
+
+{% capture custom_site_url %}http://localhost:9000/{% endcapture %}
+
+<!-- LOGO WIDTH TESTING // DONT REMOVE-->
+{% if desk.page.theme.logo-img != "" %}
+  {% assign logowidth = desk.page.theme.logo-img-width | plus: 0 %}
+  {% if logowidth > 300 %}
+    {% assign widelogo = true %}
+  {% else %}
+   {% assign widelogo = false %}
+  {% endif %}
+{% endif %}
+
+  {% capture sidebar_main %}
+      <!-- BEGIN MAIN SIDEBAR -->
+        <div id="sidebar" class="columns medium-4">
+            <h2>
+              {{system.snippets.contact_us}}
+            </h2>
+            <ul class="side-nav">
+              {% if site.questions_enabled_config %}
+              <li>
+                <a href='{{desk.system.links.question}}'>{{system.snippets.post_public_question}}</a>
+              </li>
+              {% endif %}
+
+              <!-- GS -->
+              {% if desk.apps.get_satisfaction.enabled %}
+              <li>
+                <a id='gs_link' target='_blank'>{{system.snippets.ask_community}}</a>
+              </li>
+              {% endif %}
+              <!-- GS -->
+
+              {% if site.email_enabled_config %}
+              <li>
+                <a href='{{desk.system.links.email}}'>{{system.snippets.email_us}}</a>
+              </li>
+              {% endif %}
+              {% if site.chat_enabled_config %}
+              <li>
+                <a href='{{desk.system.links.chat}}'>{{system.snippets.live_chat}}</a>
+              </li>
+              {% endif %}
+              {% if site.phone_enabled_config %}
+              <li class="phone">
+                <a>{{ desk.page.theme.contact_us_content }}</a>
+              </li>
+              {% endif %}
+            </ul>
+        </div>
+      <!-- END MAIN SIDEBAR -->
+  {% endcapture %}
+
+  {% capture sidebar_suggest %}
+      <!-- BEGIN AUTO SUGGEST SIDEBAR -->
+      <div id="sidebar" class="sidebar suggest columns medium-4 hide-for-small-only {% if desk.page.theme.layout != 'left' %}left columns medium-pull-8 {% endif %}">
+        <div id="common">
+          {% if page == "question_new" %}
+            <h2>{{ system.snippets.related_questions }}</h2>
+          {% else %}
+            <h2>{{ system.snippets.related_answers }}</h2>
+          {% endif %}
+            <p>{{ system.snippets.start_typing }}</p>
+        </div>
+        {% if MBArticleSuggest == true %}
+          <div class="autosuggest multi-brand"></div>
+        {% else %}
+          <div class="autosuggest"></div>
+        {% endif %}
+      </div>
+      <!-- END AUTO SUGGEST SIDEBAR -->
+  {% endcapture %}
+  <% if(includeFoundationSix) { %>
+    <div class="off-canvas-wrapper">
+      <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+        <div class="off-canvas position-left" id="offCanvasLeft" data-off-canvas>
+            <div class="title-bar">
+              <div class="title-bar-left">
+                <span class="title-bar-title">{{system.snippets.browse_by_topic}}</span>
+              </div>
+            </div>
+            <button class="close-button" aria-label="Close menu" type="button" data-close="">
+              <span aria-hidden="true">×</span>
+            </button>
+            <ul class="vertical menu" data-drilldown>
+                {% assign current_article = article.id %}
+                {% assign current_topic_id = topic.id %}
+                {% for topic in site.topics %}
+                  {% if topic.article_count > 0 %}
+                    {% if topic.id == current_topic_id %}
+                      <li class="current has-submenu">
+                    {% else %}
+                      <li class="has-submenu">
+                    {% endif %}
+                        <a href='#'>{{ topic.name }}</a>
+                          <ul class="vertical menu"> 
+                            {% for article in topic.articles %}
+                              {% if article.id == current_article %}
+                                <li class="current"><a href="{{ custom_site_url }}/{{ article.public_url }}">{{ article.subject_plain }}</a></li>
+                              {% else %}
+                                <li><a href="{{ custom_site_url }}/{{ article.public_url }}">{{ article.subject_plain }}</a></li>
+                              {% endif %}
+                            {% endfor %}
+                          </ul>
+                      </li>
+                  {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="off-canvas position-right" id="offCanvasRight" data-off-canvas data-position="right">
+          <div class="title-bar">
+            <div class="title-bar-left">
+              <span class="title-bar-title">User</span>
+            </div>
+          </div>
+          <ul class="menu vertical">
+            {% if site.portal_authentication_enabled_config %}
+              {% if current_user and current_user.is_guest == true and page != "login" %}
+                <!-- Guest -->
+                <li>
+                  <!--<span class="desk-guestMessage">{{system.snippets.welcome_guest}}</span>-->
+                  <a href="{{ site.authentication_login_url }}" id="desk-auth-login-link" class="">{{system.snippets.login}}<i class="right fa fa-sign-in"></i></a>
+                </li>
+              {% else %}
+                <!-- Logged In -->
+                {% if site.myportal_enabled %}
+                  <li>
+                    <a href="{{ desk.system.links.myportal }}">{{system.snippets.my_cases}} <i class="right fa fa-inbox"></i></a>
+                  </li>
+                {% endif %}
+
+                {% if site.portal_authentication_type_config == 'desk' %}
+                  <li>
+                    <a href="{{ desk.system.links.myaccount }}" id="desk-myaccount-link">{{system.snippets.my_account}} <i class="right fa fa-user"></i></a>
+                  </li>
+                {% endif %}
+
+                {% if site.portal_logout_enabled_config %}
+                  <li>
+                    <a href="{{ site.authentication_logout_url }}" id="desk-logout-link">{{system.snippets.logout}} <i class="right fa fa-sign-out"></i></a>
+                  </li>
+                {% endif %}
+              {% endif %}
+            {% endif %}
+          </ul>
+        </div>
+        <div class="off-canvas-content" data-off-canvas-content></div>
+        <div class="title-bar">
+          <div class="title-bar-left">
+            <button class="menu-icon" type="button" data-open="offCanvasLeft"></button>
+            <span class="title-bar-title">{{ site.company_name }}</span>
+          </div>
+          <div class="title-bar-right">
+            <button class="menu-icon" type="button" data-open="offCanvasRight"></button>
+          </div>
+        </div>
+  <% } else { %>
+    <div class="off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+        <!-- Top Bar -->
+        <nav class="tab-bar hide-for-large-up">
+          <section class="left-small">
+            <a href="#" class="left-off-canvas-toggle menu-icon" ><span></span></a>
+          </section>
+
+          <section class="middle tab-bar-section">
+            {% if desk.page.theme.header_content == "" %}
+            <h1>
+              <a href="{{desk.system.links.home}}">
+                {% if desk.current_brand.name == nil %}
+                  {{ site.company_name }}
+                {% else %}
+                   {{ desk.current_brand.name }}
+                {% endif %}
+              </a>
+            </h1>
+            {% else %}
+              {{ desk.page.theme.header_content }}
+            {% endif %}
+          </section>
+          {% if site.portal_authentication_enabled_config %}
+          <section class="right-small">
+              <a href="#" class="right-off-canvas-toggle menu-icon" ><span></span></a>
+          </section>
+          {% endif %}
+        </nav>
+        <!-- Mobile Nav -->
+        <aside class="left-off-canvas-menu">
+          <ul class="off-canvas-list">
+            <li><label>{{system.snippets.browse_by_topic}}</label></li>
+
+              {% assign current_article = article.id %}
+              {% assign current_topic_id = topic.id %}
+              {% for topic in site.topics %}
+                {% if topic.article_count > 0 %}
+                  {% if topic.id == current_topic_id %}
+                    <li class="current has-submenu">
+                  {% else %}
+                    <li class="has-submenu">
+                  {% endif %}
+                      <a href='#'>{{ topic.name }}</a>
+                        <ul class="left-submenu">
+                          <li><label>{{ topic.name }}</label></li>  
+                          {% for article in topic.articles %}
+                            {% if article.id == current_article %}
+                              <li class="current"><a href="{{ custom_site_url }}/{{ article.public_url }}">{{ article.subject_plain }}</a></li>
+                            {% else %}
+                              <li><a href="{{ custom_site_url }}/{{ article.public_url }}">{{ article.subject_plain }}</a></li>
+                            {% endif %}
+                          {% endfor %}
+                          <li class="back"><a href="#">Back</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+              {% endfor %}
+
+          </ul>
+          <ul class="off-canvas-list">
+            <li><label for="">{{system.snippets.contact_us}}</label></li>
+            {% if site.questions_enabled_config %}
+                <li>
+                  <a href='{{desk.system.links.question}}'>{{system.snippets.post_public_question}}<i class="right fa fa-question"></i></a>
+                </li>
+              {% endif %}
+
+              {% if site.email_enabled_config %}
+                <li>
+                  <a href='{{desk.system.links.email}}'>{{system.snippets.email_us}}<i class="right fa fa-envelope"></i></a>
+                </li>
+              {% endif %}
+              {% if site.chat_enabled_config %}
+                <li>
+                  <a href='{{desk.system.links.chat}}'>{{system.snippets.live_chat}}<i class="right fa fa-comments"></i></a>
+                </li>
+              {% endif %}
+              {% if site.phone_enabled_config %}
+                <li class="phone">
+                  <a>{{ desk.page.theme.contact_us_content }}</a>
+                </li>
+              {% endif %}
+              {% if langs_list %}
+                <li id="desk-mobile-lang-list"></li>
+              {% endif %}
+          </ul>
+        </aside>
+        {% if site.portal_authentication_enabled_config %}
+        <aside class="right-off-canvas-menu">
+          <ul class="off-canvas-list">
+            <li><label>User</label></li>
+              {% if site.portal_authentication_enabled_config %}
+                {% if current_user and current_user.is_guest == true and page != "login" %}
+                  <!-- Guest -->
+                  <li>
+                    <!--<span class="desk-guestMessage">{{system.snippets.welcome_guest}}</span>-->
+                    <a href="{{ site.authentication_login_url }}" id="desk-auth-login-link" class="">{{system.snippets.login}}<i class="right fa fa-sign-in"></i></a>
+                  </li>
+                {% else %}
+                  <!-- Logged In -->
+                  {% if site.myportal_enabled %}
+                    <li>
+                      <a href="{{ desk.system.links.myportal }}">{{system.snippets.my_cases}} <i class="right fa fa-inbox"></i></a>
+                    </li>
+                  {% endif %}
+
+                  {% if site.portal_authentication_type_config == 'desk' %}
+                    <li>
+                      <a href="{{ desk.system.links.myaccount }}" id="desk-myaccount-link">{{system.snippets.my_account}} <i class="right fa fa-user"></i></a>
+                    </li>
+                  {% endif %}
+
+                  {% if site.portal_logout_enabled_config %}
+                    <li>
+                      <a href="{{ site.authentication_logout_url }}" id="desk-logout-link">{{system.snippets.logout}} <i class="right fa fa-sign-out"></i></a>
+                    </li>
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+          </ul>
+        </aside>
+        {% endif %}
+  <% } %>
+      <section class="main-section">
+        <!-- DESKTOP HEADER -->
+        <header id="header" class="show-for-large-up">
+          <div class="container">
+            <div class="row">
+              <div class="{% if widelogo == true %} columns medium-12 {% else %} columns medium-5 {% endif %}">
+                  {% if desk.page.theme.header_content == "" %}
+                  <h1>
+                    <a href="{{desk.system.links.home}}">
+                      {% if desk.current_brand.name == nil %}
+                        {{ site.company_name }}
+                      {% else %}
+                         {{ desk.current_brand.name }}
+                      {% endif %}
+                    </a>
+                  </h1>
+                  {% else %}
+                    {{ desk.page.theme.header_content }}
+                  {% endif %}
+              </div>
+              <div class="{% if widelogo == true %} columns medium-12 {% else %} columns medium-7 {% endif %}">
+                <ul class="inline-list right">
+
+                  {% if site.portal_authentication_enabled_config %}
+                    <!-- Guest -->
+                    {% if current_user and current_user.is_guest == true  and page != "login" %}
+                      <li>
+                        <a href="{{ site.authentication_login_url }}" id="desk-auth-login-link" class="">{{system.snippets.login}}</a>
+                      </li>
+                    {% endif %}
+                    <!-- Logged In -->
+                    {% if current_user and current_user.is_guest == false %}
+                      <li class="desk-guestMessage"><p>{{system.snippets.welcome}} {{ current_user.customer.name }}</p></li>
+
+                      {% if site.myportal_enabled %}
+                        <li>
+                          <a href="{{ desk.system.links.myportal }}">{{system.snippets.my_cases}} </a>
+                        </li>
+                      {% endif %}
+                      {% if site.portal_authentication_type_config == 'desk' %}
+                        <li>
+                          <a href="{{ desk.system.links.myaccount }}" id="desk-myaccount-link">{{system.snippets.my_account}}</a>
+                        </li>
+                      {% endif %}
+                      {% if site.portal_logout_enabled_config %}
+                        <li>
+                          <a href="{{ site.authentication_logout_url }}" id="desk-logout-link">{{system.snippets.logout}}</a>
+                        </li>
+                      {% endif %}
+                    {% endif %}
+                  {% endif %}
+                  {% if langs_list %}
+                     <li>
+                          {{langs_list}}
+                     </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          </div><!-- Container Desktop -->
+        </header><!-- #desk-header -->
+        <!-- SEARCH -->
+        {% if page == "myportal_index" or page == "myaccount" or page == "login" or page == "registration" or page == "authentication_verification" or page == "forgot_password" or page == "authentication_verification" %} {% else %}
+            <div id="search">
+              <div class="container">
+              <div class="row">
+                <div class="columns medium-12">
+                  {{ search_form_begin }}
+                    {{template_form_params}}
+                    <div class="row collapse">
+                      <div class="small-10 medium-11 columns">
+                      {% if MBSearchSuggest == true %}
+                        <input type="text" id="qMB" name="q" maxlength="100" value="" placeholder="{{system.snippets.have_a_question}}" autocomplete="off" />
+                      {% else %}
+                        <input type="text" id="q" name="q" maxlength="100" value="" placeholder="{{system.snippets.have_a_question}}" />
+                      {% endif %}
+                      </div>
+                      <div class="small-2 medium-1 columns">
+                        <button type="submit" class="postfix" id="support-search-submit" value="{{system.snippets.search}}"><i class="fa fa-search"></i></button>
+                      </div>
+                    </div>
+                  {{ search_form_end }}
+                </div>
+                </div>
+              </div><!-- Search Container -->
+            </div><!-- #desk-search -->
+            <div id="SearchAutoSuggest" class="ui-multi-brand clearfix"></div>
+        {% endif %}
+        <!-- END SEARCH -->
+        <!-- BREADCRUMBS -->
+        {% if page  != "page_index" %}
+            <div id="breadcrumbs">
+              <div class="container">
+                <div class="row">
+                  <div class="columns medium-12">
+                      <ul class="breadcrumbs">
+                        {% if page  == "page_index" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a></li>
+                        {% elsif page == "page_article" %}
+                          {% if article %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="crumb"><a href="{{ topic.public_articles_url }}" title="{{ topic.name }}">{{ topic.name }}</a> </li>
+                            <li class="active crumb" title="{{ article.subject_plain }}">{{ article.subject_plain }}</li>
+                          {% else %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="crumb active">{{system.snippets.article_translation_missing}}</li>
+                          {% endif %}
+                        {% elsif page == "page_topic" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            {% if topic %}
+                            <li class="crumb active">{{ topic.name }}</li>
+                            {% endif %}
+                        {% elsif page == "page_search_result" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="crumb">{{system.snippets.search}} </li>
+                            <li class="active crumb" title="{{ search_term }}">{{ search_term }}</li>
+                        {% elsif page == "question_show" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="crumb"><a href="{{ question.topic.public_questions_url }}" title="{{ question.topic.name }}">{{ question.topic.name  | clip:30 }}</a> </li>
+                            <li class="active crumb" title="{{ question.subject }}">{{ question.subject | clip:30 }}</li>
+                        {% elsif page == "question_new" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="active crumb" title="{{ article.subject_plain }}">{{system.snippets.post_public_question}}</li>
+                        {% elsif page == "question_pre_create" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="crumb"><a href='{{desk.system.links.question}}'>{{system.snippets.post_public_question}}</a> </li>
+                            <li class="active crumb">{{system.snippets.post_public_question}}</li>
+                        {% elsif page == "email_new" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="active crumb" title="{{ article.subject_plain }}">{{system.snippets.email_us}}</li>
+                        {% elsif page == "email_pre_create" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> &rsaquo; {{system.snippets.email_us}}</li>
+                        {% elsif page == "email_submitted" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="active crumb">{{system.snippets.email_us}}</li>
+                        {% elsif page == "chat_new" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="active crumb" title="{{system.snippets.live_chat}}">{{system.snippets.live_chat}}</li>
+                        {% elsif page == "chat_pre_create" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="active crumb">{{system.snippets.live_chat}}</li>
+                        {% elsif page == "myportal_index" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="active crumb">{{desk.system.snippets.my_cases}}</li>
+                        {% elsif page == "myportal_show" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            {% if desk.customer.can_access_company_tickets? %}
+                            <li class="crumb"><a href='{{ desk.system.links.myportal }}'>{{ desk.page.content.case.customer.name }}</a></li>
+                            {% endif %}
+                            <li class="crumb"><a href='{{ desk.system.links.myportal }}'>{{desk.system.snippets.my_cases}}</a> </li>
+                            <li class="active crumb">{{desk.page.content.case.subject | clip:30 }}</li>
+                        {% elsif page == "login" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="crumb active">{{desk.system.snippets.login_title}}</li>
+                        {% elsif page == "registration" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="crumb"><a href='{{ site.authentication_login_url }}'>{{desk.system.snippets.login_title}}</a> </li>
+                            <li class="crumb active">{{desk.system.snippets.registration_title}}</li>
+                        {% elsif page == "forgot_password" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="crumb"><a href='{{desk.system.links.login}}'>{{desk.system.snippets.login_title}}</a> </li>
+                            <li class="crumb active">{{desk.system.snippets.password_reset_title}}</li>
+                        {% elsif page == "myaccount" %}
+                            <li class="crumb"><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> </li>
+                            <li class="active crumb">{{desk.system.snippets.account_title}}</li>
+                        {% elsif page == "authentication_verification" %}
+                            <li><a href='{{desk.system.links.home}}'>{{system.snippets.home}}</a> &rsaquo; {{desk.system.snippets.auth_verification_title}}</li>
+                        {% endif %}
+                      </ul>
+                  </div>
+                </div>
+              </div>
+            </div><!-- #breadcrumbs -->
+        {% endif %}
+        <!-- END BREADCRUMBS -->
+        <!-- MAIN BLOCK - Replaces Desk:Body in local dev -->
+        {% block main %}
+        {% endblock %}
+        <!-- MAIN BLOCK - Replaces Desk:Body in local dev -->
+        <footer id="footer">
+            <div class="container">
+                <div class="row">
+                  {{ desk.page.theme.footer_content }}
+                </div>
+                <div class="row attribution">
+                  <div class="columns medium-12">
+                    <!--
+                    ***************
+                    The following attribution needs to remain as is in terms of wording with the appropriate link back to desk.com as per our terms of service: http://www.desk.com/terms
+                    If you would like, you may change the location or the styling to better match your site, but the content and the link must remain in the template and visible to end users.
+                    ****************
+                    -->
+                    <div id="desk-attribution" class="text-center"><a href="http://www.desk.com/">Customer service software <span>powered by Desk.com</span></a></div>
+                  </div>
+                </div>
+            </div>
+        </footer><!-- #desk-footer -->
+      </section><!-- Main Section -->
+    </div><!-- Inner Wrap -->
+  </div><!-- Off Canvas Wrap -->
+  {% if just_moderated %}
+    <div id="Moderated" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="PreCreateModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h2>
+                    <h1>{{system.snippets.your_post_submitted}}</h1>
+                </h2>
+                <p class="subheader">{{system.snippets.not_shown_until_reviewed}}</p>
+            </div>
+              <div class="modal-body moderated">
+               <div id='form'>
+                  <div class='input-button'>
+                    <input id='moderation_okay_button'  name='commit' type='submit'  value='{{system.snippets.okay}}' />
+                    <img alt='Ajax-loader-small' id='question_submit_spinner' src='{{ "/images/ajax-loader-small.gif" | portal_image_url: image_asset_host }}' style='display: none; margin: 7px 0 0 5px; position: absolute;'/>
+                  </div>
+                </div>
+              </div>
+          </div><!-- MODAL CONTENT -->
+        </div><!-- MODAL DIALOG /  MODAL LG -->
+    </div><!-- #Moderated -->
+  {% endif %}
+
+
+<!-- Facebook Like Button -->
+<div id="fb-root"></div>
+<!-- External Variables for Portal Header -->
+<div id="desk-external-variables-header" class="desk-external-variables" style="display:none;">
+  <div id="system_language">{{system.language}}</div>
+  <div id="results_mobile">{{system.snippets.results_found_for | replace: 'for', '' }}</div>
+  <div id="read_only">{{read_only}}</div>
+  <div id="system-snippets-do_these_help">{{system.snippets.do_these_help}}</div>
+  <div id="site-default_mailbox">{{site.default_mailbox}}</div>
+  <div id="desk_javascript_host">{{desk_javascript_host}}</div>
+  <div id="twitter_enabled">{{desk.apps.twitter.enabled}}</div>
+  <div id="twitter_username">{{desk.apps.twitter.username}}</div>
+  <div id="system-snippets-loading">{{system.snippets.loading}}</div>
+  <div id="system-snippets-seconds_ago">{{system.snippets.seconds_ago}}</div>
+  <div id="system-snippets-a_minute_ago">{{system.snippets.a_minute_ago}}</div>
+  <div id="system-snippets-minutes_ago">{{system.snippets.minutes_ago}}</div>
+  <div id="system-snippets-an_hour_ago">{{system.snippets.an_hour_ago}}</div>
+  <div id="system-snippets-hours_ago">{{system.snippets.hours_ago}}</div>
+  <div id="system-snippets-a_day_ago">{{system.snippets.a_day_ago}}</div>
+  <div id="system-snippets-days_ago">{{system.snippets.days_ago}}</div>
+  <div id="system-snippets-about">{{system.snippets.about}}</div>
+  <div id="enable_gs">{{desk.apps.get_satisfaction.enabled}}</div>
+  <div id="system-snippets-invalid_characters_found">{{system.snippets.invalid_characters_found}}</div>
+  <div id="site-search_autocomplete_articles_url">{{site.search_autocomplete_articles_url}}</div>
+  <div id="search-term">{{search_term}}</div>
+  <div id="read-article">{{ system.snippets.read_article }}</div>
+  {% if desk.apps.get_satisfaction.enabled %}
+    <div id="system-snippets-get_satisfaction_error">{{system.snippets.get_satisfaction_error}}</div>
+    <div id="system-snippets-view_all">{{system.snippets.view_all}}</div>
+    <div id="system-snippets-no_related_discussions">{{system.snippets.no_related_discussions}}</div>
+    <div id="system-snippets-related_discussions">{{system.snippets.related_discussions}}</div>
+    <div id="zero0">{{0}}</div>
+    <div id="system-snippets-discussions">{{system.snippets.discussions}}</div>
+    <div id="system-snippets-replies">{{system.snippets.replies}}</div>
+    <div id="system-snippets-questions">{{system.snippets.questions}}</div>
+    <div id="system-snippets-ideas">{{system.snippets.ideas}}</div>
+    <div id="system-snippets-problems">{{system.snippets.problems}}</div>
+    <div id="system-snippets-praise">{{system.snippets.praise}}</div>
+  {% endif %}
+</div>
+<div id="ThemeOptions" class="hidden" style="display:none;">
+  <div id="header_text">{{desk.page.theme.hdr-text-color}}</div>
+  <div id="current-page">{{ page }}</div>
+  <div id="brand_id">{{ desk.current_brand.id }}</div>
+  <div id="site-brands">
+    {% for brand in desk.brands %}
+       <div id="{{brand.id}}">{{brand.name}}</div>
+    {% endfor %}
+  </div>
+  {% if SkipPreCreate == true %}
+    <div id="SkipPreCreate">true</div>
+  {% endif %}
+  {% if MBSearchPage == true %}
+    <div id="MBSearchPage">true</div>
+    <div id="results-count">{{ number_search_results }}</div>
+  {% endif %}
+  {% if MBSearchSuggest == true %}
+    <div id="MBSearchSuggest">true</div>
+  {% endif %}
+  {% if MBArticleSuggest == true %}
+    <div id="MBArticleSuggest">true</div>
+  {% endif %}
+  {% if responsiveImages == true %}
+    <div id="responsiveImages">true</div>
+  {% endif %}
+</div>
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js scripts/plugins.js -->
+    <!-- endbuild -->
+    <!-- build:js scripts/main.js -->
+    <script src="scripts/portal-reqs.js"></script>
+    <script src="scripts/desk.portal.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>

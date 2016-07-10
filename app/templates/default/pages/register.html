@@ -1,0 +1,32 @@
+{% extends "../_layout.html" %}
+{% assign page = 'registration' %}
+{% assign desk.page.content.form = "<form accept-charset='UTF-8' action='/customer/login/identity/register' method='post' novalidate='novalidate'> <div style='margin:0;padding:0;display:inline'> <input name='utf8' type='hidden' value='✓'> <input name='authenticity_token' type='hidden' value='RcGgJaMyoh9na0AA/CrNwUu3kzuDeMxtp1yqjp0oMX0='> </div> <input id='b_id' name='b_id' type='hidden' value='3891'> <div class='field'> <label for='email'>Email</label> <input disabled='disabled' id='email' name='email' type='text' value='customers-email@email.com'> </div> <div class='field'> <label for='first_name'>First name</label> <input id='first_name' name='first_name' type='text'> </div> <div class='field'> <label for='last_name'>Last name</label> <input id='last_name' name='last_name' type='text'> </div> <div class='field'> <label for='password'>Password</label> <input id='password' name='password' type='password'> </div> <div class='field'> <label for='password_confirmation'>Password confirmation</label> <input id='password_confirmation' name='password_confirmation' type='password'> </div> <input id='token' name='token' type='hidden' value='Fgm4SAGRMZYu4NIleqBD_Q'> <input id='lang_force' name='lang_force' type='hidden'> <div class='input-button actions'> <input name='commit' type='submit' value='Complete Registration'> </div> </form>" %}
+{% block main %}
+<div id="desk-external-variables-registration" class="desk-external-variables hide">
+    <div id="system-snippets-email_required">{{system.snippets.email_required}}</div>
+    <div id="system-snippets-invalid_email">{{system.snippets.invalid_email}}</div>
+</div>
+<div id="content">
+    <div class="container register">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div id="desk-external-variables-myportal_show" class="desk-external-variables hide">
+                    <div id="system-snippets-email_required" class="">
+                        <p class="error">{{system.snippets.email_required}}</p>
+                    </div>
+                    <div id="system-snippets-invalid_email" class="alert hide">{{system.snippets.invalid_email}}</div>
+                    <div id="system-snippets-password_required" class="alert hide">{{system.snippets.password_required}}</div>
+                </div>
+                <div class="panel panel-default form login">
+                    <div class="panel-body">
+                        <h2>{{desk.system.snippets.registration_title}}</h2>
+                        <div id='form' class='registration-form'>
+                            {{desk.page.content.form}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

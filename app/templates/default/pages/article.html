@@ -1,0 +1,87 @@
+{% extends "../_layout.html" %}
+{% assign page = 'page_article' %}
+{% block main %}
+{% if article == null %}
+<div id="content">
+  <div class="container article">
+    <div class="row">
+      <div class="col-md-8 {% if desk.page.theme.layout != 'left' %} col-md-push-4 {% endif %}">
+        <div class="header row">
+          <div class="col-md-12">
+                <h2>{{system.snippets.article_translation_missing}} {{system.language_name_localized}}</h2>
+          </div>
+        </div>
+      </div>
+      {{ sidebar_main }}
+    </div>
+  </div>
+</div>
+{% else %}
+<div id="content">
+  <div class="container article">
+    <div class="row">
+      <div class="col-md-8 {% if desk.page.theme.layout != 'left' %} col-md-push-4 {% endif %}">
+        <div class="header row">
+          <div class="col-md-12">
+              <h2>
+                {{ article.subject_plain }}
+              </h2>
+          </div>
+        </div><!-- Support Head -->
+        <div class="body row">
+          <div class="col-md-12">
+            {{ article.body }}
+          </div>
+        </div>
+        {% if article.number_of_attachments > 0 %}
+        <div class="row attachments">
+          <div class="col-md-12">
+              <h3>{{system.snippets.attachments}}</h3>
+              <table class="table table-hover">
+                {% for attachment in article.kb_article_attachments %}
+                <tr>
+                  <td>{{ attachment.name }}</td><a href="{{ attachment.faq_download_url }}" class="kb_article_attachment_a" target="_blank"></a></td>
+                  <td><a href="{{ attachment.faq_download_url }}" class="kb_article_attachment_a" target="_blank">{{ attachment.name }}</a></td></a>
+                </tr>
+                {% endfor %}
+              </table>
+          </div>
+        </div>
+        {% endif %}
+        <div class="row rateblock">
+          <div class="col-md-12">
+            {%if system.snippets.was_article_helpful != "" %}
+              <p>{{system.snippets.was_article_helpful}}</p>
+            {% else %}
+              <p> {{ system.snippets.did_you_find_this_article_helpful }}</p>
+            {% endif %}
+            {{ rate_block }}
+          </div>
+        </div>
+        <div class="row footer">
+          <div class="col-md-6">
+            <p class="updated">{{system.snippets.last_update}} - <time>{{ article.updated_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p %Z' }}</time></p>
+          </div>
+          <div class="col-md-6">
+            <ul class="social">
+                <li class="btn-facebook">
+                  <a href="#" data-href="https://developers.facebook.com/docs/plugins/" data-type="button_count" class="btn-facebook fb-share-button" target="pop">Share</a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/share" target="pop" class="twitter-share-button">Tweet</a>
+                </li>
+                <li>
+                  <a data-size="medium" data-annotation="bubble" data-width="94" class="rndbtn btn-flat btn-gplus g-plusone">Share</a>
+                </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--Begin Sidebar-->
+      {{ sidebar_main }}
+      <!--END Sidebar-->
+    </div><!--Main Row-->
+  </div><!--Container Article-->
+</div><!--#Content-->
+{% endif %}
+{% endblock %}

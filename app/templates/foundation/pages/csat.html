@@ -1,0 +1,98 @@
+{% extends "../_layout.html" %}
+{% assign page = 'customer_feedback' %}
+{% assign customer_feedback.feedback_enabled = true %}
+{% assign customer_feedback = 'test' %}
+{% assign form = 'treuewd' %}
+{% block main %}
+        <div id="content">
+          <div class="container feedback main-customer-feedback">
+            <div class="row">
+              <div class="columns medium-6 columns medium-offset-3">
+                <div class="panel panel-default form" id="form">
+                {{ customer_feedback.feedback_enabled }}
+                {% if customer_feedback.feedback_enabled == true %}
+                    <div class="panel-heading"> 
+                        <h2>{{system.snippets.customer_feedback_title}}</h2>
+                        <h4>{{system.snippets.customer_feedback_case}}</h4>
+                        <h6 class="subheader">{{system.snippets.case_id}}: {{ticket.id}}?</h6>
+                    </div>
+                      <div class="panel-body">
+                        <label for="" class="control-label">{{customer_feedback.question}}</label>
+                        <input id="customer-feedback-checked-rating" type="hidden" name="checked_rating" value="{{customer_feedback.rating}}">
+                        {% if customer_feedback.yes_no_rating? %}
+                          <div class="row two-up">
+                            <div class="columns small-3">
+                              <div class="form-group">
+                                <input id="customer-feedback-rating0" class="" name="customer_feedback[rating]" type="radio" value="0">
+                                <button type="button" class="button button-primary button-radio value-0">
+                                  <img class="radio-label-rating-type" src='{{ "/images/rating_type100_0.png" | portal_image_url: image_asset_host }}'>
+                                </button>
+                              </div>
+                            </div>
+                            <div class="columns small-3">
+                              <div class="form-group">
+                                <input id="customer-feedback-rating1" class="" name="customer_feedback[rating]" type="radio" value="3">
+                                <button type="button" class="button button-primary button-radio value-3">
+                                 <img class="radio-label-rating-type" src='{{ "/images/rating_type100_3.png" | portal_image_url: image_asset_host }}'>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        {% else %}
+                          <div class="row four-up">
+                            <div class="columns small-3">
+                                <div class="form-group">
+                                  <input id="customer-feedback-rating0" class="" name="customer_feedback[rating]" type="radio" value="0">
+                                  <button type="button" class="button button-primary button-radio value-0">
+                                    <img class="radio-label-rating-type" src='{{ "/images/rating_type200_0.png" | portal_image_url: image_asset_host }}'>
+                                  </button>
+                                </div>
+                            </div>
+                            <div class="columns small-3">
+                              <div class="form-group">
+                                <input id="customer-feedback-rating1" class="" name="customer_feedback[rating]" type="radio" value="1">
+                                <button type="button" class="button button-primary button-radio value-1">
+                                  <img class="radio-label-rating-type" src='{{ "/images/rating_type200_1.png" | portal_image_url: image_asset_host }}'>
+                                </button>
+                              </div>
+                            </div>
+                            <div class="columns small-3">
+                              <div class="form-group">
+                                <input id="customer-feedback-rating2" class="" name="customer_feedback[rating]" type="radio" value="2">
+                                <button type="button" class="button button-primary button-radio value-2">
+                                   <img class="radio-label-rating-type" src='{{ "/images/rating_type200_2.png" | portal_image_url: image_asset_host }}'>
+                                </button>
+                              </div>
+                            </div>
+                            <div class="columns small-3">
+                              <div class="form-group">
+                                <input id="customer-feedback-rating3" class="" name="customer_feedback[rating]" type="radio" value="3">
+                                <button type="button" class="button button-primary button-radio value-3">
+                                  <img class="radio-label-rating-type" src='{{ "/images/rating_type200_3.png" | portal_image_url: image_asset_host }}'>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        {% endif %}
+                        {% if customer_feedback.additional_feedback_enabled? %}
+                          <div class="form-group input-block">
+                              <label class="control-label">{{customer_feedback.additional_question}}</label>
+                              <textarea name='customer_feedback[additional_feedback]' class="form-control" maxlength="1024">{{customer_feedback.additional_feedback}}</textarea>
+                          </div>
+                        {% endif %}
+                      </div>
+                      <div class="panel-footer">
+                        <div class='input-button'>
+                          <input id='customer-feedback-submit button' name='commit' type='submit' value='submit' />
+                        </div>
+                      </div>
+                {% else %}
+                      <div class="panel-body feedback-disabled">
+                        {{system.snippets.customer_feedback_disabled}}
+                      </div>
+                {% endif %}
+                </div>
+              </div>
+            </div><!--ROw-->
+          </div><!--CONTAINER-->
+        </div><!--#CONTENT-->

@@ -1,0 +1,32 @@
+{% extends '../widgets.html' %}
+{% assign page = 'email_new' %}
+{% assign submit_button = " <div class='input'> <input class='widget_button widget_button_email_start widget_button_extra_email' id='email_submit' name='commit' type='submit' value='Send'> <img alt='' height='16' id='submit_spinner_email' src='https://cdn.desk.com/assets/ajax-loader-small-3f8fbce778680378474e2cd9c2a1991b.gif' width='16'> </div>" %} 
+{% block main %}
+<title>{{ site.company_name }}</title>
+<link rel='icon' type='image/vnd.microsoft.icon' href='{{ '/favicon.png' | portal_image_url: image_asset_host }}' />
+<link rel='icon' type='image/png' href='{{ '/favicon.png' | portal_image_url: image_asset_host }}' />
+<!-- BEGIN CHAT BODY -->
+<div id='customer_widget_main' class='customer_widget'>
+    <div class='inside_title' style='font-size:25px'>{{site.company_name}} {{system.snippets.help_center}}</div>
+    <div class='inside_desc'>{{system.snippets.email_support}} test</div>
+    <div class='customer_inner_widget'>
+        {% if current_user == nil or current_user.is_guest %}
+        <div class='input'><span class='form_label'>{{system.snippets.your_name}}:</span> {{ interaction_name }}
+        </div>
+        <div class='input'><span class='form_label'>{{system.snippets.your_email}}:</span> {{ interaction_email }}
+        </div>
+        {% endif %}
+        <div class='input'><span class='form_label'>{{system.snippets.subject}}:</span> {{ email_subject }}
+        </div>
+        <div class='input'><span class='form_label'>{{system.snippets.message}}:</span> {{ email_body }}
+        </div>
+        <div class='input'><span class='form_label'>{{system.snippets.file_attachment}}:</span> {{ file_attachment }}
+        </div>
+        {{hidden_parameters }} {{ submit_button }} {{ interaction_info }}
+    </div>
+    <!--customer_inner_widget-->
+</div>
+<!--customer_widget_main-->
+{% endblock %}
+
+

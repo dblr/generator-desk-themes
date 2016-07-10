@@ -1,0 +1,33 @@
+{% extends "../_layout.html" %}
+{% assign page = 'login' %}
+{% block main %}
+<div id="content">
+    <div class="container login">
+        <div class="body row">
+            <div class="col-md-6 col-md-offset-3">
+                <div id="desk-external-variables-myportal_show" class="desk-external-variables hide">
+                    <div id="system-snippets-email_required" class="">
+                        <p class="error">{{system.snippets.email_required}}</p>
+                    </div>
+                    <div id="system-snippets-invalid_email" class="alert hide">{{system.snippets.invalid_email}}</div>
+                    <div id="system-snippets-password_required" class="alert hide">{{system.snippets.password_required}}</div>
+                </div>
+                <div class="panel panel-default form login">
+                    <div class="panel-body">
+                        <h2>{{desk.system.snippets.login_title}}</h2> {{desk.page.content.form}}
+                    </div>
+                </div>
+                <div class="options">
+                    <ul>
+                        <li class="create"></li>
+                        <li class="reset"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- body.row -->
+    </div>
+    <!-- .container.login -->
+</div>
+<!-- #content -->
+{% endblock %} 

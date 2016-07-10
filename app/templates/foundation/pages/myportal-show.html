@@ -1,0 +1,653 @@
+{% extends "../_layout.html" %}
+{% assign page = 'myportal_show' %}
+{% assign email.attachments.size = 2 %}
+{% block main %}
+{% assign case = desk.page.content.case %}
+<div id="desk-external-variables-myaccount" class="desk-external-variables hide">
+  <div id="system-snippets-reply_required">{{system.snippets.message_required}}</div>
+  <div id="max_number_attachments">{{desk.system.max_attachments}}</div>
+</div>
+<div id="content">
+  <div class="container myportal case">
+    <div class="body row">
+      <div class="columns medium-8">
+        <!-- START CASE VIEW -->
+        <div class="interactions">
+            <!-- ///////////////////////////////////////////////////////////////
+                         **** START CASE SOURCE  SECTION ****
+            /////////////////////////////////////////////////////////////// -->
+              {% if case.is_email_channel?  %}<!--EMAIL-->
+                <div class="header row">
+                  <div class="columns medium-12">
+                    <h2>{{case.subject}}</h2>
+                  </div>
+                </div>
+                {% assign numder = 1 %}
+                {% for email in case.emails %}
+                  {% if numder == 1 %}
+
+                    <div class="panel user">
+                      <div class="row collapse">
+                        <div class="columns medium-1 hide-for-small-only">
+                          <div class="th">
+                             {% if case.customer.facebook.profile_image_url != nil %}
+                              <img src="{{ case.customer.facebook.profile_image_url }}" class="gravatar" />
+                            {% elsif case.customer.twitter.profile_image_url != nil %}
+                              <img src="{{ case.customer.twitter.profile_image_url }}" width="50" height="50" class="gravatar twitter-avatar" />
+                            {% else %}
+                              {{ email.from | gravatar_image: gravatar_unknown_user,   ssl }}
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="columns medium-11 small-12">
+                          <div class="columns medium-12">
+                            <div class="clearfix">
+                              <h4 class="left">
+                                 {{email.from_name | show_something: case.customer.name}}
+                              </h4>
+                              <span class="label right warning">User &nbsp;<i class="fa fa-lg fa-user"></i></span>
+                            </div>
+                            <time class='date'>{{email.created_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p' }}</time>
+                            <hr>
+                            <p>
+                              {% if email.is_erased? %}
+                                {% capture params %}"name":"{{email.erased_by.name}}"{% endcapture %}
+                                {{ system.snippets.content_erased | format_snippet: params }}
+                              {% else %}
+                                {{ email.new_html | escape_newlines }}
+                              {% endif %}
+                            </p>
+                            <h4>{{ email.attachments.size }}</h4>
+                             {% if email.attachments.size > 0 %}
+                                <h4>{{ system.snippets.attachments}}</h4>
+                                <table class="table table-hover" width="100%;">
+                                  <tr>
+                                    <th>File</th>
+                                    <th>Link</th>
+                                  </tr>
+
+                                  {% for attachment in email.attachments%}
+                                    <tr><td>{{attachment.file_name}}</td><td><a href="{{attachment.url}}">Download</a></td></tr>
+                                  {% endfor %}
+                                </table>
+                              {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+                    {% assign numder = 2 %}
+                  {% else %}
+                      {% if email.agent.name_public != nil %}
+                      <!-- AGENT REPLY -->
+                      <div class="panel agent callout">
+                          <div class="row collapse">
+                            <div class="columns medium-1 hide-for-small-only">
+                              <div class="th">
+                                {{ email.agent.email | gravatar_image: gravatar_unknown_user,   ssl }}
+                              </div>
+                            </div>
+                            <div class="columns medium-11 small-12">
+                              <div class="columns medium-12">
+                                <div class="clearfix">
+                                  <h4 class="left">
+                                      {{email.agent.name_public}}
+                                  </h4>
+                                  <span class="label right">{{ site.company_name }} {{ site.agent_name_config }} &nbsp;<i class="fa fa-lg fa-gear"></i></span>
+                                </div>
+                                <time class='date'>{{email.created_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p' }}</time>
+                                <hr>
+                                <p>
+                                  {% if email.is_erased? %}
+                                    {% capture params %}"name":"{{email.erased_by.name}}"{% endcapture %}
+                                    {{ system.snippets.content_erased | format_snippet: params }}
+                                  {% else %}
+                                    {{ email.new_html | escape_newlines }}
+                                  {% endif %}
+                                </p>
+                                 {% if email.attachments.size > 0 %}
+                                    <h4>{{ system.snippets.attachments}}</h4>
+                                    <table class="table table-hover" width="100%;">
+                                      <tr>
+                                        <th>File</th>
+                                        <th>Link</th>
+                                      </tr>
+
+                                      {% for attachment in email.attachments%}
+                                        <tr><td>{{attachment.file_name}}</td><td><a href="{{attachment.url}}">Download</a></td></tr>
+                                      {% endfor %}
+                                    </table>
+                                  {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {% else %}
+                        <!-- USER REPLY -->
+                        <div class="panel user">
+                          <div class="row collapse">
+                            <div class="columns medium-1 hide-for-small-only">
+                              <div class="th">
+                                 {% if case.customer.facebook.profile_image_url != nil %}
+                                  <img src="{{ case.customer.facebook.profile_image_url }}" class="gravatar" />
+                                {% elsif case.customer.twitter.profile_image_url != nil %}
+                                  <img src="{{ case.customer.twitter.profile_image_url }}" width="50" height="50" class="gravatar twitter-avatar" />
+                                {% else %}
+                                  {{ email.from | gravatar_image: gravatar_unknown_user,   ssl }}
+                                {% endif %}
+                              </div>
+                            </div>
+                            <div class="columns medium-11 small-12">
+                              <div class="columns medium-12">
+                                <div class="clearfix">
+                                  <h4 class="left">
+                                     {{email.from_name | show_something: case.customer.name}}
+                                  </h4>
+                                  <span class="label right warning">User &nbsp;<i class="fa fa-lg fa-user"></i></span>
+                                </div>
+                                <time class='date'>{{email.created_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p' }}</time>
+                                <hr>
+                                <p>
+                                  {% if email.is_erased? %}
+                                    {% capture params %}"name":"{{email.erased_by.name}}"{% endcapture %}
+                                    {{ system.snippets.content_erased | format_snippet: params }}
+                                  {% else %}
+                                    {{ email.new_html | escape_newlines }}
+                                  {% endif %}
+                                </p>
+                                 {% if email.attachments.size > 0 %}
+                                    <h4>{{ system.snippets.attachments}}</h4>
+                                    <table class="table table-hover" width="100%;">
+                                      <tr>
+                                        <th>File</th>
+                                        <th>Link</th>
+                                      </tr>
+
+                                      {% for attachment in email.attachments%}
+                                        <tr><td>{{attachment.file_name}}</td><td><a href="{{attachment.url}}">Download</a></td></tr>
+                                      {% endfor %}
+                                    </table>
+                                  {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {% endif %}
+                  {% endif %}
+                {% endfor %}
+              {% elsif case.is_qna_channel? %}<!--QNA-->
+                {% assign question = case.question %}
+                {% if question.hidden? %}
+                  <div class='header row'>
+                    <div class="columns medium-12">
+                      <h2>{{system.snippets.not_posted_question_yet}}</h2>
+                    </div>
+                  </div>
+                {% else %}
+                  <div class='header row'>
+                    <div class="columns medium-12">
+                      <h2>{{case.subject}}</h2>
+                    </div>
+                  </div>
+                  <div class="row body">
+                    <div class="columns medium-12">
+                      <div class="panel user">
+                        <div class="row collapse">
+                          <div class="columns medium-1 hide-for-small-only">
+                            <div class="th">
+                              {% if case.customer.facebook.profile_image_url != nil %}
+                              <img src="{{ case.customer.facebook.profile_image_url }}" class="gravatar" />
+                              {% elsif case.customer.twitter.profile_image_url != nil %}
+                              <img src="{{ case.customer.twitter.profile_image_url }}" width="48" height="48" class="gravatar twitter-avatar" />
+                              {% else %}
+                              {{ question.from_email | gravatar_image: gravatar_unknown_user,   ssl }}
+                              {% endif %}
+                            </div>
+                          </div>
+                          <div class="columns medium-11 small-12">
+                            <div class="columns medium-12">
+                              <div class="clearfix">
+                                <h4 class="left">
+                                  {{question.from_name | show_something: case.customer.name}}
+                                </h4>
+                                <span class="label right warning">User &nbsp;<i class="fa fa-lg fa-user"></i></span>
+                              </div>
+                              <time class='date'>{{question.created_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p %Z' }}</time>
+                              <hr>
+                              <p>{{ question.body_plain | escape_newlines }}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row body">
+                    <div class="columns medium-12">
+                    <!-- ///////////////////////////////////////////////////////////////
+                                        **** CASE ANSWERS  SECTION ****
+                    /////////////////////////////////////////////////////////////// -->
+                    {% for answer in case.answers %}
+                      {% if answer.agent.name_public == nil %}
+                        <!-- USER REPLY -->
+                        <div class="panel user">
+                          <div class="row collapse">
+                            <div class="columns medium-1 hide-for-small-only">
+                              <div class="th">
+                                {% if case.customer.facebook.profile_image_url != nil %}
+                                  <img src="{{ case.customer.facebook.profile_image_url }}" class="gravatar" />
+                                {% elsif case.customer.twitter.profile_image_url != nil %}
+                                  <img src="{{ case.customer.twitter.profile_image_url }}" width="50" height="50" class="gravatar twitter-avatar" />
+                                {% else %}
+                                  {{ email.from | gravatar_image: gravatar_unknown_user,   ssl }}
+                                {% endif %}
+                              </div>
+                            </div>
+                            <div class="columns medium-11 small-12">
+                              <div class="columns medium-12">
+                                <div class="clearfix">
+                                  <h4 class="left">
+                                    {{answer.from_name | show_something: case.customer.name}}
+                                  </h4>
+                                  <span class="label right warning">User &nbsp;<i class="fa fa-lg fa-user"></i></span>
+                                </div>
+                                <time class='date'>{{answer.created_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p %Z' }}</time>
+                                <hr>
+                                <p>
+                                  {% if answer.is_erased? %}
+                                  {% capture params %}"name":"{{answer.erased_by.name}}"{% endcapture %}
+                                      {{ system.snippets.content_erased | format_snippet: params }}
+                                  {% else %}
+                                      {{ answer.body_plain | escape_newlines }}
+                                  {% endif %}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% else %}
+                        <!-- AGENT REPLY -->
+                        <div class="panel callout agent">
+                          <div class="row collapse">
+                            <div class="columns medium-1 hide-for-small-only">
+                              <div class="th">
+                              {{ email.agent.email | gravatar_image: gravatar_unknown_user,   ssl }}
+                              </div>
+                            </div>
+                            <div class="columns medium-11 small-12">
+                              <div class="columns medium-12">
+                                <div class="clearfix">
+                                  <h4 class="left">
+                                    {{answer.agent.name_public}}
+                                  </h4>
+                                  <span class="label right">{{ site.company_name }} {{ site.agent_name_config }} &nbsp;<i class="fa fa-lg fa-gear"></i></span>
+                                </div>
+                                <time class='date'>{{answer.created_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p %Z' }}</time>
+                                <hr>
+                                <p>
+                                  {% if answer.is_erased? %}
+                                  {% capture params %}"name":"{{answer.erased_by.name}}"{% endcapture %}
+                                      {{ system.snippets.content_erased | format_snippet: params }}
+                                  {% else %}
+                                      {{ answer.body_plain | escape_newlines }}
+                                  {% endif %}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif  %}
+                    {% endfor %}<!--CASE ANSWERS-->
+                    </div>
+                  </div>
+                {% endif %}<!-- end question hidden/not -->
+              {% elsif case.is_chat_channel? %}
+                  {% assign chat = case.chat %}
+                  <div class="row header">
+                    <div class="columns medium-12">
+                      <h2>{{system.snippets.live_chat | remove:'!' }}</h2>
+                      <div class="panel user">
+                        <div class="row collapse">
+                          <div class="columns medium-1 hide-for-small-only">
+                            <div class="th">
+                            {{ desk.page.content.case.customer.email | gravatar_image: gravatar_unknown_user,   ssl }}
+                            </div>
+                          </div>
+                          <div class="columns medium-11 small-12">
+                            <div class="columns medium-12">
+                              <div class="clearfix">
+                                <h4 class="left">
+                                  {{ desk.page.content.case.customer.name }}
+                                </h4>
+                                <span class="label right warning">User &nbsp;<i class="fa fa-lg fa-user"></i></span>
+                              </div>
+                              <time class='date'>{{ desk.page.content.case.created_at | in_time_zone: site.timezone | date: '%I:%M%p' }}</time>
+                              <hr>
+                              <p>{{case.subject}}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row body case">
+                    <div class="columns medium-12">
+                        {% for message in chat.messages %}
+                          {% if message.from_system? %}
+                              {% if message.text contains 'left' or message.text contains 'ended' %}
+                                <div class="alert-box clearfix alert">
+                                  {{message.text}} at {{message.created_at | in_time_zone: site.timezone | date: '%I:%M%p' }}&nbsp;&nbsp;<i class="fa right fa-unlink danger"></i>
+                                </div>
+
+                              {% endif %}
+                              {% if message.text contains 'queue' or message.text contains 'wait' %}
+                                <div class="alert-box clearfix warning">
+                                   {{message.text}} at {{message.created_at | in_time_zone: site.timezone | date: '%I:%M%p' }}&nbsp;&nbsp;<i class="fa right fa-clock-o warning"></i>
+                                </div>
+
+
+                              {% endif %}
+                              {% if message.text contains 'entered' or message.text contains 'connected' %}
+                                <div class="alert-box clearfix success">
+                                  {{message.text}} at {{message.created_at | in_time_zone: site.timezone | date: '%I:%M%p' }}&nbsp;&nbsp;<i class="fa right fa-bolt success"></i>
+                                </div>
+                              {% endif %}
+                          {% else %}
+                              {% if desk.page.content.case.customer.name == message.user.name %}
+                              <div class="panel user">
+                                <div class="row collapse">
+                                  <div class="columns medium-1 hide-for-small-only">
+                                    <div class="th">
+                                    {{ desk.page.content.case.customer.email | gravatar_image: gravatar_unknown_user,   ssl }}
+                                    </div>
+                                  </div>
+                                  <div class="columns medium-11 small-12">
+                                    <div class="columns medium-12">
+                                      <div class="clearfix">
+                                        <h4 class="left">
+                                          {{message.user.name}}
+                                        </h4>
+                                        <span class="label right warning">User &nbsp;<i class="fa fa-lg fa-user"></i></span>
+                                      </div>
+                                      <time class='date'>{{message.created_at | in_time_zone: site.timezone | date: '%I:%M%p' }}</time>
+                                      <hr>
+                                      {{ message.text | escape_newlines }}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              {% else %}
+                              <div class="panel callout agent">
+                                <div class="row collapse">
+                                  <div class="columns medium-1 hide-for-small-only">
+                                    <div class="th">
+                                     {{ message.agent.email | gravatar_image: gravatar_unknown_user,   ssl }}
+                                    </div>
+                                  </div>
+                                  <div class="columns medium-11 small-12">
+                                    <div class="columns medium-12">
+                                      <div class="clearfix">
+                                        <h4 class="left">
+                                          {{message.user.name}}
+
+                                        </h4>
+                                        <span class="label right">{{ site.company_name }} {{ site.agent_name_config }} &nbsp;<i class="fa fa-lg fa-gear"></i></span>
+                                      </div>
+                                      <time class='date'>{{message.created_at | in_time_zone: site.timezone | date: '%I:%M%p' }}</time>
+                                      <hr>
+                                      {{ message.text | escape_newlines }}
+                                      </div>
+                                  </div>
+                                </div>
+                              </div>
+                              {% endif %}
+                          {% endif %}
+                        {% endfor %}
+                    </div>
+                  </div>
+              {% elsif case.is_twitter_channel? %}
+                  <!-- ///////////////////////////////////////////////////////////////
+                                      **** TWITTER  SECTION ****
+                  /////////////////////////////////////////////////////////////// -->
+                  <div class="header row">
+                    <div class="columns medium-12">
+                      <h2>{{case.subject}}</h2>
+                    </div>
+                  </div>
+                  <div class="body row">
+                    <div class="columns medium-12">
+                    {% for tweet in case.tweets %}
+                      {% assign reply_to = tweet.public_url %}
+                      {% assign tweet_dm = tweet.dm %}
+
+                      {% if tweet.agent.email != nil %}
+                      <!-- AGENT TWEET -->
+                        <div class="panel callout agent">
+                          <div class="row collapse">
+                            <div class="columns medium-1 hide-for-small-only">
+                              <div class="th">
+                               {{ tweet.agent.email | gravatar_image: gravatar_unknown_user,   ssl }}
+                              </div>
+                            </div>
+                            <div class="columns medium-11 small-12">
+                              <div class="columns medium-12">
+                                <div class="clearfix">
+                                  <h4 class="left">
+                                    {{tweet.agent.name_public}}
+
+                                  </h4>
+                                  <span class="label right">{{ site.company_name }} {{ site.agent_name_config }} &nbsp;<i class="fa fa-lg fa-gear"></i></span>
+                                </div>
+                                <time class='date'>{{tweet.created_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p' }}</time>
+                                <hr>
+                                  {% if tweet.is_erased? %}
+                                  {% capture params %}"name":"{{tweet.erased_by.name}}"{% endcapture %}
+                                      <p>{{ system.snippets.content_erased | format_snippet: params }}</p>
+                                  {% else %}
+                                      <p>{{ tweet.subject | escape_newlines }}</p>
+                                  {% endif %}
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% else %}
+                      <!-- USER TWEET -->
+                        <div class="panel user">
+                          <div class="row collapse">
+                            <div class="columns medium-1 hide-for-small-only">
+                              <div class="th">
+                              {{ desk.page.content.case.customer.email | gravatar_image: gravatar_unknown_user,   ssl }}
+                              </div>
+                            </div>
+                            <div class="columns medium-11 small-12">
+                              <div class="columns medium-12">
+                                <div class="clearfix">
+                                  <h4 class="left">
+                                     {{case.customer.name}} <small>via <a href="http://twitter.com/{{ tweet.twitter_customer.login }}" target="_blank">{{ tweet.twitter_customer.login }}</a></small>
+                                  </h4>
+                                  <span class="label right warning">User &nbsp;<i class="fa fa-lg fa-user"></i></span>
+                                </div>
+                                <time class='date'>{{{ tweet.created_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p' }}</time>
+                                <hr>
+                                  {% if tweet.is_erased? %}
+                                  {% capture params %}"name":"{{tweet.erased_by.name}}"{% endcapture %}
+                                      <p>{{ system.snippets.content_erased | format_snippet: params }}</p>
+                                  {% else %}
+                                      <p>{{ tweet.subject | escape_newlines }}</p>
+                                  {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                    </div>
+                  </div>
+              {% elsif case.is_facebook_channel? %}
+                <div class="row remove">
+                  <div class="columns-medium-12">
+                     <h1>{{case.subject}}</h1>
+                  </div>
+                </div>
+                <!-- ///////////////////////////////////////////////////////////////
+                                    **** FACEBOOK  SECTION ****
+                /////////////////////////////////////////////////////////////// -->
+
+                {% for facebook_feeds in case.facebook_feed_items_non_draft %}
+                {% assign thread_url = facebook_feeds.public_url %}
+                    <div class='interaction row'>
+                      <div class="columns medium-1">
+                        <span class='gravatar'>
+                          {% if case.customer.id == facebook_feeds.from_customer.id %}
+                          {% if case.customer.facebook.profile_image_url != nil %}
+                          <img src="{{ case.customer.facebook.profile_image_url }}" class="gravatar" />
+                          {% else %}
+                          {{ facebook_feeds.agent.email | gravatar_image: gravatar_unknown_user,   ssl }}
+                          {% endif %}
+                          {% else %}
+                          {{ facebook_feeds.agent.email | gravatar_image: gravatar_unknown_user,   ssl }}
+                          {% endif %}
+                        </span>
+                      </div>
+                      <div class='interaction-details columns medium-7'>
+                        <h3 class='meta'>
+                          <small class='date'>{{facebook_feeds.created_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p' }}</small>
+                          {% if facebook_feeds.agent == nil %}
+                          <span>{{ facebook_feeds.from_customer.name_public }}</span>
+                          {% else %}
+                          <span>{{ facebook_feeds.agent.name }} via {{ facebook_feeds.from_customer.name_public }}</span>
+                          {% endif %}
+                        </h3>
+                        {% if facebook_feeds.is_erased? %}
+                        {% capture params %}"name":"{{facebook_feeds.erased_by.name}}"{% endcapture %}
+                        <div class='interaction-body'>{{ system.snippets.content_erased | format_snippet: params }}</div>
+                        {% else %}
+                        <div class='interaction-body'>{{ facebook_feeds.message | escape_newlines }}</div>
+                        {% endif %}
+                      </div>
+                    </div>
+                    {% endfor %}
+                    <div class="case-footer">
+                      <p><a href="{{ thread_url }}" target="_blank">View and reply to this thread on Facebook</a></p>
+                    </div>
+              {% elsif case.is_phone_channel? %}<!--PH-->
+                <div class="header row">
+                  <div class="columns medium-12">
+                    <h2>Phone Case</h2>
+                    {{ case.description | escape_newlines }}
+                  </div>
+                </div>
+              {% endif %}
+
+
+              <!-- ///////////////////////////////////////////////////////////////
+                                **** REPLY ROW  SECTION ****
+              /////////////////////////////////////////////////////////////// -->
+              {% if case.can_accept_replies and case.customer.id == desk.customer.id %}
+              <div class="reply row {% if case.resolved? %} hide {% endif %}" id="ReplyRow">
+                <div class="columns medium-12">
+                  <!-- REPLY HEADER -->
+                  {% if case.is_email_channel? %}
+                    <h2>{{ system.snippets.reply_to_this_case}}</h2>
+                  {% else %}
+                    <h2>{{system.snippets.post_public_answer}}</h2>
+                  {% endif %}
+                  <!-- REPLY FORM -->
+                  <div id="form" class="form panel panel-default">
+                    <div class="panel-footer no-body">
+                      {% if case.is_email_channel? %}
+                        {{form_begin}}
+                          <div class="form-group">
+                            <textarea class="form-control" id="interaction_body" name="interaction[body]" rows="6" cols="40"></textarea>
+                            <label for="interaction_body">{{system.snippets.answer}} <span class="muted">({{system.snippets.required}})</span></label>
+                          </div>
+                          <div class="form-group attachments">
+                            <label for="case_attachment[attachment]" class="control-label"><i class="fa fa-paperclip"></i>{{system.snippets.file_attachment}}</label>
+                            <div class="desk_file_upload">
+                                <input type="button" class="button tiny" value="{{system.snippets.choose_file}}">
+                                <input name="case_attachment[attachment]" size="84" type="file">
+                                <div class="faux-file-field">
+                                  <input disabled="disabled" type="text">
+                                </div>
+                            </div>
+                          </div>
+                        <div class="input-button">
+                          <input id='reply_submit' name='commit' type='submit' value='{{system.snippets.send_text}}' class="button button-submit" />
+                        </div>
+                        {{form_end}}
+                      {% else %}
+                        {{form_begin}}
+                        <div class="form-group">
+                          <label for="interaction_body">{{system.snippets.answer}} <span class="muted">({{system.snippets.required}})</span></label>
+                          <textarea class="form-control"  id="interaction_body" name="interaction[body]" rows="6" cols="40"></textarea>
+                        </div>
+                        <div class="input-button">
+                          <input id='reply_submit' name='commit' type='submit' value='{{system.snippets.post_answer}}' class="button button-submit" />
+                        </div>
+                        {{form_end}}
+                      {% endif %}
+                    </div>
+                  </div>
+                </div><!-- Columns 12 -->
+              </div><!--END:REPLY-->
+              {% endif %}
+        </div><!-- Interactions -->
+      </div><!-- 8 col -->
+      <!--Begin Sidebar-->
+      <div class="columns medium-4">
+        <h2>{{system.snippets.case_status}}</h2>
+        <div class="status row">
+          <div class="columns medium-12 stats">
+              <table class="table table-hover" width="100%;">
+                <tbody>
+                  <tr>
+                    <td>{{ system.snippets.case_status }}</td>
+                    <td>
+                        {% case case.status.id %}
+                        {% when 10 %}
+                          {{ system.snippets.case_new}}
+                        {% when 30 %}
+                          {{ system.snippets.case_open}}
+                        {% when 50 %}
+                          {{ system.snippets.case_pending}}
+                        {% when 70 %}
+                          {{ system.snippets.case_resolved}}
+                        {% when 90 %}
+                          {{ system.snippets.case_closed}}
+                        {% endcase %}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>{{ system.snippets.case_id}}:</td>
+                    <td>{{case.id}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ system.snippets.assigned_agent}}:</td>
+                    <td>{{case.user.name_public | show_something:  system.snippets.unassigned}}</td>
+                  </tr>
+                  {% if desk.customer.can_access_company_tickets? %}
+                  <tr>
+                    <td>{{ system.snippets.from}}:</td>
+                    <td>{{case.customer.first_name}} {{case.customer.last_name}}</td>
+                  </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+          </div>
+          <div class="columns medium-12">
+            {% if case.status.id == 10 or case.status.id == 30 or case.status.id == 50 %}
+              {{resolve_or_reopen_button}}
+            {% elsif case.status.id != 90 %}
+              <button class="button expand" id="reOpen" onclick="javascript: $('div#ReplyRow').toggleClass('hide'); $('#interaction_body').focus();
+              $('<p>Add a response to reopen this case</p>').insertBefore('#interaction_body').slideDown(1000);"> {{  system.snippets.reopen_case }}</button>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <!--END Sidebar-->
+    </div>
+  </div>
+</div>
+{% endblock %}

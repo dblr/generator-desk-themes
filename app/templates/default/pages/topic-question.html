@@ -1,0 +1,78 @@
+{% extends "../_layout.html" %}
+{% assign type = 'questions' %}
+{% assign page = 'page_topic' %}
+{% block main %}
+<div id="content">
+  <div class="container topic">
+    <div class="row">
+      <div class="col-md-8 {% if desk.page.theme.layout != 'left' %} col-md-push-4 {% endif %}">
+          <div class="header row">
+            <div class="col-md-7 col-sm-12">
+              {% if topic == null %}
+                <h2>{{system.snippets.topic_translation_missing}} {{system.language_name_localized}}</h2>
+              {% else %}
+                <h2>{{ topic.name }}</h2>
+              {% endif %}
+            </div>
+            <div class="col-md-5 col-sm-12 switch">
+              {% if topic.question_count > 0 and topic.allow_questions and site.questions_enabled_config %}
+                {% if type == 'questions' %}
+                  <a class="btn btn-pill active" href='{{ topic.public_questions_url }}'>{{system.snippets.questions}}</a>
+                {% else %}
+                  <a class="btn btn-pill" href='{{ topic.public_questions_url }}'>{{system.snippets.questions}}</a>
+                {% endif %}
+              {% endif %}
+              {% if topic.article_count > 0 %}
+                {% if type == 'articles' %}
+                  <a class="btn btn-pill active" href='{{ topic.public_articles_url }}' id="desk-article-list-link">{{system.snippets.articles}}</a>
+                {% else %}
+                  <a class="btn btn-pill" href='{{ topic.public_articles_url }}' id="desk-qna-list-link">{{system.snippets.articles}}</a>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="body row">
+            {% if topic == null %}
+            {% else %}
+              <div class="col-md-12">
+                {% if type == 'articles' %}
+                  {% for article in articles %}
+                    <div class="article row nomarg">
+                      <h3><a href="{{ article.public_url }}" title="{{ article.subject_plain }}">{{ article.subject_plain }}</a></h3>
+                      <p>{{ article.body_plain | clip:210 }}</p>
+                      <a href="{{ article.public_url }}" class="btn btn-pill">{{ system.snippets.read_article }}</a>
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  {% for question in questions %}
+                    <div class="qna row nomarg">
+                      <h3><a href="{{ question.public_url }}" title="{{ question.subject_plain }}">{{ question.subject_plain }}</a></h3>
+                      <p>{{ question.body_plain | clip:210 }}</p>
+                      {% if question.answers_agent_count > 0 %}
+                        <a class="btn btn-pill" href="{{ question.public_url }}">
+                          <span>{{ question.answers_agent_count }}</span>
+                          {{ site.agent_name_config }}
+                          {{ system.snippets.answer | pluralize: question.answers_agent_count, system.snippets.answers }}
+                        </a>
+                      {% else %}
+                       <a href="{{ question.public_url }}" class="btn btn-pill">View Question</a>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div><!-- end col-md-12 -->
+            {% endif %}
+          </div>
+      </div>
+      <!--Begin Sidebar-->
+      {{ sidebar_main }}
+      <!--END Sidebar-->
+    </div>
+    <div id="pagination">
+      <div class="support-paginate row">
+        {{ more_article_block }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

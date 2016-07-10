@@ -1,0 +1,171 @@
+// bower:scss
+// endbower
+
+
+.customer_inner_widget {
+    padding-top: 0px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.customer_widget fieldset {
+    border: none;
+    margin: 0px;
+    padding: 0px;
+}
+.customer_widget .chat_bottom_area.chat_send_area{
+  height: 55px;
+}
+.customer_widget .widget_button {
+  margin: 0px;
+}
+
+/* FILE ATTACHMENTS */
+.attachments label {
+  line-height: 24px;
+  margin-bottom: 14px;
+}
+.attachments label i{
+  font-size: 24px;
+  margin-right: 10px;
+  font-weight: 300;
+}
+.desk_file_upload {
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+.desk_file_upload input[type=file] {
+  float: left;
+  outline:none;
+  position: relative;
+  text-align: right;
+  -moz-opacity:0 ;
+  opacity: 0;
+  z-index: 2;
+  width:100%;
+  height:100%;
+  margin-left: -99999px;
+}
+.desk_file_upload input[type=button] {
+  float: left;
+}
+.desk_file_upload .faux-file-field {
+  padding: 0 8px 0 0;
+  margin: 0;
+  z-index: 1;
+  float: left;
+  width: 80%;
+}
+.desk_file_upload .faux-file-field input[type=text] {
+  border: none!important;
+  outline:none;
+  width: 100%;
+  box-shadow: none;
+  height: 33px;
+  line-height: 33px;
+  margin-bottom: 5px;
+  background: none!important;
+}
+.attachments a.add_attachment{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 0;
+  border-style: solid;
+  border-width: 0;
+  cursor: pointer;
+  font-weight: normal;
+  line-height: normal;
+  margin: 0 0 1.25rem;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  padding: 0.625rem 1.25rem 0.6875rem 1.25rem;
+  font-size: 0.6875rem;
+  background-color: #009DDC;
+  border-color: #007eb0;
+  color: #fff;
+  transition: background-color 300ms ease-out;
+}
+
+
+
+#customer_widget_main {
+  padding: 0px;
+}
+#chat_end_session_div {
+  font-size: 11px!important;
+}
+.chat_timer_block {
+  font-size: 11px;
+  color: #333;
+}
+#customer_widget_main .container.chat-connected {
+  padding: 0px;
+}
+div.chat_box .chat_message_area {
+  right: 0px;
+  left: 0px;
+}
+.chat_message {
+  font-size: 12px;
+  font-weight: normal;
+}
+.chat_message_header_agent,
+.chat_message_header_customer {
+  font-size: 13px;
+  font-weight: bold;
+  padding: 5px;
+  padding-bottom: 0px;
+  padding-left: 34px;
+}
+.chat_message_header_agent .agent_thumb,
+.chat_message_header_customer .customer_thumb {
+  display: block;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  border-radius: 50px;
+  margin-top: 4px;
+  float: left;
+  margin-left: -30px;
+}
+.chat_message_header_agent .chat_message_time,
+.chat_message_header_customer .chat_message_time{
+  float: right;
+  margin: 0px;
+  padding: 0px;
+}
+.chat_message{
+  padding: 0px 0px 5px 34px;
+}
+.chat_message .chat_message_text {
+  margin: 0px;
+}
+.chat_message_header_agent,
+.chat_message_agent {
+  background: #eee;
+  border: none;
+}
+.chat_message_header_customer,
+.chat_message_customer {
+  border: none;
+  background: #ccc;
+}
+.chat_message_header_system {
+  margin: 0px;
+}
+.chat_message_system {
+  width: 100%;
+  display: block;
+  margin: 0px;
+}
+
+.chat_bottom_area.chat_send_area {border: 0px;}
+.chat_bottom_area.chat_send_area {}
+.chat_bottom_area.chat_send_area div.input_text{
+  right: 4px;
+  left: 5px;
+}
+.chat_bottom_area.chat_send_area input {margin: 0px;}
+.chat_bottom_area.chat_send_area .button.primary {margin: 0px; height: 37px;}

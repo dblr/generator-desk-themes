@@ -57,50 +57,49 @@ module.exports = generators.Base.extend({
     var done = this.async();
 
     if (!this.options['skip-welcome-message']) {
-      this.log(yosay('\'Allo \'allo! Out of the box I include HTML5 Boilerplate, jQuery, and a gulpfile to build your app.'));
+      this.log(yosay('Desk.com local theme generator and development tool!'));
     }
 
     var prompts = [{
-      type: 'checkbox',
+      type    : 'input',
+      name    : 'name',
+      message : 'Your project name?',
+      default : this.appname // Default to current folder name
+    },{
+      type: 'list',
       name: 'features',
-      message: 'What more would you like?',
+      message: 'Which theme would you like to start with?',
       choices: [{
-        name: 'Sass',
-        value: 'includeSass',
-        checked: true
-      }, {
-        name: 'Bootstrap',
-        value: 'includeBootstrap',
-        checked: true
-      }, {
-        name: 'Modernizr',
-        value: 'includeModernizr',
-        checked: true
+        name: 'Foundation - v5',
+        value: 'includeFoundation'
+      },{
+        name: 'Foundation - v6',
+        value: 'includeFoundationSix'
+      },{
+        name: 'Respnsive Template (Desk default)',
+        value: 'includeBootstrap'
+      },{
+        name: 'More Options - Coming soon',
+        value: 'includeThemePark'
       }]
-    }, {
-      type: 'confirm',
-      name: 'includeJQuery',
-      message: 'Would you like to include jQuery?',
-      default: true,
-      when: function (answers) {
-        return answers.features.indexOf('includeBootstrap') === -1;
-      }
+      ,default: 0
     }];
 
     this.prompt(prompts, function (answers) {
       var features = answers.features;
-
       function hasFeature(feat) {
         return features && features.indexOf(feat) !== -1;
       };
 
       // manually deal with the response, get back and store the results.
       // we change a bit this way of doing to automatically do this in the self.prompt() method.
-      this.includeSass = hasFeature('includeSass');
+      this.includeSass = true;
+      this.includeJQuery = true;
       this.includeBootstrap = hasFeature('includeBootstrap');
-      this.includeModernizr = hasFeature('includeModernizr');
-      this.includeJQuery = answers.includeJQuery;
-
+      this.includeFoundation = hasFeature('includeFoundation');
+      this.includeFoundationSix = hasFeature('includeFoundationSix');
+      this.includeModernizr = false;
+      this.appname = answers.name;
       done();
     }.bind(this));
   },
@@ -156,9 +155,8 @@ module.exports = generators.Base.extend({
         private: true,
         dependencies: {}
       };
-
+      bowerJson.dependencies['font-awesome'] = '~4.5';
       if (this.includeBootstrap) {
-        if (this.includeSass) {
           bowerJson.dependencies['bootstrap-sass'] = '~3.3.5';
           bowerJson.overrides = {
             'bootstrap-sass': {
@@ -169,21 +167,10 @@ module.exports = generators.Base.extend({
               ]
             }
           };
-        } else {
-          bowerJson.dependencies['bootstrap'] = '~3.3.5';
-          bowerJson.overrides = {
-            'bootstrap': {
-              'main': [
-                'less/bootstrap.less',
-                'dist/css/bootstrap.css',
-                'dist/js/bootstrap.js',
-                'dist/fonts/*'
-              ]
-            }
-          };
-        }
-      } else if (this.includeJQuery) {
-        bowerJson.dependencies['jquery'] = '~2.1.1';
+      } else if(this.includeFoundationSix) {
+          bowerJson.dependencies['foundation-sites'] = 'latest';
+      } else if(this.includeFoundation) {
+          bowerJson.dependencies['foundation'] = '5.5.3';
       }
 
       if (this.includeModernizr) {
@@ -245,46 +232,48 @@ module.exports = generators.Base.extend({
       );
     },
 
-    html: function () {
-      var bsPath;
-
-      // path prefix for Bootstrap JS files
-      if (this.includeBootstrap) {
-        bsPath = '/bower_components/';
-
-        if (this.includeSass) {
-          bsPath += 'bootstrap-sass/assets/javascripts/bootstrap/';
+    html: function() {
+        this.fs.copy(
+            this.templatePath('data.json'),
+            this.destinationPath('app/data.json'));
+        var fwPath;
+        fwPath = '/bower_components/bootstrap-sass/assets/javascripts/'
+            // path prefix for Bootstrap JS files
+        if (this.includeBootstrap) {
+            fwPath = '/bower_components/bootstrap-sass/assets/javascripts/'
+        } else if (this.includeFoundation) {
+            fwPath = '/bower_components/foundation-sites/dist/'
+        }  else if (this.includeFoundationSix) {
+            fwPath = '/bower_components/foundation/js/'
+        }
+        if (this.includeBootstrap) {
+          this.fs.copyTpl(
+              this.templatePath('default/'),
+              this.destinationPath('app/'), {
+                  appname: this.appname,
+                  includeSass: this.includeSass,
+                  includeFoundation: this.includeFoundation,
+                  includeBootstrap: this.includeBootstrap,
+                  includeModernizr: this.includeModernizr,
+                  includeJQuery: this.includeJQuery,
+                  fwPath: fwPath
+              }
+          );
         } else {
-          bsPath += 'bootstrap/js/';
+          this.fs.copyTpl(
+              this.templatePath('foundation/'),
+              this.destinationPath('app/'), {
+                  appname: this.appname,
+                  includeSass: this.includeSass,
+                  includeFoundation: this.includeFoundation,
+                  includeFoundationSix: this.includeFoundationSix,
+                  includeBootstrap: this.includeBootstrap,
+                  includeModernizr: this.includeModernizr,
+                  includeJQuery: this.includeJQuery,
+                  fwPath: fwPath
+              }
+          );
         }
-      }
-
-      this.fs.copyTpl(
-        this.templatePath('index.html'),
-        this.destinationPath('app/index.html'),
-        {
-          appname: this.appname,
-          includeSass: this.includeSass,
-          includeBootstrap: this.includeBootstrap,
-          includeModernizr: this.includeModernizr,
-          includeJQuery: this.includeJQuery,
-          bsPath: bsPath,
-          bsPlugins: [
-            'affix',
-            'alert',
-            'dropdown',
-            'tooltip',
-            'modal',
-            'transition',
-            'button',
-            'popover',
-            'carousel',
-            'scrollspy',
-            'collapse',
-            'tab'
-          ]
-        }
-      );
     },
 
     misc: function () {

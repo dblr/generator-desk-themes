@@ -1,0 +1,30 @@
+{% extends "../_layout.html" %}
+{% assign page = 'forgot_password' %}
+{% assign desk.page.content.form = "<form accept-charset='UTF-8' action='/customer/password_resets' method='post' novalidate='novalidate'><div style='margin:0;padding:0;display:inline'><input name='utf8' type='hidden' value='✓'><input name='authenticity_token' type='hidden' value='INY+d0Nc5eu0DcqQ7aLr3wmShSotRr4twIgCKCBWrbk='></div> <div class='field'> <label for='email'>Email</label> <input id='email' maxlength='50' name='email' type='text'> </div> <div class='input-button actions'><input id='password_reset_submit' name='commit' type='submit' value='Send Instructions'></div> </form>" %}
+{% block main %}
+<div id="desk-external-variables-forgot_password" class="desk-external-variables hide">
+    <div id="system-snippets-email_required">{{system.snippets.email_required}}</div>
+    <div id="system-snippets-invalid_email">{{system.snippets.invalid_email}}</div>
+</div>
+<div id="content">
+    <div class="container password">
+        <div class="row">
+            <div class="columns medium-6 medium-offset-3">
+                <div id="desk-external-variables-myportal_show" class="desk-external-variables hide">
+                    <div id="system-snippets-email_required" class="">
+                        <p class="error">{{system.snippets.email_required}}</p>
+                    </div>
+                    <div id="system-snippets-invalid_email" class="alert hide">{{system.snippets.invalid_email}}</div>
+                    <div id="system-snippets-password_required" class="alert hide">{{system.snippets.password_required}}</div>
+                </div>
+                <div class="panel panel-default form login">
+                    <div class="panel-body clearfix">
+                        <h2 class="text-center">{{desk.system.snippets.password_reset_title}}</h2> {{desk.page.content.form}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} 

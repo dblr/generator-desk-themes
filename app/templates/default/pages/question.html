@@ -1,0 +1,70 @@
+{% extends "../_layout.html" %}
+{% assign page = 'question_new' %}
+{% block main %}
+  <div id="desk-external-variables-question_new" class="desk-external-variables hide">
+    <div id="qna-kb_topic_id">{{qna.kb_topic_id}}</div>
+    <div id="system-snippets-name_required">{{system.snippets.name_required}}</div>
+    <div id="system-snippets-email_required">{{system.snippets.email_required}}</div>
+    <div id="system-snippets-invalid_email">{{system.snippets.invalid_email}}</div>
+    <div id="system-snippets-email_required">{{system.snippets.email_required}}</div>
+    <div id="system-snippets-subject_required">{{system.snippets.subject_required}}</div>
+    <div id="system-snippets-question_required">{{system.snippets.question_required}}</div>
+    <div id="system-snippets-exceeding_max_chars">{{system.snippets.exceeding_max_chars}}</div>
+  </div>
+
+  <div id="content">
+    <div class="container qna">
+      <div class="row">
+        <div class="col-md-8 {% if desk.page.theme.layout != 'left' %} col-md-push-4 {% endif %}">
+          <div class="row nomarg header">
+            <h2>{{system.snippets.post_public_question}}</h2>
+          </div>
+          <div class="row nomarg body">
+            <div class="panel panel-default form">
+              {{form_begin}}
+              <div class="panel-body">
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <label for="qna_kb_topic_id" class="control-label">{{system.snippets.topic}} ({{system.snippets.required}}):</label>
+                    <select id='qna_kb_topic_id' name='qna[kb_topic_id]' class="form-control">
+                      {% for topic in topics %}
+                      <option value='{{ topic.id }}'>{{ topic.name | clip:30 }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                {% if current_user == nil or current_user.is_guest %}
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <label for="interaction_name" class="control-label">{{system.snippets.your_name}} ({{system.snippets.required}}):</label>
+                      <input value="{{ interaction.name }}" id="interaction_name" class="form-control" maxlength="100" name="interaction[name]" type="text" />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="interaction_email" class="control-label">{{system.snippets.your_email}} ({{system.snippets.required}}):</label>
+                      <input value="{{ interaction.email }}" id="interaction_email" class="form-control" maxlength="100" name="interaction[email]" type="text" />
+                    </div>
+                  </div>
+                {% endif %}
+                <div class="form-group">
+                  <label for="qna_subject" class="control-label">{{system.snippets.subject}} ({{system.snippets.required}}):</label>
+                  <input id='qna_subject' maxlength='100' name='qna[subject]' class="form-control" type='text' value='{% if search_term and search_term != '' %}{{search_term}}{% else %}{{qna.subject}}{%endif%}' />
+                </div>
+                <div class="form-group">
+                  <label for="qna_body" class="control-label">{{system.snippets.your_question}} ({{system.snippets.required}}):</label>
+                  <textarea id='qna_body' class="form-control" rows="6" cols="6" name='qna[body]'>{{qna.body}}</textarea>
+                </div>
+                <div class="autosuggest visible-xs right-side hide"> </div>
+              </div>
+              <div class="panel-footer input-button">
+                <input id='email_submit' class="btn btn-submit" name='commit' type='submit' value='{{system.snippets.ask_question}}' />
+              </div>
+              {{form_end}}
+            </div><!-- end .panel -->
+          </div><!-- end .body.row -->
+        </div><!-- end .col-md-8 -->
+        {{ sidebar_suggest }}
+      </div><!-- end .row -->
+    </div><!-- .qna -->
+  </div> <!-- #content -->
+  <!-- Old qna -->
+{% endblock %}
