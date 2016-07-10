@@ -208,28 +208,9 @@ module.exports = generators.Base.extend({
     },
 
     styles: function () {
-      var css = 'main';
-
-      if (this.includeSass) {
-        css += '.scss';
-      } else {
-        css += '.css';
-      }
-
-      this.fs.copyTpl(
-        this.templatePath(css),
-        this.destinationPath('app/styles/' + css),
-        {
-          includeBootstrap: this.includeBootstrap
-        }
-      );
     },
 
     scripts: function () {
-      this.fs.copy(
-        this.templatePath('main.js'),
-        this.destinationPath('app/scripts/main.js')
-      );
     },
 
     html: function() {
@@ -308,15 +289,15 @@ module.exports = generators.Base.extend({
     wiredep({
       bowerJson: bowerJson,
       directory: 'bower_components',
-      exclude: ['bootstrap-sass', 'bootstrap.js'],
       ignorePath: /^(\.\.\/)*\.\./,
-      src: 'app/index.html'
+      src: ['app/_layout.html', 'app/widgets.html']
     });
 
     if (this.includeSass) {
       // wire Bower packages to .scss
       wiredep({
         bowerJson: bowerJson,
+        exclude: ['font-awesome', 'font-awesome.scss'],
         directory: 'bower_components',
         ignorePath: /^(\.\.\/)+/,
         src: 'app/styles/*.scss'
