@@ -15,9 +15,9 @@
     <!-- endbuild -->
 
     <!-- build:css styles/main.css -->
-    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css">
     <% if (includeModernizr) { %>
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
@@ -134,7 +134,7 @@
                       <li class="has-submenu">
                     {% endif %}
                         <a href='#'>{{ topic.name }}</a>
-                          <ul class="vertical menu"> 
+                          <ul class="vertical menu">
                             {% for article in topic.articles %}
                               {% if article.id == current_article %}
                                 <li class="current"><a href="{{ custom_site_url }}/{{ article.public_url }}">{{ article.subject_plain }}</a></li>
@@ -241,7 +241,7 @@
                   {% endif %}
                       <a href='#'>{{ topic.name }}</a>
                         <ul class="left-submenu">
-                          <li><label>{{ topic.name }}</label></li>  
+                          <li><label>{{ topic.name }}</label></li>
                           {% for article in topic.articles %}
                             {% if article.id == current_article %}
                               <li class="current"><a href="{{ custom_site_url }}/{{ article.public_url }}">{{ article.subject_plain }}</a></li>
@@ -495,10 +495,10 @@
             </div><!-- #breadcrumbs -->
         {% endif %}
         <!-- END BREADCRUMBS -->
-        <!-- MAIN BLOCK - Replaces Desk:Body in local dev -->
-        {% block main %}
-        {% endblock %}
-        <!-- MAIN BLOCK - Replaces Desk:Body in local dev -->
+<!-- MAIN BLOCK - Replaces Desk:Body in local dev -->
+{% block main %}
+{% endblock %}
+<!-- MAIN BLOCK - Replaces Desk:Body in local dev -->
         <footer id="footer">
             <div class="container">
                 <div class="row">
