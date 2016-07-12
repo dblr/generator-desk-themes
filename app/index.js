@@ -177,6 +177,8 @@ module.exports = generators.Base.extend({
         bowerJson.dependencies['modernizr'] = '~2.8.1';
       }
 
+      //bowerJson.dependencies['j'] = '~2.8.1'
+      bowerJson.dependencies['jquery'] = '~1.9.1'
       this.fs.writeJSON('bower.json', bowerJson);
       this.fs.copy(
         this.templatePath('bowerrc'),

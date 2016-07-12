@@ -1,3 +1,17 @@
+<!-- build:email_pre_create -->
+{% extends "../_layout.html" %}
+{% assign page = 'email_pre_create' %}
+{% assign form_begin = "<form action='/email-sent.html' enctype='multipart/form-data' class='new_email' id='new_email' method='go' novalidate='novalidate' __bizdiag='1061580178' __biza='WJV_'>" %}
+
+<!-- endbuild -->
+
+<!-- build:chat_new -->
+{% extends "../_layout.html" %}
+{% assign page = 'chat_new' %}
+{% assign form_begin = "<form action='/chat-precreate.html' enctype='multipart/form-data' class='new_email' id='new_email' method='go' novalidate='novalidate'>" %}
+{% block main %}
+<!-- endbuild -->
+
 <!-- build:page_article -->
 {% extends "../_layout.html" %}
 {% assign page = 'page_article' %}
