@@ -198,15 +198,18 @@ module.exports = generators.Base.extend({
         this.templatePath('favicon.ico'),
         this.destinationPath('app/favicon.ico')
       );
-
       this.fs.copy(
         this.templatePath('apple-touch-icon.png'),
         this.destinationPath('app/apple-touch-icon.png')
       );
-
       this.fs.copy(
         this.templatePath('robots.txt'),
-        this.destinationPath('app/robots.txt'));
+        this.destinationPath('app/robots.txt')
+      );
+      this.fs.copy(
+        this.templatePath('autocomplete'),
+        this.destinationPath('.tmp/customer/portal/articles/autocomplete')
+      );
     },
 
     styles: function () {
@@ -219,6 +222,7 @@ module.exports = generators.Base.extend({
         this.fs.copy(
             this.templatePath('data.json'),
             this.destinationPath('app/data.json'));
+
         var fwPath;
         fwPath = '/bower_components/bootstrap-sass/assets/javascripts/'
             // path prefix for Bootstrap JS files
