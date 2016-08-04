@@ -63,7 +63,7 @@ module.exports = generators.Base.extend({
     var prompts = [{
       type    : 'input',
       name    : 'name',
-      message : 'Your project name?',
+      message : 'Want to name your project?',
       default : this.appname // Default to current folder name
     },{
       type: 'list',
