@@ -563,7 +563,7 @@
         "article_count": 11,
         "question_count": 25,
         "public_questions_url": "topic-question.html",
-        "public_articles_url": "topic-article.html",
+        "public_articles_url": "topic.html",
         "articles": [{
             "id": 5,
             "public_url": "article.html",
@@ -643,7 +643,7 @@
         "article_count": 23,
         "question_count": 12,
         "public_questions_url": "topic-question.html",
-        "public_articles_url": "topic-article.html",
+        "public_articles_url": "topic.html",
         "articles": [{
             "id": 5,
             "public_url": "article.html",
@@ -723,7 +723,7 @@
         "article_count": 19,
         "question_count": 20,
         "public_questions_url": "topic-question.html",
-        "public_articles_url": "topic-article.html",
+        "public_articles_url": "topic.html",
         "articles": [{
             "id": 5,
             "public_url": "article.html",
@@ -813,7 +813,7 @@
         "article_count": 11,
         "question_count": 22,
         "public_questions_url": "topic-question.html",
-        "public_articles_url": "topic-article.html",
+        "public_articles_url": "topic.html",
         "articles": [{
             "id": 5,
             "public_url": "article.html",
@@ -898,7 +898,7 @@
         "article_count": 24,
         "question_count": 14,
         "public_questions_url": "topic-question.html",
-        "public_articles_url": "topic-article.html",
+        "public_articles_url": "topic.html",
         "articles": [{
             "id": 5,
             "public_url": "article.html",
@@ -978,7 +978,7 @@
         "article_count": 18,
         "question_count": 23,
         "public_questions_url": "topic-question.html",
-        "public_articles_url": "topic-article.html",
+        "public_articles_url": "topic.html",
         "articles": [{
             "id": 5,
             "public_url": "article.html",
@@ -1072,7 +1072,7 @@
         "id": 666,
         "article_count": 44,
         "question_count": 5,
-        "public_articles_url": "topic-article.html",
+        "public_articles_url": "topic.html",
         "public_questions_url": "topic-question.html",
         "allow_questions": true
     },
