@@ -382,6 +382,7 @@
           </div><!-- Container Desktop -->
         </header><!-- #desk-header -->
         <!-- SEARCH -->
+       <!-- SEARCH -->
         {% if page == "myportal_index" or page == "myaccount" or page == "login" or page == "registration" or page == "authentication_verification" or page == "forgot_password" or page == "authentication_verification" %} {% else %}
             <div id="search">
               <div class="container">
@@ -391,11 +392,7 @@
                     {{template_form_params}}
                     <div class="row collapse">
                       <div class="small-10 medium-11 columns">
-                      {% if MBSearchSuggest == true %}
-                        <input type="text" id="qMB" name="q" maxlength="100" value="" placeholder="{{system.snippets.have_a_question}}" autocomplete="off" />
-                      {% else %}
-                        <input type="text" id="q" name="q" maxlength="100" value="" placeholder="{{system.snippets.have_a_question}}" />
-                      {% endif %}
+                        <input type="text" id="searchInput" name="q" maxlength="100" value="" placeholder="{{system.snippets.have_a_question}}" autocomplete="off" />
                       </div>
                       <div class="small-2 medium-1 columns">
                         <button type="submit" class="postfix" id="support-search-submit" value="{{system.snippets.search}}"><i class="fa fa-search"></i></button>
@@ -406,7 +403,7 @@
                 </div>
               </div><!-- Search Container -->
             </div><!-- #desk-search -->
-            <div id="SearchAutoSuggest" class="ui-multi-brand clearfix"></div>
+            <div id="SearchAutoSuggest" class="clearfix"></div>
         {% endif %}
         <!-- END SEARCH -->
         <!-- BREADCRUMBS -->
@@ -495,10 +492,8 @@
             </div><!-- #breadcrumbs -->
         {% endif %}
         <!-- END BREADCRUMBS -->
-<!-- MAIN BLOCK - Replaces Desk:Body in local dev -->
 {% block main %}
 {% endblock %}
-<!-- MAIN BLOCK - Replaces Desk:Body in local dev -->
         <footer id="footer">
             <div class="container">
                 <div class="row">

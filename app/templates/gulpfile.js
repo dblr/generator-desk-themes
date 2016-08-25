@@ -1,4 +1,7 @@
 // generated on <%= date %> using <%= name %> <%= version %>
+
+
+
 const gulp = require('gulp');
 const gulpLoadPlugins = require('gulp-load-plugins');
 const browserSync = require('browser-sync');
@@ -57,6 +60,7 @@ var customFilters = {
       return str;
     }
 }
+// For files being hosted at <%= urlpath %>
 var locals = JSON.parse(fs.readFileSync('./app/data.json', 'utf8'));
 
 // Default Task
@@ -169,7 +173,7 @@ gulp.task('serve', ['styles', 'templates' , 'fonts'], () => {
       }
     }
   });
-
+  gulp.watch(['app/pages/*.html', 'app/*.html'], ['templates']).on('change', reload);
   gulp.watch([
     'app/*.html',
 <% if (!includeBabel) { -%>
@@ -359,7 +363,7 @@ gulp.task('body', function() {
     return gulp.src([
             'app/pages/index.html',
             'app/pages/article.html',
-            'app/pages/topic-article.html',
+            'app/pages/topic.html',
             'app/pages/search.html',
             'app/pages/question-show.html',
             'app/pages/question.html',
@@ -380,30 +384,30 @@ gulp.task('body', function() {
             'app/pages/csat-sent.html'
         ])
         .pipe(htmlreplace({
-            'page_index': '{% if page  == "page_index" %}',
-            'page_article': '{% elsif page == "page_article" %}',
-            'page_topic': '{% elsif page == "page_topic" %}',
-            'page_search_result': '{% elsif page == "page_search_result" %}',
-            'question_show': '{% elsif page == "question_show" %}',
-            'question_new': '{% elsif page == "question_new" %}',
-            'question_pre_create': '{% elsif page == "question_pre_create" %}',
-            'email_new': '{% elsif page == "email_new" %}',
-            'email_pre_create': '{% elsif page == "email_pre_create" %}',
-            'email_submitted': '{% elsif page == "email_submitted" %}',
-            'chat_new': '{% elsif page == "chat_new" %}',
-            'chat_pre_create': '{% elsif page == "chat_pre_create" %}',
-            'myportal_index': '{% elsif page == "myportal_index" %}',
-            'myportal_show': '{% elsif page == "myportal_show" %}',
-            'login': '{% elsif page == "login" %}',
-            'registration': '{% elsif page == "registration" %}',
-            'forgot_password': '{% elsif page == "forgot_password" %}',
-            'myaccount': '{% elsif page == "myaccount" %}',
-            'authentication_verification': '{% elsif page == "authentication_verification" %}',
-            'customer_feedback': '{% elsif page == "customer_feedback" %}',
-            'customer_feedback_completed': '{% elsif page == "customer_feedback_completed" %}',
+            'page_index': '<!--begin:portal_body-->\n{% if page  == "page_index" %}\n<!--begin:page_index-->\n',
+            'page_article': '<!--end:page_index-->\n{% elsif page == "page_article" %}\n<!--begin:page_article-->',
+            'page_topic': '<!--end:page_article-->\n{% elsif page == "page_topic" %}\n<!--begin:page_topic-->',
+            'page_search_result': '<!--end:page_topic-->\n{% elsif page == "page_search_result" %}\n<!--begin:page_search_result-->',
+            'question_show': '<!--end:page_search_result-->\n{% elsif page == "question_show" %}\n<!--begin:question_show-->',
+            'question_new': '<!--end:question_show-->\n{% elsif page == "question_new" %}\n<!--begin:question_new-->',
+            'question_pre_create': '<!--end:question_new-->\n{% elsif page == "question_pre_create" %}\n<!--begin:question_pre_create-->',
+            'email_new': '<!--end:question_pre_create-->\n{% elsif page == "email_new" %}\n<!--begin:email_new-->',
+            'email_pre_create': '<!--end:email_new-->\n{% elsif page == "email_pre_create" %}\n<!--begin:email_pre_create-->',
+            'email_submitted': '<!--end:email_pre_create-->\n{% elsif page == "email_submitted" %}\n<!--begin:email_submitted-->',
+            'chat_new': '<!--end:email_submitted-->\n{% elsif page == "chat_new" %}\n<!--begin:chat_new-->',
+            'chat_pre_create': '<!--end:chat_new-->\n{% elsif page == "chat_pre_create" %}\n<!--begin:chat_pre_create-->',
+            'myportal_index': '<!--end:chat_pre_create-->\n{% elsif page == "myportal_index" %}\n<!--begin:myportal_index-->',
+            'myportal_show': '<!--end:myportal_index-->\n{% elsif page == "myportal_show" %}\n<!--begin:myportal_show-->',
+            'login': '<!--end:myportal_show-->\n{% elsif page == "login" %}\n<!--begin:login-->',
+            'registration': '<!--end:login-->\n{% elsif page == "registration" %}\n<!--begin:registration-->',
+            'forgot_password': '<!--end:registration-->\n{% elsif page == "forgot_password" %}\n<!--begin:forgot_password-->',
+            'myaccount': '<!--end:forgot_password-->\n{% elsif page == "myaccount" %}\n<!--begin:myaccount-->',
+            'authentication_verification': '<!--end:myaccount-->\n{% elsif page == "authentication_verification" %}\n<!--begin:authentication_verification-->',
+            'customer_feedback': '<!--end:authentication_verification-->\n{% elsif page == "customer_feedback" %}\n<!--begin:customer_feedback-->',
+            'customer_feedback_completed': '<!--end:customer_feedback-->\n{% elsif page == "customer_feedback_completed" %}\n<!--begin:customer_feedback_completed-->',
             'endblock': '',
             'deskbody': '{{desk:body}}',
-            'bodyclose': '{%endif%}'
+            'bodyclose': '<!--end:customer_feedback_completed-->\n{%endif%}\n<!--end:portal_body-->'
         }))
         .pipe(removeEmptyLines())
         .pipe(gp_concat('body.liquid'))
@@ -458,6 +462,11 @@ gulp.task('pages', function() {
             'endblock': '',
             'deskbody': '{{desk:body}}',
             'bodyclose': ''
+        }))
+        .pipe(deleteLines({
+          'filters': [
+              /<!--end:/g
+            ]
         }))
         .pipe(removeEmptyLines())
         .pipe(gulp.dest('dist/theme'))

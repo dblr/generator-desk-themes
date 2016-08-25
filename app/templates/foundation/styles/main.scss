@@ -4,10 +4,19 @@
 <% if (includeFoundationSix) { %>
   @include foundation-everything;
 <% } %>
+
+
 .row {
     margin: 0 auto;
     max-width: 75em;
     width: 100%;
+}
+#SearchAutoSuggest {
+  position: absolute;
+  display: none;
+  background: #eee;
+  padding-top: 0.9375rem;
+  z-index: 9999;
 }
 
 /* FILE ATTACHMENTS */

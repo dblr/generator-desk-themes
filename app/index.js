@@ -66,6 +66,10 @@ module.exports = generators.Base.extend({
       message : 'Want to name your project?',
       default : this.appname // Default to current folder name
     },{
+      type    : 'input',
+      name    : 'urlpath',
+      message : 'Path to hosted site files (for site deployment)'
+    },{
       type: 'list',
       name: 'features',
       message: 'Which theme would you like to start with?',
@@ -100,6 +104,7 @@ module.exports = generators.Base.extend({
       this.includeFoundationSix = hasFeature('includeFoundationSix');
       this.includeModernizr = false;
       this.appname = answers.name;
+      this.urlpath = answers.urlpath;
       done();
     }.bind(this));
   },
@@ -112,6 +117,7 @@ module.exports = generators.Base.extend({
         {
           date: (new Date).toISOString().split('T')[0],
           name: this.pkg.name,
+          urlpath: this.urlpath,
           version: this.pkg.version,
           includeSass: this.includeSass,
           includeBootstrap: this.includeBootstrap,
