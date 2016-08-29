@@ -1,0 +1,24 @@
+<!-- build:question_new -->
+{% extends "../_layout.html" %}
+{% assign page = 'question_new' %}
+{% assign form_begin = "<form action='/question-precreate.html' enctype='multipart/form-data' class='new_email' id='new_email' method='go' novalidate='novalidate'>" %}
+{% assign customer_answer_count = question.answers_customer_count %}
+{% assign agent_answer_count = question.answers_agent_count %}
+{% assign answers_count = question.answers_count %}
+{% assign best_answer = question.best_answer %}
+{% block main %}
+<!-- endbuild -->
+
+  <div id="desk-external-variables-question_show" class="desk-external-variables hide">
+    <div id="system-snippets-just_moderated">{{just_moderated}}</div>
+    <div id="system-snippets-name_required">{{system.snippets.name_required}}</div>
+    <div id="system-snippets-email_required">{{system.snippets.email_required}}</div>
+    <div id="system-snippets-invalid_email">{{system.snippets.invalid_email}}</div>
+    <div id="system-snippets-answer_required">{{system.snippets.answer_required}}</div>
+    <div id="system-snippets-exceeding_max_chars">{{system.snippets.exceeding_max_chars}}</div>
+  </div>
+
+
+<!-- build:endblock -->
+{% endblock %}
+<!-- endbuild -->

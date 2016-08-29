@@ -1,0 +1,34 @@
+{% extends "../widgets.html" %}
+{% assign page = 'chat_new' %}
+{% block main %}
+<title>{{ site.company_name }}</title>
+<link rel="icon" type="image/vnd.microsoft.icon" href='{{ "/favicon.png" | portal_image_url: image_asset_host }}' />
+<link rel="icon" type="image/png" href='{{ "/favicon.png" | portal_image_url: image_asset_host }}' />
+<style type="text/css">
+.customer_inner_widget {
+    padding-top: 0px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+</style>
+<!-- BEGIN CHAT BODY -->
+<id id="current-page">chat_widget_new</id>
+<div id="customer_widget_main" class="customer_widget">
+    <div class="inside_title" style="font-size:25px">{{site.company_name}} {{system.snippets.help_center}}</div>
+    <div class="inside_desc">{{system.snippets.chat_support}}</div>
+    <div class="customer_inner_widget">
+        {% if current_user == nil or current_user.is_guest %}
+        <div class="input"><span class="form_label">{{system.snippets.your_name}}:</span> {{ interaction_name }}
+        </div>
+        <div class="input">
+            <span class="form_label">{{system.snippets.your_email}}: <span class="form_label_required">({{system.snippets.optional}})</span></span>
+            {{ interaction_email }}
+        </div>
+        {% endif %}
+        <div class="input"><span class="form_label">{{system.snippets.question}}:</span> {{ chat_subject }}
+        </div>
+        {{hidden_parameters }} {{ submit_button }} {{ interaction_info }}
+    </div>
+</div> 
+{% endblock %}

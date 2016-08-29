@@ -1,0 +1,22 @@
+<!-- build:question_pre_create -->
+{% extends "../_layout.html" %}
+{% assign page = 'question_pre_create' %}
+{% assign form_begin = "<form action='/?moderated=true' enctype='multipart/form-data' class='new_email' id='new_email' method='go' novalidate='novalidate'>" %}
+{% block main %}
+<!-- endbuild -->
+
+  <div id="desk-external-variables-email_pre_create" class="desk-external-variables hidden">
+    <div id="search_term">{{search_term}}</div>
+    <div id="number_search_results">{{number_search_results}}</div>
+    <div id="system-snippets-name_required">{{system.snippets.name_required}}</div>
+    <div id="system-snippets-email_required">{{system.snippets.email_required}}</div>
+    <div id="system-snippets-invalid_email">{{system.snippets.invalid_email}}</div>
+    <div id="system-snippets-subject_required">{{system.snippets.subject_required}}</div>
+    <div id="system-snippets-question_required">{{system.snippets.question_required}}</div>
+    <div id="system-snippets-exceeding_max_chars">{{system.snippets.exceeding_max_chars}}</div>
+  </div>
+
+
+<!-- build:endblock -->
+{% endblock %}
+<!-- endbuild -->

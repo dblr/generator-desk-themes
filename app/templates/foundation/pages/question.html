@@ -21,28 +21,28 @@
   <div id="content">
     <div class="container qna">
       <div class="row">
-        <div class="col-md-8 {% if desk.page.theme.layout != 'left' %} col-md-push-4 {% endif %}">
+        <div class="columns medium-8 {% if desk.page.theme.layout != 'left' %} columns medium-push-4 {% endif %}">
           <!-- THE QUESTION -->
           <div class="row header question">
-              <div class="col-md-1">
+              <div class="columns medium-1">
                 <span class="gravatar">
                   {{ question.from_email | gravatar_image: gravatar_unknown_user, ssl }}
                 </span>
               </div>
-              <div class="col-md-11">
+              <div class="columns medium-11">
                 <h2>{{ question.subject }}</h2>
                 <h3 class="meta">{{ question.from_name }} &mdash; {{ question.created_at | in_time_zone: site.timezone | date: '%b %d, %Y %I:%M%p %Z' }} </h3>
               </div>
           </div>
           <div class="row body question">
-            <div class="col-md-12">
+            <div class="columns medium-12">
                <p>{{ question.body }}</p>
                <hr>
             </div>
           </div><!-- THE QUESTION -->
           {% if best_answer != nil %}
               <div class="row header answer">
-                <div class="col-md-12">
+                <div class="columns medium-12">
                   <h2>
                     {{ answers_count }}
                     {{ system.snippets.community_answer | pluralize: answer_count, system.snippets.community_answers }}
@@ -51,12 +51,12 @@
               </div>
 
               <div class="row body answer best">
-                <div class="col-md-1">
+                <div class="columns medium-1">
                   <span class="gravatar">
                     {{ best_answer.from_email | gravatar_image: gravatar_unknown_user,  ssl }}
                   </span>
                 </div>
-                <div  class="col-md-11">
+                <div  class="columns medium-11">
                   <h3>
                     {{ best_answer.from_name }}
                     - <small>
@@ -77,7 +77,7 @@
           {% if question.non_best_answers_exist %}
             {% if best_answer == nil %}
               <div class="row header answer">
-                <div class="col-md-12">
+                <div class="columns medium-12">
                   <h2>
                     {{ answers_count }}
                     {{ system.snippets.community_answer | pluralize: answer_count, system.snippets.community_answers }}
@@ -87,12 +87,12 @@
             {% endif %}
             {% for answer in question.answers %}
                 <div class="row body answer">
-                  <div class="col-md-1">
+                  <div class="columns medium-1">
                     <span class="gravatar">
                       {{ answer.from_email | gravatar_image: gravatar_unknown_user,  ssl }}
                     </span>
                   </div>
-                  <div class="col-md-11">
+                  <div class="columns medium-11">
                     <h3>
                       {{ answer.from_name }}<small class="muted"> - {{ answer.updated_at | in_time_zone: site.timezone | date: '%b %d, %Y at %I:%M%p %Z' }}</small>
                     </h3>
@@ -134,16 +134,16 @@
                 <h2>{{system.snippets.post_public_answer}}</h2>
                 {{ form_begin }}
                 <div class="form panel panel-default">
-                  <div class="panel-footer no-body ">
+                  <div class="panel-footer no-body">
                     {% if current_user == nil or current_user.is_guest %}
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="columns medium-6">
                           <div class="form-group">
                               <label for="interaction_name">{{system.snippets.your_name}} <span class="muted">({{system.snippets.required}})</span></label>
                               <input id="interaction_name" maxlength="100" class="form-control" name="interaction[name]" value="{{ interaction.name }}" type="text" />
                            </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="columns medium-6">
                           <div class="form-group">
                             <label for="interaction_email">{{system.snippets.your_email}} <span class="muted">({{system.snippets.required}})</span></label>
                             <input id="interaction_email" class="form-control" maxlength="100" name="interaction[email]" value="{{ interaction.email }}" type="text" />
@@ -163,9 +163,9 @@
                 {{ form_end }}
               {% endif %}
             </div>
-        </div><!-- 8 col-->
+        </div>
       {{ sidebar_main }}
-      </div><!--ROW-->
+      </div>
     </div><!--Container-->
   </div><!--Content-->
 

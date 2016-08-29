@@ -1,0 +1,48 @@
+<!doctype html>
+<html<% if (includeModernizr) { %> class="no-js"<% } %> lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= appname %></title>
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <link rel="stylesheet" href="styles/desk-widget.css">
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css">
+    <!-- build:css styles/widget.css -->
+    <link rel="stylesheet" href="styles/widgets.css">
+    <!-- endbuild -->
+    <% if (includeModernizr) { %>
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <script src="/bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+    <% } %>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="authenticity_token" name="csrf-param" />
+    <meta content="zo4Z7hAQ5l8ZR/uet2+/zUUK+5Wh+v+CKoWZDPaZI4w=" name="csrf-token" />
+    <meta name="max_number_attachments" content="5" />
+    <meta name="system-snippets-add_attachment" content="Add Another Attachment" />
+  </head>
+  <body>
+
+    {% block main %}
+    {% endblock %}
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js scripts/plugins.js -->
+    <!-- endbuild -->
+    <script src="scripts/widget-reqs.js"></script>
+    <!-- build:js scripts/widgets.js -->
+    <script src="scripts/widgets.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>

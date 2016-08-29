@@ -1,0 +1,15 @@
+<!-- build:myportal_index -->
+{% extends "../_layout.html" %}
+{% assign page = 'myportal_index' %}
+{% assign desk.page.content.form = "<form accept-charset='UTF-8' action='/customer/registrations' method='post' novalidate='novalidate'><div style='margin:0;padding:0;display:inline'><input name='utf8' type='hidden' value='✓'><input name='authenticity_token' type='hidden' value='INY+d0Nc5eu0DcqQ7aLr3wmShSotRr4twIgCKCBWrbk='></div> <div class='field'> <label for='email'>Email</label> <input id='email' maxlength='50' name='email' type='text' class='invalid'><label for='email' generated='true' class='invalid'>Email address is required.</label> </div> <div class='input-button actions'><input id='registration_submit' name='commit' type='submit' value='Send Instructions'></div> </form>" %}
+{% block main %}
+<!-- endbuild -->
+
+  <div id="registration-in-progress" class="hide">
+      <img alt='Ajax-loader-small' src='{{ "/images/ajax-loader-small.gif" | portal_image_url: image_asset_host }}' /> {{ system.snippets.registration_in_progress}} 
+  </div>
+
+
+<!-- build:endblock -->
+{% endblock %}
+<!-- endbuild -->

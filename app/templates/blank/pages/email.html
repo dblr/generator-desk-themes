@@ -1,0 +1,20 @@
+<!-- build:email_new -->
+{% extends "../_layout.html" %}
+{% assign page = 'email_new' %}
+{% block main %}
+<!-- endbuild -->
+
+  <div id="desk-external-variables-email_new" class="desk-external-variables hide">
+    <div id="system-snippets-name_required">{{system.snippets.name_required}}</div>
+    <div id="system-snippets-email_required">{{system.snippets.email_required}}</div>
+    <div id="system-snippets-invalid_email">{{system.snippets.invalid_email}}</div>
+    <div id="system-snippets-subject_required">{{system.snippets.subject_required}}</div>
+    <div id="system-snippets-question_required">{{system.snippets.question_required}}</div>
+    <div id="system-snippets-exceeding_max_chars">{{system.snippets.exceeding_max_chars}}</div>
+    <div id="max_number_attachments">{{desk.system.max_attachments}}</div>
+    <div id="system-snippets-add_attachment">{{system.snippets.add_attachment}}</div>
+  </div>
+
+<!-- build:endblock -->
+{% endblock %}
+<!-- endbuild -->

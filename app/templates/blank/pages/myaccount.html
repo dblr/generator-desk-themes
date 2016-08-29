@@ -1,0 +1,16 @@
+<!-- build:myaccount -->
+{% extends "../_layout.html" %}
+{% assign page = 'myaccount' %}
+{% block main %}
+<!-- endbuild -->
+
+  <div id="desk-external-variables-myaccount" class="desk-external-variables hide">
+    <div id="system-snippets-email_required">{{system.snippets.email_required}}</div>
+    <div id="system-snippets-invalid_email">{{system.snippets.invalid_email}}</div>
+    <div id="system-snippets-duplicate_email">{{system.snippets.duplicate_email}}</div>
+  </div>
+
+
+<!-- build:endblock -->
+{% endblock %}
+<!-- endbuild -->
