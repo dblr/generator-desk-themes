@@ -1,7 +1,7 @@
 {
   "name": "generator-desk-themes-new",
   "version": "1.2.9",
-  "description": "Desk.com theme generator with local liquid rendering",
+  "description": "Desk.com theme generator",
   "license": "BSD-2-Clause",
   "repository": "dblr/generator-desk-gen",
   "author": "Desk.com / WOW Services",
