@@ -1563,7 +1563,7 @@
     "number_search_results": 14,
     "topics_count": 100,
     "more_search_block": "<div class='pagination'><span class='previous_page disabled'>&lt;&lt;</span> <em class='current'>1</em> <a rel='next' href='#'>2</a> <a href='#'>3</a> <a class='next_page' rel='next' href='#'>&gt;&gt;</a></div>",
-    "more_article_block": "<div class='pagination'><span class='previous_page disabled'>&lt;&lt;</span> <em class='current'>1</em> <a rel='next' href='/customer/en/portal/topics/496610-topic-3/articles?page=2&amp;t=503097'>2</a> <a href='/customer/en/portal/topics/496610-topic-3/articles?page=3&amp;t=503097'>3</a> <a class='next_page' rel='next' href='/customer/en/portal/topics/496610-topic-3/articles?page=2&amp;t=503097'>&gt;&gt;</a></div>",
+    "more_article_block": "<div id='paginate_block'><br><div id='results_string'></div><br><div class='pagination'><span class='previous_page disabled'>&lt;&lt;</span> <em class='current'>1</em> <a rel='next' href='/customer/en/portal/topics/496610-topic-3/articles?page=2&amp;t=592889'>2</a> <a href='/customer/en/portal/topics/496610-topic-3/articles?page=3&amp;t=592889'>3</a> <a class='next_page' rel='next' href='/customer/en/portal/topics/496610-topic-3/articles?page=2&amp;t=592889'>&gt;&gt;</a></div> </div>",
     "search_form_begin": "<form action='search.html' method='get' id='support-search' class='support-search-big'>",
     "search_form_end": "</form>",
     "form_begin": "<form action='/email-precreate.html' enctype='multipart/form-data' class='new_email' id='new_email' method='go' novalidate='novalidate'>",

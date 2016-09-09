@@ -159,7 +159,8 @@ module.exports = generators.Base.extend({
       var bowerJson = {
         name: _s.slugify(this.appname),
         private: true,
-        dependencies: {}
+        dependencies: {},
+        resolutions: {}
       };
       bowerJson.dependencies['font-awesome'] = '~4.5';
       if (this.includeBootstrap) {
@@ -184,7 +185,8 @@ module.exports = generators.Base.extend({
       }
 
       //bowerJson.dependencies['j'] = '~2.8.1'
-      bowerJson.dependencies['jquery'] = '~1.9.1'
+      bowerJson.dependencies['jquery'] = '~1.9.1';
+      bowerJson.resolutions['jquery'] = '~1.9.1';
       this.fs.writeJSON('bower.json', bowerJson);
       this.fs.copy(
         this.templatePath('bowerrc'),
