@@ -214,10 +214,6 @@ module.exports = generators.Base.extend({
         this.templatePath('robots.txt'),
         this.destinationPath('app/robots.txt')
       );
-      this.fs.copy(
-        this.templatePath('autocomplete'),
-        this.destinationPath('.tmp/customer/portal/articles/autocomplete')
-      );
     },
 
     styles: function () {
