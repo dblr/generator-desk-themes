@@ -50,7 +50,7 @@
                         <a href='{{ result.public_url }}' title="{{ result.subject_plain }}"><span>{{ result.subject_plain }}</span></a>
                       </h3>
                       {% if MBSearchPage == true %}<label class="{{desk.current_brand.name}}">{{desk.current_brand.name}}</label>{% endif %}
-                      <p>{{ result.body_plain | clip }}</p>
+                      <p>{{ result.body_plain | clip:210 }}</p>
                       <a href="{{ result.public_url }}" class="button tiny">{{ system.snippets.read_article }}</a>
                     </div>
                   </article>
@@ -62,7 +62,7 @@
                         <a href='{{ result.public_url }}' title="{{ result.subject_plain }}"><span>{{ result.subject_plain }}</span></a>
                       </h3>
                       {% if MBSearchPage == true %}<label class="{{desk.current_brand.name}}">{{desk.current_brand.name}}</label>{% endif %}
-                      <p>{{ result.body_plain | clip }}</p>
+                      <p>{{ result.body_plain | clip:210 }}</p>
                     </div>
                     <div class="columns medium-12">
                       {% if result.answers_agent_count > 0 %}
