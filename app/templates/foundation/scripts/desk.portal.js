@@ -1028,11 +1028,12 @@ if (currentPage == 'page_search_result') {
   if (MBSearchPage == 'true') {
     jQuery(document).ready(function () {
       //VARIABLES
-      var brandCount = 0,
-      displayLimit = 10,
-      totalCount = 0,
-      searchTerm = $('#search-term').html(), 
-      systemLanguageDesk = $('#system_language').html(),
+      themeID = 0; //ONLY NEEDED IF WORKING ON THEME AND WANT TO RENDER LINKS w/THEME ID
+      brandCount = 0;
+      displayLimit = 10;
+      totalCount = 0;
+      searchTerm = $('#search-term').html(); //LOADS SEARCH TERM
+      systemLanguageDesk = $('#system_language').html(); //LOADS SYSTEM LANGUAGE
       readArticle = $('#read-article').html(); //LOADS READ ARTICLE SNIPPET
       //FOR EACH BRAND FUNCTION
       $('#site-brands > div').each(function (i, e) {
@@ -1059,7 +1060,7 @@ if (currentPage == 'page_search_result') {
             var html = $(this.label);
             article_title = html.find(".article-autocomplete-subject").html();
             article_body = html.find(".article-autocomplete-body").html();
-            auto_suggest_articles += '<article class="row result article"><div class="columns medium-12"><h3><a href="' + this.id + '">' + article_title + '</a></h3><p>' + article_body + '</p><a class="button" href="' + this.id + '">' + readArticle + '</a></div></article><hr>';
+            auto_suggest_articles += '<article class="row result article"><div class="columns medium-12"><h3><a href="' + this.id + '&t=' + themeID + '">' + article_title + '</a></h3><p>' + article_body + '</p><a class="button" href="' + this.id + '">' + readArticle + '</a></div></article><hr>';
             resultsCount++;
           });
 
@@ -1107,7 +1108,7 @@ if (currentPage == 'page_search_result') {
         pageNumber = parseInt($(this).attr('data-page'));
         searchTerm = $('#search-term').html(); //LOADS SEARCH TERM
         systemLanguageDesk = $('#system_language').html(); //LOADS SYSTEM LANGUAGE
-        searchBrandURL = 'https://' + document.location.host.toString() + '/customer/' + systemLanguageDesk + '/portal/articles/search?q=' + searchTerm + '&page=' + pageNumber + '&b_id=' + brandID + '&displayMode=BrandOnly';
+        searchBrandURL = 'https://' + document.location.host.toString() + '/customer/' + systemLanguageDesk + '/portal/articles/search?q=' + searchTerm + '&page=' + pageNumber + '&b_id=' + brandID + '&t=' + themeID + '&displayMode=BrandOnly';
         //AJAX REQUEST(S)
         $.ajax({
           async: true,
@@ -1256,7 +1257,7 @@ function SearchSuggestMB() {
           if (as_count > 0) {
             $('#SearchAutoSuggest').show();
             if (as_count > 9) {
-              $('#SearchAutoSuggest').append('<div class="columns medium-12" id="brand-' + brandID + '">' + '<div class="row"><h4 class="left subheader"><span>' + as_count + ' + </span>' + resultsFound + ' in ' + brandName + '</h4>' + '<a class="button tiny right" target="_blank" href="//' + document.location.host.toString() + '/customer/' + systemLanguageDesk + '/portal/articles/search?b_id=' + brandID + '&q=' + search_query + '">View All</a></div>' + '<div class="row"><ul class="unstyled"></ul></div>');
+              $('#SearchAutoSuggest').append(' ' + '<div class="columns medium-12" id="brand-' + brandID + '">' + '<div class="row"><h4 class="left subheader"><span>' + as_count + ' + </span>' + resultsFound + ' in ' + brandName + '</h4>' + '<a class="button tiny right" target="_blank" href="//' + document.location.host.toString() + '/customer/' + systemLanguageDesk + '/portal/articles/search?b_id=' + brandID + '&q=' + search_query + '">View All</a></div>' + '<div class="row"><ul class="unstyled"></ul></div>');
             } else {
               $('#SearchAutoSuggest').append('<div class="columns medium-12" id="brand-' + brandID + '">' + '<div class="row"><h4 class="left subheader"><span>' + as_count + ' </span>' + resultsFound + ' in ' + brandName + '</h4>' + '<a class="button tiny right" target="_blank" href="//' + document.location.host.toString() + '/customer/' + systemLanguageDesk + '/portal/articles/search?b_id=' + brandID + '&q=' + search_query + '">View All</a></div>' + '<div class="row"><ul class="unstyled"></ul></div>');
             }
@@ -1272,4 +1273,29 @@ function SearchSuggestMB() {
     }); // AJAX REQUEST
   }); // FOR EACH BRAND
 }
-
+// =====================================================
+// OLD JS? Is this even needed?
+// =====================================================
+//TWITTER... BROKEN DUE TO NEW API?
+jQuery(document).ready(function () {
+  if (deskEV('twitter_enabled') == 'true') {
+    jQuery('#tweets').tweet({
+      join_text: 'auto',
+      auto_join_text_default: '',
+      auto_join_text_reply: '',
+      username: deskEV('twitter_username'),
+      avatar_size: 24,
+      count: 3,
+      loading_text: deskEV('system.snippets.loading') + '...',
+      time_text_seconds_ago: $("#system-snippets-seconds_ago").html(),
+      time_text_a_minute_ago: $('#system-snippets-a_minute_ago').html(),
+      time_text_minutes_ago: $('#system-snippets-minutes_ago').html(),
+      time_text_an_hour_ago: $('#system-snippets-an_hour_ago').html(),
+      time_text_hours_ago: $('#system-snippets-hours_ago').html(),
+      time_text_a_day_ago: $('#system-snippets-a_day_ago').html(),
+      time_text_days_ago: $('#system-snippets-days_ago').html(),
+      time_text_about: $('#system-snippets-about').html()
+    });
+  }
+});
+//# sourceMappingURL=desk.portal.js.map
