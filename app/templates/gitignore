@@ -1,4 +1,5 @@
 node_modules
+.DS_Store
 dist
 .tmp
 bower_components/chai
@@ -9,6 +10,6 @@ bower_components/jquery-placeholder
 bower_components/jquery.cookie
 bower_components/mocha
 bower_components/modernizr
-!bower_components/foundation
+!bower_components/foundation/scss
 !bower_components/bootstrap-sass
 test/bower_components

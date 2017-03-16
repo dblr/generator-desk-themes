@@ -1,6 +1,7 @@
 <!-- build:myaccount -->
 {% extends "../_layout.html" %}
 {% assign page = 'myaccount' %}
+{% assign desk.page.content.form = "<div id='email_338801754'> <img alt='A-email' src='https://cdn.desk.com/assets/interactions/20/a-email-5a0ea05227839a544b26a8f7d078d07d.png'> <span class='email_address'> testing@desk.com </span> <div id='verified_338801754' class='verified'> <img alt='Verified' src='https://cdn.desk.com/assets/verified-516ee42f0447d04b5d7b2a4ee5aa7ffd.png'> verified </div> </div> <div id='add_facebook'> <form action='/customer/login/facebook' class='button_to' method='get'> <div> <input type='submit' value='Add Facebook Account'> </div> </form> </div> <div id='add_twitter'> <form action='/customer/login/twitter' class='button_to' method='get'> <div> <input type='submit' value='Add Twitter Account'> </div> </form> </div> <form accept-charset='UTF-8' action='/customer/account/emails?t=746220' class='new_customer_contact_email' id='new_customer_contact_email' method='post' novalidate='novalidate' _lpchecked='1'> <div style='margin:0;padding:0;display:inline'> <input name='utf8' type='hidden' value='✓'> <input name='authenticity_token' type='hidden' value='JJeDGwSeqglZ60ttnIao0ioCwAyZzj/lc5TFqNSfXic='> </div> <input id='new_email' name='customer_contact_email[email]' placeholder='Add an email address' size='30' type='text'> <button id='add_email' type='submit'>Add</button> </form>" %}
 {% block main %}
 <!-- endbuild -->
 
@@ -15,8 +16,8 @@
       <div class="col-md-8 {% if desk.page.theme.layout != 'left' %} col-md-push-4 {% endif %}">
         <div class="header row">
           <div class="col-md-12">
-            <h2>{{desk.system.snippets.account_title}}</h2>
-            <a href='{{ desk.system.links.myportal }}'>{{desk.system.snippets.track_support_cases_clickable}}</a>{{desk.system.snippets.track_support_cases}}
+            <h2>{{system.snippets.account_title}}</h2>
+            <a href='{{ system.links.myportal }}'>{{system.snippets.track_support_cases_clickable}}</a>{{system.snippets.track_support_cases}}
           </div>
         </div>
         <div class="body row">

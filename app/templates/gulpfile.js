@@ -1,13 +1,10 @@
 // generated on <%= date %> using <%= name %> <%= version %>
 
-
-
 const gulp = require('gulp');
 const gulpLoadPlugins = require('gulp-load-plugins');
 const browserSync = require('browser-sync');
 const del = require('del');
 const wiredep = require('wiredep').stream;
-
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
@@ -311,7 +308,7 @@ gulp.task('cleanup', function () {
       'page_index': '{% if page  == "page_index" %}',
       'endblock': '',
       'css': '',
-      'js': ''
+      'js': '<script src="<%= urlpath %>/scripts/main.js" type"text/javascript"></script>'
     }))
     .pipe(removeEmptyLines())
     .pipe(gp_rename('body.liquid'))

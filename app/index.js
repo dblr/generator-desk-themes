@@ -63,7 +63,7 @@ module.exports = generators.Base.extend({
     var prompts = [{
       type    : 'input',
       name    : 'name',
-      message : 'Want to name your project?',
+      message : 'Want to name your project derp?',
       default : this.appname // Default to current folder name
     },{
       type    : 'input',
@@ -162,6 +162,7 @@ module.exports = generators.Base.extend({
         dependencies: {},
         resolutions: {}
       };
+      bowerJson.dependencies['jquery-validation'] = '^1.16.0';
       bowerJson.dependencies['font-awesome'] = '~4.5';
       if (this.includeBootstrap) {
           bowerJson.dependencies['bootstrap-sass'] = '~3.3.5';

@@ -1,4 +1,15 @@
 {
+    "portal":{
+      "authentication_enabled": true
+    },
+    "current_user": {
+        "is_guest": false,
+        "customer":{
+          "name": "Bob Dole"
+        }
+    },
+    "langs_list": "<select id='a-content-select' name='a-content-select'><option value='en' selected='selected'>English</option><option value='en'>Spanish</option><option value='hu'>Magyar</option> <option value='ja'>日本語</option></select>",
+
     "desk": {
         "brands": [{
             "id": 6660,
@@ -25,7 +36,9 @@
                 "question": "question.html",
                 "home": "index.html",
                 "email": "email.html",
-                "login": "login.html"
+                "login": "login.html",
+                "myportal": "myportal.html",
+                "myaccount": "profile.html"
             }
         },
         "customer": {
@@ -44,6 +57,7 @@
                     "is_email_channel": true,
                     "can_accept_replies": true,
                     "id": 6734,
+                    "updated_at": "2015-12-02 12:14:51 -0500",
                     "status": {
                         "id": 30
                     },
@@ -494,66 +508,121 @@
         }
     },
     "site": {
-        "company_name": "Isologics Garrison",
+        "company_name": "Company Name",
         "questions_enabled_config": true,
         "timezone": "UTC",
         "email_enabled_config": true,
         "chat_enabled_config": true,
         "phone_enabled_config": true,
         "agent_name_config": "agent",
-        "portal_authentication_enabled_config": true
+        "myportal_enabled": true,
+        "portal_logout_enabled_config": true,
+        "portal_authentication_type_config": "desk",
+        "portal_authentication_enabled_config": true,
+        "topics":[{
+            "name": "Frederick Willis",
+            "public_url": "topics.html",
+            "article_count": 23,
+            "public_articles_url": "topic.html",
+            "desc": "ea incididunt eiusmod laboris aliqua minim aute commodo veniam sunt"
+        },{
+            "name": "Hello Willis",
+            "public_url": "topics.html",
+            "article_count": 23,
+            "public_articles_url": "topic.html",
+            "desc": "ea incididunt eiusmod laboris aliqua minim aute commodo veniam sunt"
+        },{
+            "name": "Derp Willis",
+            "public_url": "topics.html",
+            "article_count": 23,
+            "public_articles_url": "topic.html",
+            "desc": "ea incididunt eiusmod laboris aliqua minim aute commodo veniam sunt"
+        },{
+            "name": "Sue Willis",
+            "public_url": "topics.html",
+            "article_count": 23,
+            "public_articles_url": "topic.html",
+            "desc": "ea incididunt eiusmod laboris aliqua minim aute commodo veniam sunt"
+        }]
     },
     "article": {
-        "subject_plain": "Minga Merritt",
-        "body": "<p>Ea consectetur laboris eiusmod eiusmod mollit est ex ad velit proident voluptate exercitation. Adipisicing aliquip eu officia proident veniam quis enim in enim culpa nostrud nisi reprehenderit reprehenderit. Ad nisi amet quis nulla pariatur consequat voluptate ipsum irure consequat eiusmod aliquip eu dolore. Enim in occaecat mollit qui do laborum adipisicing minim ex duis fugiat exercitation dolore.\r\nQuis sit esse fugiat laboris ex nostrud aliqua ullamco do laborum dolore dolor adipisicing cillum. Pariatur sint in nisi culpa veniam proident ullamco sint fugiat ut. Commodo incididunt consequat voluptate duis in dolor quis officia excepteur.\r\n</p><p>Culpa eiusmod id duis reprehenderit minim culpa. Aliqua velit consequat voluptate amet aliquip magna ex amet nulla sit magna sint enim. Sint sit exercitation id laboris nulla irure tempor adipisicing Lorem.\r\n</p><p>Est laborum labore aliqua id anim reprehenderit ipsum cillum velit sint dolor. Et pariatur sunt qui esse nulla dolore laboris sunt. Consectetur aliquip magna quis sunt do consequat aliquip sit deserunt. Ex labore cupidatat eiusmod mollit esse proident aliqua dolor in ea.\r\nCommodo laboris veniam exercitation amet reprehenderit irure tempor minim ex minim eu cillum labore. Ex minim cillum proident amet esse ea mollit elit irure ea. Aliqua adipisicing aute nulla aliquip ex dolor culpa officia sit amet Lorem occaecat occaecat excepteur. Velit mollit commodo non sit mollit duis. In do consectetur ut aute nisi est voluptate minim veniam pariatur ipsum qui nostrud. Consectetur sint labore laborum pariatur aute deserunt labore aliqua veniam deserunt ea sit cillum ut. Cillum duis est enim culpa sit amet elit.\r\n</p><p>Id officia est aute esse occaecat irure laboris pariatur. Exercitation non do aute tempor culpa ex elit reprehenderit. Tempor elit deserunt et qui sint reprehenderit ea veniam pariatur non. Nisi do proident nostrud nostrud reprehenderit ex veniam culpa eiusmod velit voluptate tempor nisi. Nostrud occaecat commodo commodo Lorem veniam cupidatat nulla voluptate aliquip aute. Exercitation magna Lorem irure reprehenderit et. Occaecat occaecat anim deserunt occaecat amet anim eu do duis adipisicing do dolor excepteur.\r\n</p><p>Commodo qui commodo cillum incididunt laborum proident nisi exercitation eiusmod nostrud incididunt. Dolor laborum nostrud veniam velit. Officia consectetur ea in laboris nostrud deserunt nulla aliquip eu.\r\nEst ut amet et ad irure veniam aliquip cillum. Veniam eiusmod qui officia nisi excepteur eiusmod in fugiat est consequat. Magna sit nisi sunt in pariatur reprehenderit quis velit do. Tempor cillum id consectetur qui esse consequat ut tempor magna nostrud. Laboris dolor enim cillum aute quis. In do adipisicing enim do eiusmod consequat aliquip.\r\n</p><hr><h1>h1. This is a very large header.</h1> <h2>h2. This is a large header.</h2> <h3>h3. This is a medium header.</h3> <h4>h4. This is a moderate header.</h4> <h5>h5. This is a small header.</h5> <h6>h6. This is a tiny header.</h6> <hr> <h1 class='subheader'>h1.subheader</h1> <h2 class='subheader'>h2.subheader</h2> <h3 class='subheader'>h3.subheader</h3> <h4 class='subheader'>h4.subheader</h4> <h5 class='subheader'>h5.subheader</h5> <h6 class='subheader'>h6.subheader</h6><hr><ul class='disc'> <li>List item with a much longer description or more content.</li> <li>List item</li> <li>List item <ul> <li>Nested list item</li> <li>Nested list item</li> <li>Nested list item</li> </ul> </li> <li>List item</li> <li>List item</li> <li>List item</li> </ul> <ul class='circle'> <li>List item with a much longer description or more content.</li> <li>List item</li> <li>List item <ul> <li>Nested List Item</li> <li>Nested List Item</li> <li>Nested List Item</li> </ul> </li> <li>List item</li> <li>List item</li> <li>List item</li> </ul> <ul class='square'> <li>List item with a much longer description or more content.</li> <li>List item</li> <li>List item <ul> <li>Nested List Item</li> <li>Nested List Item</li> <li>Nested List Item</li> </ul> </li> <li>List item</li> <li>List item</li> <li>List item</li> </ul> <ul class='no-bullet'> <li>List item with a much longer description or more content.</li> <li>List item</li> <li>List item <ul> <li>Nested List Item</li> <li>Nested List Item</li> <li>Nested List Item</li> </ul> </li> <li>List item</li> <li>List item</li> <li>List item</li> </ul> <ol> <li>List item with a much longer description or more content.</li> <li>List item</li> <li>List item <ol> <li>Nested List Item</li> <li>Nested List Item</li> <li>Nested List Item</li> </ol> </li> <li>List item</li> <li>List item</li> <li>List item</li> </ol> <dl> <dt>Definition Title</dt> <dd>Definition Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam id dolor id nibh ultricies vehicula ut id elit.</dd> </dl> <blockquote>Those people who think they know everything are a great annoyance to those of us who do.<cite>Isaac Asimov</cite></blockquote> <ul class='vcard'> <li class='fn'>Gaius Baltar</li> <li class='street-address'>123 Colonial Ave.</li> <li class='locality'>Caprica City</li> <li><span class='state'>Caprica</span>, <span class='zip'>12345</span></li> <li class='email'><a href='#'>g.baltar@example.com</a></li> </ul>",
+        "subject_plain": "Interesting Article Title",
+        "body": "<ul class='article-nav'> <li><a href='#top'>Top</a></li> <li><a href='#section-one'>Section Two</a></li> <li><a href='#section-two'>Section Three</a></li> <li><a href='#section-three'>Section Four</a></li> <li><a href='#section-four'>Section Five</a></li> <li><a href='#section-five'>Section Six</a></li> </ul><p>Ea consectetur laboris eiusmod eiusmod mollit est ex ad velit proident voluptate exercitation. Adipisicing aliquip eu officia proident veniam quis enim in enim culpa nostrud nisi reprehenderit reprehenderit. Ad nisi amet quis nulla pariatur consequat voluptate ipsum irure consequat eiusmod aliquip eu dolore. Enim in occaecat mollit qui do laborum adipisicing minim ex duis fugiat exercitation dolore.\r\nQuis sit esse fugiat laboris ex nostrud aliqua ullamco do laborum dolore dolor adipisicing cillum. Pariatur sint in nisi culpa veniam proident ullamco sint fugiat ut. Commodo incididunt consequat voluptate duis in dolor quis officia excepteur.\r\n</p> <p>Culpa eiusmod id duis reprehenderit minim culpa. Aliqua velit consequat voluptate amet aliquip magna ex amet nulla sit magna sint enim. Sint sit exercitation id laboris nulla irure tempor adipisicing Lorem.\r\n</p> <dl> <dt>Definition Title</dt> <dd>Definition Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam id dolor id nibh ultricies vehicula ut id elit.</dd> <dt>Another Important Title</dt> <dd>Commodo qui commodo cillum incididunt laborum proident nisi exercitation eiusmod nostrud incididunt.</dd> <dt>Repeating Title</dt> <dd>Definition Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam id dolor id nibh ultricies vehicula ut id elit.</dd> </dl> <p id='section-one'>Est laborum labore aliqua id anim reprehenderit ipsum cillum velit sint dolor. Et pariatur sunt qui esse nulla dolore laboris sunt. Consectetur aliquip magna quis sunt do consequat aliquip sit deserunt. Ex labore cupidatat eiusmod mollit esse proident aliqua dolor in ea.\r\nCommodo laboris veniam exercitation amet reprehenderit irure tempor minim ex minim eu cillum labore. Ex minim cillum proident amet esse ea mollit elit irure ea. Aliqua adipisicing aute nulla aliquip ex dolor culpa officia sit amet Lorem occaecat occaecat excepteur. Velit mollit commodo non sit mollit duis. In do consectetur ut aute nisi est voluptate minim veniam pariatur ipsum qui nostrud. Consectetur sint labore laborum pariatur aute deserunt labore aliqua veniam deserunt ea sit cillum ut. Cillum duis est enim culpa sit amet elit.\r\n</p> <blockquote> Those people who think they know everything are a great annoyance to those of us who do. <cite>Isaac Asimov</cite> </blockquote> <p>Id officia est aute esse occaecat irure laboris pariatur. Exercitation non do aute tempor culpa ex elit reprehenderit. Tempor elit deserunt et qui sint reprehenderit ea veniam pariatur non. Nisi do proident nostrud nostrud reprehenderit ex veniam culpa eiusmod velit voluptate tempor nisi. Nostrud occaecat commodo commodo Lorem veniam cupidatat nulla voluptate aliquip aute. Exercitation magna Lorem irure reprehenderit et. Occaecat occaecat anim deserunt occaecat amet anim eu do duis adipisicing do dolor excepteur.\r\n</p> <p id='section-two'>Est laborum labore aliqua id anim reprehenderit ipsum cillum velit sint dolor. Et pariatur sunt qui esse nulla dolore laboris sunt. Consectetur aliquip magna quis sunt do consequat aliquip sit deserunt. Ex labore cupidatat eiusmod mollit esse proident aliqua dolor in ea.\r\nCommodo laboris veniam exercitation amet reprehenderit irure tempor minim ex minim eu cillum labore. Ex minim cillum proident amet esse ea mollit elit irure ea. Aliqua adipisicing aute nulla aliquip ex dolor culpa officia sit amet Lorem occaecat occaecat excepteur. Velit mollit commodo non sit mollit duis. In do consectetur ut aute nisi est voluptate minim veniam pariatur ipsum qui nostrud. Consectetur sint labore laborum pariatur aute deserunt labore aliqua veniam deserunt ea sit cillum ut. Cillum duis est enim culpa sit amet elit.\r\n</p> <ul class='no-bullet'> <li>List item with a much longer description or more content.</li> <li>List item</li> <li>List item <ul> <li>Nested List Item</li> <li>Nested List Item</li> <li>Nested List Item</li> </ul> </li> <li>List item</li> <li>List item</li> <li>List item</li> </ul> <p>Commodo qui commodo cillum incididunt laborum proident nisi exercitation eiusmod nostrud incididunt. Dolor laborum nostrud veniam velit. Officia consectetur ea in laboris nostrud deserunt nulla aliquip eu.\r\nEst ut amet et ad irure veniam aliquip cillum. Veniam eiusmod qui officia nisi excepteur eiusmod in fugiat est consequat. Magna sit nisi sunt in pariatur reprehenderit quis velit do. Tempor cillum id consectetur qui esse consequat ut tempor magna nostrud. Laboris dolor enim cillum aute quis. In do adipisicing enim do eiusmod consequat aliquip.\r\n</p> <hr> <h1 id='section-three'>h1. This is a very large header.</h1> <h2>h2. This is a large header.</h2> <h3>h3. This is a medium header.</h3> <h4>h4. This is a moderate header.</h4> <h5>h5. This is a small header.</h5> <h6>h6. This is a tiny header.</h6> <hr> <h1 class='subheader'>h1.subheader</h1> <h2 class='subheader'>h2.subheader</h2> <h3 class='subheader'>h3.subheader</h3> <h4 class='subheader'>h4.subheader</h4> <h5 class='subheader'>h5.subheader</h5> <h6 class='subheader'>h6.subheader</h6> <hr> <ul class='disc'> <li>List item with a much longer description or more content.</li> <li>List item</li> <li>List item <ul> <li>Nested list item</li> <li>Nested list item</li> <li>Nested list item</li> </ul> </li> <li>List item</li> <li>List item</li> <li>List item</li> </ul> <ul class='circle'> <li>List item with a much longer description or more content.</li> <li>List item</li> <li>List item <ul> <li>Nested List Item</li> <li>Nested List Item</li> <li>Nested List Item</li> </ul> </li> <li>List item</li> <li>List item</li> <li>List item</li> </ul> <ul class='square'> <li>List item with a much longer description or more content.</li> <li>List item</li> <li>List item <ul> <li>Nested List Item</li> <li>Nested List Item</li> <li>Nested List Item</li> </ul> </li> <li>List item</li> <li>List item</li> <li>List item</li> </ul> <ul class='no-bullet'> <li>List item with a much longer description or more content.</li> <li>List item</li> <li>List item <ul> <li>Nested List Item</li> <li>Nested List Item</li> <li>Nested List Item</li> </ul> </li> <li>List item</li> <li>List item</li> <li>List item</li> </ul> <ol id='section-four'> <li>List item with a much longer description or more content.</li> <li>List item</li> <li>List item <ol> <li>Nested List Item</li> <li>Nested List Item</li> <li>Nested List Item</li> </ol> </li> <li>List item</li> <li>List item</li> <li>List item</li> </ol> <ul class='vcard'> <li class='fn'>Gaius Baltar</li> <li class='street-address'>123 Colonial Ave.</li> <li class='locality'>Caprica City</li> <li><span class='state'>Caprica</span>, <span class='zip'>12345</span></li> <li class='email'> <a href='#'>g.baltar@example.com</a> </li> </ul>",  
         "number_of_attachments": 5,
-        "kb_article_attachments": {
-            "attachment": [{
-                "name": "Village Court.pdf",
-                "url": "#"
-            }]
-        }
+        "keywords": "this is a keyword, this is another, tag:keyword,tag:admin support, tag:agent support, another keyword, arthur:James Brown",
+        "kb_article_attachments":[{
+                "name": "Important File.pdf",
+                "faq_download_url": "#"
+            },{
+                "name": "Some Spreadsheet.xls",
+                "faq_download_url": "#"
+            },{
+                "name": "Random Word Document.wrd",
+                "faq_download_url": "#"
+            },{
+                "name": "Cool Cat Photo ROFL.jpeg",
+                "faq_download_url": "#"
+            }
+          ]
     },
     "question": {
         "allow_answers?": true,
         "answers_count": 5,
         "answers_agent_count": 2,
         "answers_customer_count": 4,
-        "subject": "test",
+        "subject": "This is a public question?",
+        "derp": "testing derp",
+        "created_at": "2015-12-02 12:14:51 -0500",
         "body": "Qui nisi aliqua nisi occaecat elit. Enim nulla ex consequat sit et reprehenderit incididunt veniam qui. Veniam excepteur officia sit pariatur cupidatat aute. Nostrud excepteur minim adipisicing aliquip. Incididunt dolor minim culpa sunt id anim. Nisi officia ut veniam cupidatat pariatur voluptate do sint magna mollit nisi nulla.\r\nDolore consectetur qui quis eiusmod sunt. Reprehenderit ipsum consectetur ut id et. Cillum ut deserunt Lorem exercitation cupidatat sunt voluptate anim enim nisi nostrud amet. Id laborum proident do fugiat eiusmod et velit. Ad culpa minim adipisicing excepteur et velit ea. Officia duis cillum sint cillum dolor qui commodo ex in officia excepteur duis.\r\n",
         "from_email": "dobbelaar@gmail.com",
         "topic": {
             "name": "Sawyer Madden"
         },
-        "created_at": "",
         "best_answer": {
-            "id": 0,
+            "id": 44,
             "rating_value": -1,
             "from_email": "zdobbelaar@salesforce.com",
             "from_name": "Silva Townsend",
             "body": "Qui proident sunt officia esse incididunt voluptate ullamco fugiat nostrud consequat nostrud qui. Qui ea ea tempor in quis laboris eu consequat excepteur ea quis aliqua aliqua. Commodo adipisicing aliquip aliqua ad. Do anim reprehenderit magna consequat laborum velit nostrud aute. Occaecat cillum Lorem amet sint magna occaecat exercitation eu proident mollit.\r\nConsectetur ex ipsum id ut eu commodo labore ex duis. Cupidatat pariatur sunt dolore consequat eiusmod dolore adipisicing dolore aliqua. Consectetur tempor tempor deserunt magna tempor in. Eu aute reprehenderit adipisicing mollit officia qui tempor anim elit. Aute mollit magna irure laborum fugiat laborum ipsum ea.\r\n"
         },
         "answers": [{
-            "answer": "agent",
-            "rating_value": 2,
+            "agent": [{
+              "name": "Some Agent"
+            }],
+            "rating_value": 3,
             "from_email": "zdobbelaar@salesforce.com",
-            "from_name": "Alicia Banks",
+            "from_name": "Silva Townsend",
             "public_url": "question.html",
             "body": "Dolor Lorem fugiat nisi sint eu ullamco duis anim pariatur. Cillum labore ea ipsum enim tempor. Ut reprehenderit officia mollit esse excepteur commodo quis amet minim minim mollit laborum excepteur cillum. In sit qui sunt minim laboris labore excepteur nisi voluptate. Cupidatat commodo dolor anim labore proident veniam.\r\nNulla incididunt labore irure deserunt amet commodo aute id ullamco laborum consectetur consectetur ipsum. Laborum ad excepteur ex mollit pariatur reprehenderit officia reprehenderit esse quis. Ad ullamco enim adipisicing culpa laborum enim commodo voluptate.\r\n"
         }, {
-            "answer": "agent",
-            "rating_value": 2,
+            "agent": "agent name",
+            "rating_value": -3,
             "from_email": "dobbelaar@gmail.com",
             "from_name": "Duffy Sanders",
             "public_url": "question.html",
             "body": "Est ea do reprehenderit esse. Nostrud labore magna aliqua sit consectetur aute elit. Cillum et ipsum consequat occaecat consequat velit aute. Aute nostrud nisi dolore aute minim occaecat culpa amet in. Sit adipisicing laboris minim reprehenderit ullamco magna exercitation enim eu non in magna.\r\nAdipisicing ex exercitation magna consequat dolor velit amet consectetur do sit. Adipisicing incididunt dolore culpa duis pariatur dolore nulla qui proident deserunt magna pariatur do aute. Dolor eu ex cupidatat officia do aute. Exercitation aliqua ad consectetur commodo veniam sunt. Sint ullamco et sunt nostrud tempor. Eu irure anim tempor minim aute. Qui incididunt ea nisi veniam ex pariatur.\r\n"
         }, {
-            "answer": "agent",
-            "rating_value": 2,
+            "agent": "true",
+            "id": 44,
+            "rating_value": 6,
             "from_email": "zdobbelaar@salesforce.com",
-            "from_name": "Dora Cherry",
+            "from_name": "Silva Townsend",
             "public_url": "question.html",
             "body": "Ipsum cupidatat ex ex nisi voluptate amet ea laborum occaecat ipsum. Id enim consectetur adipisicing do duis non Lorem aute ex enim laboris. Amet ipsum minim sit ut excepteur consectetur duis qui elit laborum ad. Et ut duis consequat magna quis aliquip ipsum consequat sunt aliqua ut sunt. Ipsum sit fugiat aliquip magna est exercitation. Magna dolor incididunt laboris Lorem eu consectetur cillum voluptate enim ipsum anim aliqua sit. Quis commodo commodo dolor reprehenderit.\r\nMinim et aliquip dolore laboris in excepteur excepteur nisi nulla. Aliquip sint aliqua tempor ipsum eu elit qui ipsum eu duis proident. Pariatur ut qui incididunt non fugiat laboris mollit minim magna in eu. Consequat voluptate non culpa tempor amet reprehenderit aliquip reprehenderit proident sit laboris. Ullamco labore id ullamco dolor amet laborum tempor dolore ipsum adipisicing quis minim voluptate occaecat.\r\n"
+        },{
+            "agent": "#",
+            "rating_value": 2,
+            "from_email": "dobbelaar@gmail.com",
+            "from_name": "Duffy Sanders",
+            "public_url": "question.html",
+            "body": "Est ea do reprehenderit esse. Nostrud labore magna aliqua sit consectetur aute elit. Cillum et ipsum consequat occaecat consequat velit aute. Aute nostrud nisi dolore aute minim occaecat culpa amet in. Sit adipisicing laboris minim reprehenderit ullamco magna exercitation enim eu non in magna.\r\nAdipisicing ex exercitation magna consequat dolor velit amet consectetur do sit. Adipisicing incididunt dolore culpa duis pariatur dolore nulla qui proident deserunt magna pariatur do aute. Dolor eu ex cupidatat officia do aute. Exercitation aliqua ad consectetur commodo veniam sunt. Sint ullamco et sunt nostrud tempor. Eu irure anim tempor minim aute. Qui incididunt ea nisi veniam ex pariatur.\r\n"
+        },{
+            "agent": 1,
+            "rating_value": 2,
+            "from_email": "dobbelaar@gmail.com",
+            "from_name": "Duffy Sanders",
+            "public_url": "question.html",
+            "body": "Est ea do reprehenderit esse. Nostrud labore magna aliqua sit consectetur aute elit. Cillum et ipsum consequat occaecat consequat velit aute. Aute nostrud nisi dolore aute minim occaecat culpa amet in. Sit adipisicing laboris minim reprehenderit ullamco magna exercitation enim eu non in magna.\r\nAdipisicing ex exercitation magna consequat dolor velit amet consectetur do sit. Adipisicing incididunt dolore culpa duis pariatur dolore nulla qui proident deserunt magna pariatur do aute. Dolor eu ex cupidatat officia do aute. Exercitation aliqua ad consectetur commodo veniam sunt. Sint ullamco et sunt nostrud tempor. Eu irure anim tempor minim aute. Qui incididunt ea nisi veniam ex pariatur.\r\n"
         }]
     },
     "topics": [{
@@ -1068,7 +1137,7 @@
         }]
     }],
     "topic": {
-        "name": "Baluba Cruz",
+        "name": "Product Related Topic",
         "id": 666,
         "article_count": 44,
         "question_count": 5,
@@ -1130,22 +1199,26 @@
     "questions": [{
         "id": 5,
         "public_url": "question-show.html",
-        "subject_plain": "Neteria Kirk",
+        "subject_plain": "This is a question?",
+        "answers_agent_count": 2,
+        "answers_customer_count": 6,
         "body_plain": "ea aliqua cupidatat ea laborum consectetur do do dolor elit ea incididunt veniam consectetur sunt anim dolor culpa ex dolore aliquip do ea veniam ad"
     }, {
         "id": 6,
         "public_url": "question-show.html",
-        "subject_plain": "Xymonk Rodriguez",
+        "subject_plain": "This is a much longer question to test the width of webthemes when there is a longer question?",
+        "answers_agent_count": 4,
         "body_plain": "enim ut excepteur minim non elit exercitation et qui laboris enim laborum commodo et nisi culpa officia minim amet deserunt nulla anim ut reprehenderit in"
     }, {
         "id": 7,
         "public_url": "question-show.html",
-        "subject_plain": "Valpreal Dejesus",
+        "subject_plain": "Probably a normal sized question, with an important detail?",
         "body_plain": "laborum est ex pariatur culpa fugiat excepteur voluptate exercitation cillum dolor ad culpa excepteur ut nostrud nisi ea irure culpa officia fugiat proident irure minim"
     }, {
         "id": 8,
         "public_url": "question-show.html",
         "subject_plain": "Moreganic Vasquez",
+        "answers_agent_count": 1,
         "body_plain": "consectetur reprehenderit id cupidatat in ea aliqua consectetur fugiat cillum proident culpa in aute et incididunt id exercitation amet ex laborum enim fugiat ex eiusmod"
     }, {
         "id": 9,
@@ -1156,6 +1229,7 @@
         "id": 10,
         "public_url": "question-show.html",
         "subject_plain": "Zentury Stephens",
+        "answers_customer_count": 22,
         "body_plain": "labore proident officia sunt ex irure quis consectetur quis excepteur elit id minim voluptate amet commodo tempor eiusmod do consequat ut sint enim nulla nostrud"
     }, {
         "id": 11,
@@ -1559,6 +1633,7 @@
         }
     },
     "BLOCK CITY": "THIS IS WHERE BLOCKS LIVE, ITS A NICE BLOCK TO BE A BLOCK ON",
+    "ticket_custom_dropdown":"<select class='default xl' id='ticket_custom4' name='ticket[custom4]'><option value='' selected='selected'>-- Please Select --</option> <option value='Option 1'>Option 1</option> <option value='Option 2'>Option 2</option> <option value='Events &amp; Partners'>Events &amp; Partners</option> <option value='Option 3'>Option 3</option> <option value='Option 4'>Option 4</option></select>",
     "search_term": "How do I search",
     "number_search_results": 14,
     "topics_count": 100,

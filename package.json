@@ -1,9 +1,9 @@
 {
-  "name": "generator-desk-themes-new",
-  "version": "1.2.9",
-  "description": "Desk.com theme generator",
+  "name": "generator-desk-themes-LOCALtestER",
+  "version": "1.2.99",
+  "description": "Yeoman generator for Desk.com Themes",
   "license": "BSD-2-Clause",
-  "repository": "dblr/generator-desk-gen",
+  "repository": "dblr/generator-desk-themes",
   "author": "Desk.com / WOW Services",
   "main": "app/index.js",
   "engines": {
