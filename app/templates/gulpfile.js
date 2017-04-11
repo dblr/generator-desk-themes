@@ -21,7 +21,7 @@ runSequence = require('run-sequence'),
 removeEmptyLines = require('gulp-remove-empty-lines'),
 fs = require('fs');
 
-//Desk/Liquid Releated Variables
+//Liquid & Template Related Functionality
 var customFilters = {
     gravatar_image: function(url) {
         var unsecureUrl = gravatar.url(url, { s: '100', r: 'x', d: 'retro' }, false);
@@ -57,8 +57,23 @@ var customFilters = {
       return str;
     }
 }
-// For files being hosted at <%= urlpath %>
 var locals = JSON.parse(fs.readFileSync('./app/data.json', 'utf8'));
+gulp.task('templates', function() {
+    gulp.src(['app/pages/*.html'])
+        .pipe(liquify(locals, {
+            filters: customFilters
+        }))
+        .pipe(gulp.dest('.tmp'))
+        .pipe(reload({ stream: true }));
+});
+gulp.task('widgets', function() {
+    gulp.src(['app/widgets/*.html'])
+        .pipe(liquify(locals, {
+            filters: customFilters
+        }))
+        .pipe(gulp.dest('.tmp/widgets/'))
+        .pipe(reload({ stream: true }));
+});
 
 // Default Task
 gulp.task('styles', () => {<% if (includeSass) { %>
@@ -156,9 +171,9 @@ gulp.task('extras', () => {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 <% if (includeBabel) { -%>
-gulp.task('serve', ['styles', 'templates' , 'scripts', 'fonts'], () => {
+gulp.task('serve', ['styles', 'templates','widgets', 'scripts', 'fonts'], () => {
 <% } else { -%>
-gulp.task('serve', ['styles', 'templates' , 'fonts'], () => {
+gulp.task('serve', ['styles', 'templates','widgets' , 'fonts'], () => {
 <% } -%>
   browserSync({
     notify: false,
@@ -170,20 +185,9 @@ gulp.task('serve', ['styles', 'templates' , 'fonts'], () => {
       }
     }
   });
-  gulp.watch(['app/pages/*.html', 'app/*.html'], ['templates']).on('change', reload);
-  gulp.watch([
-    'app/*.html',
-<% if (!includeBabel) { -%>
-    'app/scripts/**/*.js',
-<% } -%>
-    'app/images/**/*',
-    '.tmp/fonts/**/*'
-  ]).on('change', reload);
-
-  gulp.watch('app/styles/**/*.<%= includeSass ? 'scss' : 'css' %>', ['styles']);
-<% if (includeBabel) { -%>
-  gulp.watch('app/scripts/**/*.js', ['scripts']);
-<% } -%>
+  gulp.watch(['app/pages/*.html', 'app/widgets/*.html', 'app/*.html', 'app/_layout.html'], ['templates','widgets']).on('change', reload);
+  gulp.watch('app/styles/**/*.scss', ['styles','templates','widgets']).on('change', reload);
+  gulp.watch('app/scripts/**/*.js',['styles','templates','widgets']).on('change', reload);
   gulp.watch('app/fonts/**/*', ['fonts']);
   gulp.watch('bower.json', ['wiredep', 'fonts']);
 });
@@ -255,15 +259,8 @@ gulp.task('default', ['clean'], () => {
 
 
 
+
 // Desk Related Functionality
-gulp.task('templates', function() {
-    gulp.src(['app/pages/*.html'])
-        .pipe(liquify(locals, {
-            filters: customFilters
-        }))
-        .pipe(gulp.dest('.tmp'))
-        .pipe(reload({ stream: true }));
-});
 gulp.task('header', function() {
     gulp.src(['app/header.html'])
         .pipe(liquify(locals, {
