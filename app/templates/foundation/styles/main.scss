@@ -5,6 +5,21 @@
   @include foundation-everything;
 <% } %>
 
+$blue: #3798D4 !default;
+/* Respnsive MIXTAPE */
+$break-small: 480px;
+$break-large: 992px;
+@mixin respond-to($media) {
+  @if $media == phone {
+    @media only screen and (max-width: $break-small) { @content; }
+  }
+  @else if $media == tablet {
+    @media only screen and (min-width: $break-small + 1) and (max-width: $break-large - 1) { @content; }
+  }
+  @else if $media == desktop {
+    @media only screen and (min-width: $break-large) { @content; }
+  }
+}
 
 .row {
     margin: 0 auto;
