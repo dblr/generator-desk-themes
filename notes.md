@@ -22,3 +22,5 @@
     </div>
 </div>
 ##data update files
+  -search page block
+  - topic.article: related topics
